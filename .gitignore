@@ -1,3 +1,9 @@
+
+# Build results
+bin/
+obj/
+packages/
+
 # Visual Studio
 .vs/
 *.sln
