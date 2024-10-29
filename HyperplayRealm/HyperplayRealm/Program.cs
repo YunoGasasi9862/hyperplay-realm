@@ -1,11 +1,19 @@
+
+using BLL.Interfaces;
+using BLL.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<HyperplayRealmDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+//builder.Services.AddScoped<IGenericService<>>
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline.  
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -14,7 +22,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 //TODO use Firebase Storage to fetch the profile pictures
-//TODO fetch database string from the appsettings.json
 //TODO if time permits, use a free cloud DB hosting plan to host the entire localDB there
 
 app.UseHttpsRedirection();

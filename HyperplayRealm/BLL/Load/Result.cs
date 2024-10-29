@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Interfaces
+namespace BLL.Enums
 {
-    public interface IGenericService
+    public enum Result
     {
+        ERROR = 0,
+
+        SUCCESS = 1
     }
 }
