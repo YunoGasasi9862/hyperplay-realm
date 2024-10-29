@@ -10,6 +10,7 @@ namespace BLL.Load
     public class ResultMessages
     {
         private const string DEFAULT_MESSAGE = "UNKNOWN";
+        public string? Message { get; private set; }
 
         private readonly Dictionary<Result, string> resultMessages = new Dictionary<Result, string>()
         {
@@ -18,9 +19,9 @@ namespace BLL.Load
             {Result.SUCCESS, "Successfully performed the Operation"},
         };
 
-        public string GetResultMessage(Result result)
+        public void SetResultMessage(Result result)
         {
-            return resultMessages.TryGetValue(result, out var resultMessage) ? resultMessage : DEFAULT_MESSAGE;
+            Message = resultMessages.TryGetValue(result, out var resultMessage) ? resultMessage : DEFAULT_MESSAGE;
         }
     }
 }
