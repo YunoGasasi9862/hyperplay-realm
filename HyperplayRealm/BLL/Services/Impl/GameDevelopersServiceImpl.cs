@@ -1,17 +1,35 @@
-﻿using BLL.Load;
+﻿using BLL.Interfaces;
+using BLL.Load;
 using BLL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using BLL.DTOs;
 using System.Threading.Tasks;
 
 namespace BLL.Services.Impl
 {
-    public class GameDevelopersServiceImpl : LoadResult
+    public class GameDevelopersServiceImpl : LoadResult, IDBOperations<GameDeveloper, GameDeveloperDTO>
     {
         public GameDevelopersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, ResultMessages resultMessages) : base(hyperplayRealmDBContext, resultMessages)
         {
+        }
+
+        public Task<LoadResult> Create(GameDeveloper type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<LoadResult> Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<GameDeveloperDTO> Query()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<LoadResult> Update(GameDeveloper type)
+        {
+            throw new NotImplementedException();
         }
     }
 }
