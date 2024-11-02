@@ -3,6 +3,7 @@ using BLL.Load;
 using BLL.Models;
 using BLL.DTOs;
 using System.Threading.Tasks;
+using BLL.Enums;
 
 namespace BLL.Services.Impl
 {
@@ -12,22 +13,26 @@ namespace BLL.Services.Impl
         {
         }
 
-        public Task<LoadResult> Create(Game type)
+        public async Task<ILoadResult> Create(Game type)
+        {
+            HyperplayRealmDBContext.Games.Add(type);
+
+            await HyperplayRealmDBContext.SaveChangesAsync();
+
+            return await Load(Result.SUCCESS);
+        }
+
+        public Task<ILoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<LoadResult> Delete(int id)
+        public Task<ILoadResult> Update(Game type)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<GameDTO> Query()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<LoadResult> Update(Game type)
+        IQueryable<GameDTO> IDBOperations<Game, GameDTO>.Query()
         {
             throw new NotImplementedException();
         }

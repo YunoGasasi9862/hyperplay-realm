@@ -14,12 +14,12 @@ namespace BLL.Services.Impl
 
         }
 
-        public Task<LoadResult> Create(User type)
+        public Task<ILoadResult> Create(User type)
         {
             throw new NotImplementedException();
         }
 
-        public Task<LoadResult> Delete(int id)
+        public Task<ILoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -29,7 +29,7 @@ namespace BLL.Services.Impl
             throw new NotImplementedException();
         }
 
-        public Task<LoadResult> Update(User type)
+        public Task<ILoadResult> Update(User type)
         {
             throw new NotImplementedException();
         }

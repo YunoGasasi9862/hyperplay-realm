@@ -12,12 +12,12 @@ namespace BLL.Services.Impl
         {
         }
 
-        public Task<LoadResult> Create(Publisher type)
+        public Task<ILoadResult> Create(Publisher type)
         {
             throw new NotImplementedException();
         }
 
-        public Task<LoadResult> Delete(int id)
+        public Task<ILoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace BLL.Services.Impl
             throw new NotImplementedException();
         }
 
-        public Task<LoadResult> Update(Publisher type)
+        public Task<ILoadResult> Update(Publisher type)
         {
             throw new NotImplementedException();
         }

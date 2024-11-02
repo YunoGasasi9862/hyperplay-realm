@@ -83,7 +83,7 @@ go
 create table Genres
 (
 	Id int primary key identity(1, 1),
-	Genre nvarchar(20) not null,
+	GenreName nvarchar(20) not null,
 )
 
 go

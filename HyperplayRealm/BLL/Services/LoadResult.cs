@@ -19,11 +19,11 @@ namespace BLL.Services
             ResultMessages = resultMessages;
         }
 
-        public Task<ILoadResult> Load(Result result)
+        public Task<LoadResult> Load(Result result)
         {
-             ResultMessages.SetResultMessage(result);
+            ResultMessages.SetResultMessage(result);
 
-            return Task.FromResult<ILoadResult>(this);
+            return Task.FromResult(this);
         }
     }
 }

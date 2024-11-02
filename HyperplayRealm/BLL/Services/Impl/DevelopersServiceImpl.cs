@@ -12,17 +12,17 @@ namespace BLL.Services.Impl
         {
         }
 
-        public Task<LoadResult> Create(Developer type)
+        public Task<ILoadResult> Create(Developer type)
         {
             throw new NotImplementedException();
         }
 
-        public Task<LoadResult> Delete(int id)
+        public Task<ILoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<LoadResult> Update(Developer type)
+        public Task<ILoadResult> Update(Developer type)
         {
             throw new NotImplementedException();
         }

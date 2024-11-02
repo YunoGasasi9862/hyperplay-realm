@@ -13,12 +13,12 @@ namespace BLL.Services.Impl
 
         }
 
-        public Task<LoadResult> Create(Role type)
+        public Task<ILoadResult> Create(Role type)
         {
             throw new NotImplementedException();
         }
 
-        public Task<LoadResult> Delete(int id)
+        public Task<ILoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -28,7 +28,7 @@ namespace BLL.Services.Impl
             throw new NotImplementedException();
         }
 
-        public Task<LoadResult> Update(Role type)
+        public Task<ILoadResult> Update(Role type)
         {
             throw new NotImplementedException();
         }

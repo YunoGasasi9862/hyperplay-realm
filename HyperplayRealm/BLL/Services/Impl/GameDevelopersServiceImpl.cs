@@ -12,12 +12,12 @@ namespace BLL.Services.Impl
         {
         }
 
-        public Task<LoadResult> Create(GameDeveloper type)
+        public Task<ILoadResult> Create(GameDeveloper type)
         {
             throw new NotImplementedException();
         }
 
-        public Task<LoadResult> Delete(int id)
+        public Task<ILoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace BLL.Services.Impl
             throw new NotImplementedException();
         }
 
-        public Task<LoadResult> Update(GameDeveloper type)
+        public Task<ILoadResult> Update(GameDeveloper type)
         {
             throw new NotImplementedException();
         }

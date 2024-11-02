@@ -9,7 +9,7 @@ public partial class Genre
 {
     public int Id { get; set; }
 
-    public string Genre1 { get; set; }
+    public string GenreName { get; set; }
 
     public virtual ICollection<GameGenre> GameGenres { get; set; } = new List<GameGenre>();
 }
