@@ -20,6 +20,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+//Use online templates for login, etc
+
 //TODO use Firebase Storage to fetch the profile pictures
 //TODO if time permits, use a free cloud DB hosting plan to host the entire localDB there
 

@@ -6,6 +6,7 @@ namespace HyperplayRealm.Controllers
 {
     public class HomeController : Controller
     {
+        //change this to login page!!
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)

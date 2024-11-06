@@ -92,7 +92,7 @@ public partial class HyperplayRealmDBContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Genres__3214EC0709C705D8");
 
-            entity.Property(e => e.Genre1)
+            entity.Property(e => e.GenreName)
                 .IsRequired()
                 .HasMaxLength(20)
                 .HasColumnName("Genre");
