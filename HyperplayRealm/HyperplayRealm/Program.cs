@@ -1,4 +1,5 @@
-
+using BLL.Configuration;
+using BLL.Configuration.Model;
 using BLL.Interfaces;
 using BLL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<HyperplayRealmDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+
+// App Settings
+builder.Services.AddSingleton<IAppSettings, AppSettingsService>();
 
 var app = builder.Build();
 

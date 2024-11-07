@@ -1,3 +1,4 @@
+using BLL.Interfaces;
 using HyperplayRealm.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -9,9 +10,14 @@ namespace HyperplayRealm.Controllers
         //change this to login page!!
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IAppSettings _appSettings;
+
+        public HomeController(IAppSettings appSettings, ILogger<HomeController> logger)
         {
             _logger = logger;
+
+            //get this when you need send it in index
+            _appSettings = appSettings;
         }
 
         public IActionResult Index()
