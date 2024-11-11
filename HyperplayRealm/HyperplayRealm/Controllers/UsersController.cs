@@ -4,27 +4,29 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Controllers.Bases;
 using BLL.Services;
 using BLL.Models;
+using BLL.Interfaces;
+using BLL.DTOs;
 
 // Generated from Custom Template.
 
 namespace HyperplayRealm.Controllers
 {
-    public class UsersController : MvcController
+    public class UsersController : BaseController
     {
         // Service injections:
-        private readonly IUserService _userService;
+        private readonly IDBOperations<User, UserDTO> UserOperations;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
         public UsersController(
-			IUserService userService
+            IDBOperations<User, UserDTO> userOperations
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService
         )
         {
-            _userService = userService;
+            UserOperations = userOperations;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //_ManyToManyRecordService = ManyToManyRecordService;
@@ -34,7 +36,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Index()
         {
             // Get collection service logic:
-            var list = _userService.Query().ToList();
+            var list = UserOperations.Query().ToList();
             return View(list);
         }
 
@@ -42,7 +44,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = _userService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = UserOperations.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
         }
 
@@ -64,13 +66,13 @@ namespace HyperplayRealm.Controllers
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(UserModel user)
+        public IActionResult Create(UserDTO user)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                var result = _userService.Create(user.Record);
-                if (result.IsSuccessful)
+                var result = UserOperations.Create(user.Record);
+                if (result.)
                 {
                     TempData["Message"] = result.Message;
                     return RedirectToAction(nameof(Details), new { id = user.Record.Id });
@@ -85,7 +87,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = _userService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = UserOperations.Query().SingleOrDefault(q => q.Record.Id == id);
             SetViewData();
             return View(item);
         }
@@ -93,12 +95,12 @@ namespace HyperplayRealm.Controllers
         // POST: Users/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(UserModel user)
+        public IActionResult Edit(UserDTO user)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                var result = _userService.Update(user.Record);
+                var result = UserOperations.Update(user.Record);
                 if (result.IsSuccessful)
                 {
                     TempData["Message"] = result.Message;
@@ -114,7 +116,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            var item = _userService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = UserOperations.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
         }
 
@@ -124,7 +126,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            var result = _userService.Delete(id);
+            var result = UserOperations.Delete(id);
             TempData["Message"] = result.Message;
             return RedirectToAction(nameof(Index));
         }

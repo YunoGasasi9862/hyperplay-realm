@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BLL.Models;
 
@@ -12,6 +13,8 @@ public partial class User
     public string Name { get; set; }
 
     public string Surname { get; set; }
+    
+    public string Username { get; set; }
 
     public string Email { get; set; }
 

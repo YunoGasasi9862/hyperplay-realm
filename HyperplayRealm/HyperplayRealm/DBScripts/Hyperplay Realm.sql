@@ -16,7 +16,8 @@ create table Users
 (
 	Id int primary key identity(1, 1),
 	Name nvarchar(50) not null,
-	Surname nvarchar(50) not null,
+	Surname nvarchar(50),
+	Username nvarchar(50) not null,
 	Email nvarchar(50) not null,
 	Password nvarchar(255) not null, --hashed passwords
 	ProfilePicturePath nvarchar(100) -- path of the file, use firebase storage

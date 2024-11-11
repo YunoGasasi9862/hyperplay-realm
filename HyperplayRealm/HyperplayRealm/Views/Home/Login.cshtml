@@ -1,0 +1,72 @@
+﻿@model UserDTO
+
+@{
+    var containerDivClass = "container";
+    ViewData["Title"] = "Login";
+}
+
+<div class="@containerDivClass">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+</div>
+
+@if (Model != null)
+{
+    <div class="@containerDivClass">
+        @if (TempData["Message"] != null)
+        {
+            <p class="text-danger">
+                @TempData["Message"]
+            </p>
+        }
+
+        <form asp-action="Login" method="post" autocomplete="off">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Username Input -->
+            <div class="row mb-3">
+                <label asp-for="Username" class="col-2 col-form-label fw-bold"></label>
+                <div class="col-10">
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Password Input -->
+            <div class="row mb-3">
+                <label asp-for="Password" class="col-2 col-form-label fw-bold"></label>
+                <div class="col-10">
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Remember Me Checkbox -->
+            <div class="row mb-3">
+                <div class="offset-2 col-10">
+                    <div class="form-check">
+                        <input asp-for="RememberMe" type="checkbox" class="form-check-input" />
+                        <label class="form-check-label" asp-for="RememberMe">Remember Me</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <!-- Submit Button -->
+            <div class="row mb-3">
+                <div class="offset-2 col-10">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    &nbsp;&nbsp;
+                    <button type="reset" class="btn btn-outline-primary">Reset</button>
+                    &nbsp;&nbsp;
+                    <a asp-action="Register">Register</a>
+                    &nbsp;&nbsp;
+                    <a asp-action="ForgotPassword">Forgot Password?</a>
+                </div>
+            </div>
+        </form>
+    </div>
+}

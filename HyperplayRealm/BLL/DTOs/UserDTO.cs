@@ -10,6 +10,10 @@ namespace BLL.DTOs
         [Required]
         public required string Name { get; set; }
 
+        [Required]
+        public required string Username { get; set; }
+
+
         public string? Surname { get; set; }
 
         [Required]
@@ -21,11 +25,15 @@ namespace BLL.DTOs
 
         public string? ProfilePicturePath { get; set; }
 
+        public bool RememberMe { get; set; }
+
         public void MapFrom(User entity)
         {
             Id = entity.Id;
 
             Name = entity.Name;
+
+            Username = entity.Username;
 
             Surname = entity.Surname;
 
