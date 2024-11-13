@@ -16,5 +16,10 @@ namespace BLL.DTOs
 
             Name = entity.Name;
         }
+
+        public Publisher MapTo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

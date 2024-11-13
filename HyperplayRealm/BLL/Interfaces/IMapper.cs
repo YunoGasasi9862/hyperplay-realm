@@ -10,5 +10,7 @@ namespace BLL.Interfaces
     public interface IMapper<T>
     {
         public void MapFrom(T entity);
+
+        public T MapTo();
     }
 }

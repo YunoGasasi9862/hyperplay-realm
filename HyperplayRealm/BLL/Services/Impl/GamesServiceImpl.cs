@@ -9,25 +9,25 @@ namespace BLL.Services.Impl
 {
     public class GamesServiceImpl : LoadResult, IDBOperations<Game, GameDTO>
     {
-        public GamesServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, ResultMessages resultMessages) : base(hyperplayRealmDBContext, resultMessages)
+        public GamesServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
         {
         }
 
-        public async Task<ILoadResult> Create(Game type)
+        public async Task<LoadResult> Create(Game type)
         {
             HyperplayRealmDBContext.Games.Add(type);
 
             await HyperplayRealmDBContext.SaveChangesAsync();
 
-            return await Load(Result.SUCCESS);
+            return (LoadResult) await Load(ResultEnum.SUCCESS, true);
         }
 
-        public Task<ILoadResult> Delete(int id)
+        public Task<LoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Update(Game type)
+        public Task<LoadResult> Update(Game type)
         {
             throw new NotImplementedException();
         }

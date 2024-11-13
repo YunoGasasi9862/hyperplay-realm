@@ -27,5 +27,10 @@ namespace BLL.DTOs
 
             Game = entity.Game; 
         }
+
+        public GameDeveloper MapTo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

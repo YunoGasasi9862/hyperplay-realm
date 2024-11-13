@@ -26,5 +26,10 @@ namespace BLL.DTOs
 
             User = entity.User; 
         }
+
+        public UserRole MapTo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

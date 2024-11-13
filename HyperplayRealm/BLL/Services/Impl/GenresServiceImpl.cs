@@ -8,16 +8,16 @@ namespace BLL.Services.Impl
 {
     public class GenresServiceImpl : LoadResult, IDBOperations<Genre, GenreDTO>
     {
-        public GenresServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, ResultMessages resultMessages) : base(hyperplayRealmDBContext, resultMessages)
+        public GenresServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
         {
         }
 
-        public Task<ILoadResult> Create(Genre type)
+        public Task<LoadResult> Create(Genre type)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Delete(int id)
+        public Task<LoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace BLL.Services.Impl
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Update(Genre type)
+        public Task<LoadResult> Update(Genre type)
         {
             throw new NotImplementedException();
         }

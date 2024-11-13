@@ -8,16 +8,16 @@ namespace BLL.Services.Impl
 {
     public class UserRolesServiceImpl : LoadResult, IDBOperations<UserRole, UserDTO>
     {
-        public UserRolesServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, ResultMessages resultMessages) : base(hyperplayRealmDBContext, resultMessages)
+        public UserRolesServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
         {
         }
 
-        public Task<ILoadResult> Create(UserRole type)
+        public Task<LoadResult> Create(UserRole type)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Delete(int id)
+        public Task<LoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace BLL.Services.Impl
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Update(UserRole type)
+        public Task<LoadResult> Update(UserRole type)
         {
             throw new NotImplementedException();
         }

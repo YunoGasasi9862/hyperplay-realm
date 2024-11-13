@@ -34,5 +34,10 @@ namespace BLL.DTOs
             ReleaseDate = entity.ReleaseDate;
             Publisher = entity.Publisher;
         }
+
+        public Game MapTo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

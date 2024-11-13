@@ -8,16 +8,16 @@ namespace BLL.Services.Impl
 {
     public class PublishersServiceImpl : LoadResult, IDBOperations<Publisher, PublisherDTO>
     {
-        public PublishersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, ResultMessages resultMessages) : base(hyperplayRealmDBContext, resultMessages)
+        public PublishersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
         {
         }
 
-        public Task<ILoadResult> Create(Publisher type)
+        public Task<LoadResult> Create(Publisher type)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Delete(int id)
+        public Task<LoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace BLL.Services.Impl
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Update(Publisher type)
+        public Task<LoadResult> Update(Publisher type)
         {
             throw new NotImplementedException();
         }

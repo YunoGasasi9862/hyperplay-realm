@@ -19,5 +19,10 @@ namespace BLL.DTOs
 
             Name = entity.Name;
         }
+
+        public Developer MapTo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -43,5 +43,27 @@ namespace BLL.DTOs
 
             ProfilePicturePath = entity.ProfilePicturePath;
         }
+
+
+        public User MapTo()
+        {
+            return new User
+            {
+                Id = this.Id,
+
+                Name = this.Name,
+
+                Username = this.Username,
+
+                Surname = this.Surname,
+
+                Email = this.Email,
+
+                Password = this.Password,
+
+                ProfilePicturePath = this.ProfilePicturePath
+            };
+        }
+
     }
 }

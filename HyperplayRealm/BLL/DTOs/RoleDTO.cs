@@ -21,5 +21,10 @@ namespace BLL.DTOs
 
             Description = entity.Description;   
         }
+
+        public Role MapTo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -10,18 +10,18 @@ namespace BLL.Services
     public abstract class LoadResult : ILoadResult
     {
         protected HyperplayRealmDBContext HyperplayRealmDBContext { get; set; }
-        protected ResultMessages ResultMessages { get; set; }
+        public Result Result { get; set; }
 
-        public LoadResult(HyperplayRealmDBContext hyperplayRealmDBContext, ResultMessages resultMessages)
+        public LoadResult(HyperplayRealmDBContext hyperplayRealmDBContext, Result result)
         {
             HyperplayRealmDBContext = hyperplayRealmDBContext;
 
-            ResultMessages = resultMessages;
+            Result = result;
         }
 
-        public Task<ILoadResult> Load(Result result)
+        public Task<ILoadResult> Load(ResultEnum result, bool isSuccessful)
         {
-            ResultMessages.SetResultMessage(result);
+            Result.SetResultMessage(result, isSuccessful);
 
             return Task.FromResult<ILoadResult>(this);
         }

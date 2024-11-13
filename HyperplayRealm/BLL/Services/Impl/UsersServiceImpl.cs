@@ -9,17 +9,17 @@ namespace BLL.Services.Impl
     //so since im using LoadResult, you'll use Service - just like in the assignments
     public class UsersServiceImpl : LoadResult, IDBOperations<User, UserDTO>
     {
-        public UsersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, ResultMessages resultMessages) : base(hyperplayRealmDBContext, resultMessages)
+        public UsersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
         {
 
         }
 
-        public Task<ILoadResult> Create(User type)
+        public Task<LoadResult> Create(User type)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Delete(int id)
+        public Task<LoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -29,7 +29,7 @@ namespace BLL.Services.Impl
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Update(User type)
+        public Task<LoadResult> Update(User type)
         {
             throw new NotImplementedException();
         }

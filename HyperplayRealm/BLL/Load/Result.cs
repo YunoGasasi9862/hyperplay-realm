@@ -1,15 +1,31 @@
-﻿using System;
+﻿using BLL.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Enums
+namespace BLL.Load
 {
-    public enum Result
+    public class Result
     {
-        ERROR = 0,
+        private const string DEFAULT_MESSAGE = "UNKNOWN";
+        public string? Message { get; private set; }
 
-        SUCCESS = 1
+        public bool IsSuccessfull { get; private set; }
+
+        private readonly Dictionary<ResultEnum, string> resultMessages = new Dictionary<ResultEnum, string>()
+        {
+            {ResultEnum.ERROR, "Failed to perform the Operation"},
+
+            {ResultEnum.SUCCESS, "Successfully performed the Operation"},
+        };
+
+        public void SetResultMessage(ResultEnum result, bool isSuccessful)
+        {
+            Message = resultMessages.TryGetValue(result, out var resultMessage) ? resultMessage : DEFAULT_MESSAGE;
+
+            IsSuccessfull = isSuccessful;
+        }
     }
 }

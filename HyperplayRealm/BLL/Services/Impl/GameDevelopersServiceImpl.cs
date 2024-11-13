@@ -8,16 +8,16 @@ namespace BLL.Services.Impl
 {
     public class GameDevelopersServiceImpl : LoadResult, IDBOperations<GameDeveloper, GameDeveloperDTO>
     {
-        public GameDevelopersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, ResultMessages resultMessages) : base(hyperplayRealmDBContext, resultMessages)
+        public GameDevelopersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
         {
         }
 
-        public Task<ILoadResult> Create(GameDeveloper type)
+        public Task<LoadResult> Create(GameDeveloper type)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Delete(int id)
+        public Task<LoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace BLL.Services.Impl
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Update(GameDeveloper type)
+        public Task<LoadResult> Update(GameDeveloper type)
         {
             throw new NotImplementedException();
         }

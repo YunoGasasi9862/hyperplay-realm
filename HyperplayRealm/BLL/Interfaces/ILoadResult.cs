@@ -6,6 +6,6 @@ namespace BLL.Interfaces
 {
     public interface ILoadResult
     {
-        public Task<ILoadResult> Load(Result result);
+        public Task<ILoadResult> Load(ResultEnum result, bool isSuccessful);
     }
 }

@@ -26,5 +26,10 @@ namespace BLL.DTOs
 
             Genre = entity.Genre;   
         }
+
+        public GameGenre MapTo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

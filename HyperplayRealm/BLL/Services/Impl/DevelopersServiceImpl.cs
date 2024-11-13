@@ -8,21 +8,21 @@ namespace BLL.Services.Impl
 {
     public class DevelopersServiceImpl : LoadResult, IDBOperations<Developer, DeveloperDTO>
     {
-        public DevelopersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, ResultMessages resultMessages) : base(hyperplayRealmDBContext, resultMessages)
+        public DevelopersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
         {
         }
 
-        public Task<ILoadResult> Create(Developer type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ILoadResult> Delete(int id)
+        public Task<LoadResult> Create(Developer type)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Update(Developer type)
+        public Task<LoadResult> Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<LoadResult> Update(Developer type)
         {
             throw new NotImplementedException();
         }

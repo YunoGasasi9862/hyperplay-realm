@@ -8,16 +8,16 @@ namespace BLL.Services.Impl
 {
     public class PurchasesServiceImpl : LoadResult, IDBOperations<Purchase, PurchaseDTO>
     {
-        public PurchasesServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, ResultMessages resultMessages) : base(hyperplayRealmDBContext, resultMessages)
+        public PurchasesServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
         {
         }
 
-        public Task<ILoadResult> Create(Purchase type)
+        public Task<LoadResult> Create(Purchase type)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Delete(int id)
+        public Task<LoadResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace BLL.Services.Impl
             throw new NotImplementedException();
         }
 
-        public Task<ILoadResult> Update(Purchase type)
+        public Task<LoadResult> Update(Purchase type)
         {
             throw new NotImplementedException();
         }

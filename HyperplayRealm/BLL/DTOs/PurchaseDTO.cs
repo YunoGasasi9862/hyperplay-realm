@@ -29,5 +29,10 @@ namespace BLL.DTOs
 
             User = entity.User;
         }
+
+        public Purchase MapTo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

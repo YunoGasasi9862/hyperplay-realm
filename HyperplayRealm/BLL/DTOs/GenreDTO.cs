@@ -17,5 +17,10 @@ namespace BLL.DTOs
 
             GenreName = entity.GenreName;
         }
+
+        public Genre MapTo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

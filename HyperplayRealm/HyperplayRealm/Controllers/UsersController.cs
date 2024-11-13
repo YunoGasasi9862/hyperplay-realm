@@ -1,11 +1,10 @@
 ﻿#nullable disable
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Controllers.Bases;
-using BLL.Services;
 using BLL.Models;
 using BLL.Interfaces;
 using BLL.DTOs;
+using BLL.Services;
 
 // Generated from Custom Template.
 
@@ -44,7 +43,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = UserOperations.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = UserOperations.Query().SingleOrDefault(q => q.Id == id);
             return View(item);
         }
 
@@ -66,18 +65,18 @@ namespace HyperplayRealm.Controllers
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(UserDTO user)
+        public async Task<IActionResult> Create(UserDTO user)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                var result = UserOperations.Create(user.Record);
-                if (result.)
+                LoadResult result = await UserOperations.Create(user.MapTo());
+                if (result.Result.IsSuccessfull)
                 {
-                    TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = user.Record.Id });
+                    TempData["Message"] = result.Result.Message;
+                    return RedirectToAction(nameof(Details), new { id = user.Id });
                 }
-                ModelState.AddModelError("", result.Message);
+                ModelState.AddModelError("", result.Result.Message);
             }
             SetViewData();
             return View(user);
@@ -87,7 +86,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = UserOperations.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = UserOperations.Query().SingleOrDefault(q => q.Id == id);
             SetViewData();
             return View(item);
         }
@@ -95,18 +94,18 @@ namespace HyperplayRealm.Controllers
         // POST: Users/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(UserDTO user)
+        public async Task<IActionResult> Edit(UserDTO user)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                var result = UserOperations.Update(user.Record);
-                if (result.IsSuccessful)
+                LoadResult result = await UserOperations.Update(user.MapTo());
+                if (result.Result.IsSuccessfull)
                 {
-                    TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = user.Record.Id });
+                    TempData["Message"] = result.Result.Message;
+                    return RedirectToAction(nameof(Details), new { id = user.Id });
                 }
-                ModelState.AddModelError("", result.Message);
+                ModelState.AddModelError("", result.Result.Message);
             }
             SetViewData();
             return View(user);
@@ -116,18 +115,18 @@ namespace HyperplayRealm.Controllers
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            var item = UserOperations.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = UserOperations.Query().SingleOrDefault(q => q.Id == id);
             return View(item);
         }
 
         // POST: Users/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            var result = UserOperations.Delete(id);
-            TempData["Message"] = result.Message;
+            var result = await UserOperations.Delete(id);
+            TempData["Message"] = result.Result.Message;
             return RedirectToAction(nameof(Index));
         }
 	}
