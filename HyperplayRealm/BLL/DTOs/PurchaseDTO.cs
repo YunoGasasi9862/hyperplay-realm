@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BLL.DTOs
 {
-    public class PurchaseDTO : IMapper<Purchase>
+    public class PurchaseDTO : IMapper<Purchase, PurchaseDTO>
     {
         public int UserId { get; set; }
 
@@ -17,7 +17,7 @@ namespace BLL.DTOs
 
         [Required]
         public required User User { get; set; }
-        public void MapFrom(Purchase entity)
+        public PurchaseDTO MapFrom(Purchase entity)
         {
             UserId = entity.UserId;
 
@@ -28,11 +28,13 @@ namespace BLL.DTOs
             Game = entity.Game; 
 
             User = entity.User;
+
+            return this;
         }
 
         public Purchase MapTo()
         {
-            throw new NotImplementedException();
+           return new Purchase { UserId = UserId, GameId = GameId, PurchaseDate = PurchaseDate };
         }
     }
 }

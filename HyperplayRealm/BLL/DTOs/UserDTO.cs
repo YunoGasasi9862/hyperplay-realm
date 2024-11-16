@@ -3,31 +3,30 @@ using BLL.Models;
 using System.ComponentModel.DataAnnotations;
 namespace BLL.DTOs
 {
-    public class UserDTO : IMapper<User>
+    public class UserDTO : IMapper<User, UserDTO>
     {
+        public UserDTO()
+        {
+
+        }
         public int Id { get; set; }
 
-        [Required]
-        public required string Name { get; set; }
+        public string Name { get; set; }
 
-        [Required]
-        public required string Username { get; set; }
-
+        public string Username { get; set; }
 
         public string? Surname { get; set; }
 
-        [Required]
-        public required string Email { get; set; }
+        public string Email { get; set; }
 
         //Hash it
-        [Required]
-        public required string Password { get; set; }
+        public string Password { get; set; }
 
         public string? ProfilePicturePath { get; set; }
 
         public bool RememberMe { get; set; }
 
-        public void MapFrom(User entity)
+        public UserDTO MapFrom(User entity)
         {
             Id = entity.Id;
 
@@ -42,6 +41,8 @@ namespace BLL.DTOs
             Password = entity.Password;
 
             ProfilePicturePath = entity.ProfilePicturePath;
+
+            return this;
         }
 
 

@@ -5,7 +5,7 @@ using BLL.Models;
 
 namespace BLL.DTOs
 {
-    public class DeveloperDTO: IMapper<Developer>
+    public class DeveloperDTO: IMapper<Developer, DeveloperDTO>
     {
         [Required]
         public int DeveloperId { get; set; }
@@ -13,16 +13,18 @@ namespace BLL.DTOs
         [Required]
         public required string Name { get; set; }
 
-        public void MapFrom(Developer entity)
+        public DeveloperDTO MapFrom(Developer entity)
         {
             DeveloperId = entity.DeveloperId;
 
             Name = entity.Name;
+
+            return this;
         }
 
         public Developer MapTo()
         {
-            throw new NotImplementedException();
+            return new Developer() { DeveloperId = this.DeveloperId, Name = this.Name };
         }
     }
 }

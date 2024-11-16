@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BLL.DTOs
 {
-    public class GameDeveloperDTO : IMapper<GameDeveloper>
+    public class GameDeveloperDTO : IMapper<GameDeveloper, GameDeveloperDTO>
     {
         public int GameId { get; set; }
 
@@ -17,7 +17,7 @@ namespace BLL.DTOs
         [Required]
         public required Game Game { get; set; }
 
-        public void MapFrom(GameDeveloper entity)
+        public GameDeveloperDTO MapFrom(GameDeveloper entity)
         {
             GameId = entity.GameId;
 
@@ -25,12 +25,14 @@ namespace BLL.DTOs
 
             Developer = entity.Developer;
 
-            Game = entity.Game; 
+            Game = entity.Game;
+
+            return this;
         }
 
         public GameDeveloper MapTo()
         {
-            throw new NotImplementedException();
+            return new GameDeveloper { GameId = GameId, DeveloperId = DeveloperId };
         }
     }
 }

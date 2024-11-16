@@ -8,6 +8,8 @@ namespace BLL.Models;
 
 public partial class Developer
 {
+    public Developer() { }
+
     [Required]
     public int DeveloperId { get; set; }
 

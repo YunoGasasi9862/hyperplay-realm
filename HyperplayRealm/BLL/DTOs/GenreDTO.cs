@@ -4,23 +4,25 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BLL.DTOs
 {
-    public class GenreDTO : IMapper<Genre>
+    public class GenreDTO : IMapper<Genre, GenreDTO>
     {
         public int Id { get; set; }
 
         [Required]
         public required string GenreName { get; set; }
 
-        public void MapFrom(Genre entity)
+        public GenreDTO MapFrom(Genre entity)
         {
             Id = entity.Id;
 
             GenreName = entity.GenreName;
+
+            return this;
         }
 
         public Genre MapTo()
         {
-            throw new NotImplementedException();
+            return new Genre { Id = Id, GenreName = GenreName };
         }
     }
 }

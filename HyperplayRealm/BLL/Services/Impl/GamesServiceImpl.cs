@@ -4,6 +4,7 @@ using BLL.Models;
 using BLL.DTOs;
 using System.Threading.Tasks;
 using BLL.Enums;
+using System.Linq;
 
 namespace BLL.Services.Impl
 {
@@ -34,7 +35,9 @@ namespace BLL.Services.Impl
 
         IQueryable<GameDTO> IDBOperations<Game, GameDTO>.Query()
         {
-            throw new NotImplementedException();
+            return HyperplayRealmDBContext.Games.Select(game => new GameDTO().MapFrom(game));
+
         }
+
     }
 }

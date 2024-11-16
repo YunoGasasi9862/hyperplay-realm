@@ -7,6 +7,11 @@ namespace BLL.Models;
 
 public partial class Publisher
 {
+    public Publisher()
+    {
+
+    }
+
     public int PublisherId { get; set; }
 
     public string Name { get; set; }

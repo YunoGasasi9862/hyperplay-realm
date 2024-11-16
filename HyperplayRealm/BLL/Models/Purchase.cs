@@ -7,6 +7,7 @@ namespace BLL.Models;
 
 public partial class Purchase
 {
+    public Purchase() { }   
     public int UserId { get; set; }
 
     public int GameId { get; set; }

@@ -1,4 +1,4 @@
-﻿@model UserModel
+﻿@model UserDTO
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -28,40 +28,40 @@
     <form asp-action="Edit" autocomplete="off">
 	    @Html.AntiForgeryToken()
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="Record.Id" />
+        <input type="hidden" asp-for="Id" />
         <div class="row mb-3">
             <label asp-for="Name" class="col-2 col-form-label fw-bold"></label>
 	        <div class="col-10">
-	            <input asp-for="Record.Name" class="form-control" />
-		        <span asp-validation-for="Record.Name" class="text-danger"></span>
+	            <input asp-for="Name" class="form-control" />
+		        <span asp-validation-for="Name" class="text-danger"></span>
 	        </div>
         </div>
         <div class="row mb-3">
             <label asp-for="Surname" class="col-2 col-form-label fw-bold"></label>
 	        <div class="col-10">
-	            <input asp-for="Record.Surname" class="form-control" />
-		        <span asp-validation-for="Record.Surname" class="text-danger"></span>
+	            <input asp-for="Surname" class="form-control" />
+		        <span asp-validation-for="Surname" class="text-danger"></span>
 	        </div>
         </div>
         <div class="row mb-3">
             <label asp-for="Email" class="col-2 col-form-label fw-bold"></label>
 	        <div class="col-10">
-	            <input asp-for="Record.Email" class="form-control" />
-		        <span asp-validation-for="Record.Email" class="text-danger"></span>
+	            <input asp-for="Email" class="form-control" />
+		        <span asp-validation-for="Email" class="text-danger"></span>
 	        </div>
         </div>
         <div class="row mb-3">
             <label asp-for="Password" class="col-2 col-form-label fw-bold"></label>
 	        <div class="col-10">
-	            <input asp-for="Record.Password" class="form-control" />
-		        <span asp-validation-for="Record.Password" class="text-danger"></span>
+	            <input asp-for="Password" class="form-control" />
+		        <span asp-validation-for="Password" class="text-danger"></span>
 	        </div>
         </div>
         <div class="row mb-3">
             <label asp-for="ProfilePicturePath" class="col-2 col-form-label fw-bold"></label>
 	        <div class="col-10">
-	            <input asp-for="Record.ProfilePicturePath" class="form-control" />
-		        <span asp-validation-for="Record.ProfilePicturePath" class="text-danger"></span>
+	            <input asp-for="ProfilePicturePath" class="form-control" />
+		        <span asp-validation-for="ProfilePicturePath" class="text-danger"></span>
 	        </div>
         </div>
 
@@ -83,7 +83,7 @@
 		        &nbsp;&nbsp;
                 <button type="reset" class="btn btn-outline-primary">Reset</button>
 		        &nbsp;&nbsp;
-                <a asp-action="Delete" asp-route-id="@Model.Record.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
                 &nbsp;&nbsp;
 		        <a asp-action="Index">Back to List</a>
 	        </div>

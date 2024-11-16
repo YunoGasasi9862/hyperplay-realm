@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BLL.DTOs
 {
-    public class RoleDTO : IMapper<Role>
+    public class RoleDTO : IMapper<Role, RoleDTO>
     {
         public int Id { get; set; }
 
@@ -13,18 +13,20 @@ namespace BLL.DTOs
 
         [Required]
         public required string Description { get; set; }
-        public void MapFrom(Role entity)
+        public RoleDTO MapFrom(Role entity)
         {
             Id = entity.Id;
 
             Name = entity.Name;
 
-            Description = entity.Description;   
+            Description = entity.Description;
+
+            return this;
         }
 
         public Role MapTo()
         {
-            throw new NotImplementedException();
+           return new Role() { Description = Description, Id = Id , Name = Name };    
         }
     }
 }

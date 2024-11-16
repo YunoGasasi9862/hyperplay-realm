@@ -1,3 +1,4 @@
+using BLL.DTOs;
 using BLL.Interfaces;
 using HyperplayRealm.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,8 @@ namespace HyperplayRealm.Controllers
 
         public IActionResult Login()
         {
-            return View();
+            //for testing purposes
+            return View(new UserDTO());
         }
 
         public IActionResult Index()

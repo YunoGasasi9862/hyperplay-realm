@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BLL.DTOs
 {
-    public class GameGenreDTO : IMapper<GameGenre>
+    public class GameGenreDTO : IMapper<GameGenre, GameGenreDTO>
     {
         public int GameId { get; set; }
 
@@ -16,7 +16,7 @@ namespace BLL.DTOs
         [Required]
         public required Genre Genre { get; set; }
 
-        public void MapFrom(GameGenre entity)
+        public GameGenreDTO MapFrom(GameGenre entity)
         {
             GameId = entity.GameId;
 
@@ -25,11 +25,13 @@ namespace BLL.DTOs
             Game = entity.Game;
 
             Genre = entity.Genre;   
+
+            return this;
         }
 
         public GameGenre MapTo()
         {
-            throw new NotImplementedException();
+            return new GameGenre() { GameId = GameId, GenreId = GenreId };
         }
     }
 }
