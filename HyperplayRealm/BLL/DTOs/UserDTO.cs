@@ -26,6 +26,8 @@ namespace BLL.DTOs
 
         public bool RememberMe { get; set; }
 
+        public List<string> Roles { get; set; }
+
         public UserDTO MapFrom(User entity)
         {
             Id = entity.Id;
@@ -41,6 +43,8 @@ namespace BLL.DTOs
             Password = entity.Password;
 
             ProfilePicturePath = entity.ProfilePicturePath;
+
+            Roles = GetRoleNames(entity);
 
             return this;
         }
@@ -64,6 +68,11 @@ namespace BLL.DTOs
 
                 ProfilePicturePath = this.ProfilePicturePath
             };
+        }
+
+        private  List<string> GetRoleNames(User entity)
+        {
+            return entity.UserRoles.Select(role => role.Role.Name).ToList();
         }
 
     }

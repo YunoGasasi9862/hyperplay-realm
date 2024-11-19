@@ -10,8 +10,8 @@ INSERT INTO Game (Id, Title, Price, Quantity, PublisherId, ReleaseDate)
 VALUES (?, ?, ?, ?, ?, ?)
 """
 insert_publisher_query = """
-INSERT INTO Publisher (Id, Name)
-VALUES (?, ?)
+INSERT INTO HyperplayRealmDB.dbo.Publisher (Name)
+VALUES
 """
 insert_developer_query = """
 INSERT INTO Developer (Id, Name)
@@ -37,8 +37,13 @@ def separate_on_delimiter(value: str, delimiter : str = "||") -> list[str]:
 def generate_random_number(min_limit: int, max_limit: int) -> float:
     return float(random.randint(min_limit, max_limit))
 
-def generate_query(row: pd.series) -> str:
-    return ""
+def generate_queries(row: pd.Series) -> str:
+    publisher_query = EMPTY_STRING
+    for publisher in row["publishers"]:
+        if publisher is not EMPTY_STRING:
+            publisher_query += f"({publisher}),\n"
+  
+    return publisher_query
     
 dummy_data_df = pd.read_csv(DUMMY_DATA, usecols = DUMMY_COLUMNS)
 dummy_data_df["quantity"] = 0
@@ -49,4 +54,15 @@ dummy_data_df["developers"] = dummy_data_df["developers"].apply(lambda value: se
 dummy_data_df["quantity"] = dummy_data_df["quantity"].apply(lambda value: generate_random_number(1,5))
 dummy_data_df["quantity"]  = dummy_data_df["quantity"].astype(int)
 dummy_data_df["price"] = dummy_data_df["price"].apply(lambda value: generate_random_number(50,60))
-print(dummy_data_df)
+
+publisher_queries = EMPTY_STRING
+for index, row in dummy_data_df.iterrows():
+    if index <= 1000:
+        publisher_queries += generate_queries(row)
+    else:
+        break
+
+if publisher_queries.endswith(",\n"):
+    publisher_queries = publisher_queries.rstrip(',\n')
+final_publisher_query = insert_publisher_query + publisher_queries + ";"
+print(final_publisher_query)

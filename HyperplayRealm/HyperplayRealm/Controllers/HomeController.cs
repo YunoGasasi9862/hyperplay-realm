@@ -21,12 +21,6 @@ namespace HyperplayRealm.Controllers
             _appSettings = appSettings;
         }
 
-        public IActionResult Login()
-        {
-            //for testing purposes
-            return View(new UserDTO());
-        }
-
         public IActionResult Index()
         {
             return View();

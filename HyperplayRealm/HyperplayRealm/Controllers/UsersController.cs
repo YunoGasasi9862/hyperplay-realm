@@ -5,6 +5,8 @@ using BLL.Models;
 using BLL.Interfaces;
 using BLL.DTOs;
 using BLL.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 // Generated from Custom Template.
 
@@ -13,121 +15,46 @@ namespace HyperplayRealm.Controllers
     public class UsersController : BaseController
     {
         // Service injections:
-        private readonly IDBOperations<User, UserDTO> UserOperations;
+        private readonly IDBOperations<User, UserDTO> m_userOperations;
+        private readonly IAuthentication m_authentication;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
         public UsersController(
-            IDBOperations<User, UserDTO> userOperations
+            IDBOperations<User, UserDTO> userOperations,
+            IAuthentication authentication
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService
         )
         {
-            UserOperations = userOperations;
+            m_userOperations = userOperations;
+            m_authentication = authentication;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //_ManyToManyRecordService = ManyToManyRecordService;
         }
 
-        // GET: Users
-        public IActionResult Index()
+        // GET: Users/Login
+        public IActionResult Login()
         {
-            // Get collection service logic:
-            var list = UserOperations.Query().ToList();
-            return View(list);
-        }
-
-        // GET: Users/Details/5
-        public IActionResult Details(int id)
-        {
-            // Get item service logic:
-            var item = UserOperations.Query().SingleOrDefault(q => q.Id == id);
-            return View(item);
-        }
-
-        protected void SetViewData()
-        {
-            // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
-            
-            /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
-        }
-
-        // GET: Users/Create
-        public IActionResult Create()
-        {
-            SetViewData();
             return View();
         }
 
-        // POST: Users/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UserDTO user)
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(UserDTO user)
         {
-            if (ModelState.IsValid)
+            //use hashed password and then compare!
+            UserDTO userDto = m_userOperations.Query().SingleOrDefault();
+            if (userDto is not null)
             {
-                // Insert item service logic:
-                LoadResult result = await UserOperations.Create(user.MapTo());
-                if (result.Result.IsSuccessfull)
-                {
-                    TempData["Message"] = result.Result.Message;
-                    return RedirectToAction(nameof(Details), new { id = user.Id });
-                }
-                ModelState.AddModelError("", result.Result.Message);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, await m_authentication.Authenticate(user));
+                return RedirectToAction("Index", "Home");
             }
-            SetViewData();
-            return View(user);
+
+            return View();
         }
 
-        // GET: Users/Edit/5
-        public IActionResult Edit(int id)
-        {
-            // Get item to edit service logic:
-            var item = UserOperations.Query().SingleOrDefault(q => q.Id == id);
-            SetViewData();
-            return View(item);
-        }
-
-        // POST: Users/Edit
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(UserDTO user)
-        {
-            if (ModelState.IsValid)
-            {
-                // Update item service logic:
-                LoadResult result = await UserOperations.Update(user.MapTo());
-                if (result.Result.IsSuccessfull)
-                {
-                    TempData["Message"] = result.Result.Message;
-                    return RedirectToAction(nameof(Details), new { id = user.Id });
-                }
-                ModelState.AddModelError("", result.Result.Message);
-            }
-            SetViewData();
-            return View(user);
-        }
-
-        // GET: Users/Delete/5
-        public IActionResult Delete(int id)
-        {
-            // Get item to delete service logic:
-            var item = UserOperations.Query().SingleOrDefault(q => q.Id == id);
-            return View(item);
-        }
-
-        // POST: Users/Delete
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            // Delete item service logic:
-            var result = await UserOperations.Delete(id);
-            TempData["Message"] = result.Result.Message;
-            return RedirectToAction(nameof(Index));
-        }
-	}
+    }
 }

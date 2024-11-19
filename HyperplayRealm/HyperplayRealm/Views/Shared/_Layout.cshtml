@@ -25,8 +25,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                    </ul>
+                </div>
+
+                <!-- User: - also add the login to users controller, instead of home for login! -->
+                <div class="navbar-text">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Login</a>
                         </li>
                     </ul>
                 </div>
