@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace BLL.Services
 {
     //this is similar to what Hocam created but with Service/base Service - i just divided that into enum and Result messages for modularity
-    public abstract class LoadResult : ILoadResult
+    public class LoadResult : ILoadResult
     {
         protected HyperplayRealmDBContext HyperplayRealmDBContext { get; set; }
-        public Result Result { get; set; }
+        public IResult Result { get; set; }
 
-        public LoadResult(HyperplayRealmDBContext hyperplayRealmDBContext, Result result)
+        public LoadResult(HyperplayRealmDBContext hyperplayRealmDBContext, IResult result)
         {
             HyperplayRealmDBContext = hyperplayRealmDBContext;
 

@@ -2,7 +2,9 @@ using BLL.Configuration;
 using BLL.Configuration.Model;
 using BLL.DTOs;
 using BLL.Interfaces;
+using BLL.Load;
 using BLL.Models;
+using BLL.Services;
 using BLL.Services.Authentication;
 using BLL.Services.Impl;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -23,6 +25,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 });
 
 builder.Services.AddDbContext<HyperplayRealmDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+builder.Services.AddScoped<IResult, Result>(); //this needs to be added as well!
+builder.Services.AddScoped<ILoadResult, LoadResult>();
 builder.Services.AddScoped<IDBOperations<User, UserDTO>, UsersServiceImpl>();
 // App Settings
 builder.Services.AddSingleton<IAppSettings, AppSettingsService>();

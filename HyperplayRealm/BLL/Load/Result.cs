@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BLL.Load
 {
-    public class Result
+    public class Result: IResult
     {
         private const string DEFAULT_MESSAGE = "UNKNOWN";
-        public string? Message { get; private set; }
+        public string? Message { get; set; }
 
-        public bool IsSuccessfull { get; private set; }
+        public bool IsSuccessfull { get; set; }
 
         private readonly Dictionary<ResultEnum, string> resultMessages = new Dictionary<ResultEnum, string>()
         {

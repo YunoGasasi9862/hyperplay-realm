@@ -8,7 +8,7 @@ namespace BLL.Services.Impl
 {
     public class GameDevelopersServiceImpl : LoadResult, IDBOperations<GameDeveloper, GameDeveloperDTO>
     {
-        public GameDevelopersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
+        public GameDevelopersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, IResult result) : base(hyperplayRealmDBContext, result)
         {
         }
 

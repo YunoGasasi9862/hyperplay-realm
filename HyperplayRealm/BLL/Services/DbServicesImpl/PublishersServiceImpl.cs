@@ -8,7 +8,7 @@ namespace BLL.Services.Impl
 {
     public class PublishersServiceImpl : LoadResult, IDBOperations<Publisher, PublisherDTO>
     {
-        public PublishersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
+        public PublishersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, IResult result) : base(hyperplayRealmDBContext, result)
         {
         }
 

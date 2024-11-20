@@ -8,7 +8,7 @@ namespace BLL.Services.Impl
 {
     public class PurchasesServiceImpl : LoadResult, IDBOperations<Purchase, PurchaseDTO>
     {
-        public PurchasesServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
+        public PurchasesServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, IResult result) : base(hyperplayRealmDBContext, result)
         {
         }
 

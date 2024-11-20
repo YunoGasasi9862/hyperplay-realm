@@ -8,7 +8,7 @@ namespace BLL.Services.Impl
 {
     public class UserRolesServiceImpl : LoadResult, IDBOperations<UserRole, UserDTO>
     {
-        public UserRolesServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
+        public UserRolesServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, IResult result) : base(hyperplayRealmDBContext, result)
         {
         }
 

@@ -8,7 +8,7 @@ namespace BLL.Services.Impl
 {
     public class GameGenresServiceImpl : LoadResult, IDBOperations<GameGenre, GameGenreDTO>
     {
-        public GameGenresServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
+        public GameGenresServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, IResult result) : base(hyperplayRealmDBContext, result)
         {
         }
 

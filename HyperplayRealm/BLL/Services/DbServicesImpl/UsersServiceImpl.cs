@@ -9,7 +9,7 @@ namespace BLL.Services.Impl
     //so since im using LoadResult, you'll use Service - just like in the assignments
     public class UsersServiceImpl : LoadResult, IDBOperations<User, UserDTO>
     {
-        public UsersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, Result result) : base(hyperplayRealmDBContext, result)
+        public UsersServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, IResult result) : base(hyperplayRealmDBContext, result)
         {
 
         }
