@@ -4,31 +4,37 @@ import random
 from typing import Tuple, Optional, List
 from dataclasses import dataclass
 
+
+
 DUMMY_DATA = ".\Dataset\game_info.csv"
 DUMMY_COLUMNS = ["name", "released", "developers", "publishers", "genres"]
 EMPTY_STRING = ""
+PUBLISHER_QUERY = "publisher_query.sql"
+GENRE_QUERY = "genre_query.sql"
+DEVELOPER_QUERY = "developer_query.sql"
+
 insert_game_query = """
-INSERT INTO Game (Id, Title, Price, Quantity, PublisherId, ReleaseDate)
+INSERT INTO Games (Id, Title, Price, Quantity, PublisherId, ReleaseDate)
 VALUES (?, ?, ?, ?, ?, ?)
 """
 insert_publisher_query = """
-INSERT INTO HyperplayRealmDB.dbo.Publisher (Name)
+INSERT INTO HyperplayRealmDB.dbo.Publishers (Name)
 VALUES
 """
 insert_developer_query = """
-INSERT INTO HyperplayRealmDB.dbo.Developer (Name)
+INSERT INTO HyperplayRealmDB.dbo.Developers (Name)
 VALUES
 """
 insert_genre_query = """
-INSERT INTO HyperplayRealmDB.dbo.Genre (Name)
+INSERT INTO HyperplayRealmDB.dbo.Genres (Name)
 VALUES
 """
 insert_game_genre_query = """
-INSERT INTO GameGenre (GameId, GenreId)
+INSERT INTO GameGenres (GameId, GenreId)
 VALUES (?, ?)
 """
 insert_game_developer_query = """
-INSERT INTO GameDeveloper (GameId, DeveloperId)
+INSERT INTO GameDevelopers (GameId, DeveloperId)
 VALUES (?, ?)
 """
 @dataclass
@@ -42,6 +48,13 @@ def separate_on_delimiter(value: str, delimiter : str = "||") -> list[str]:
     values = value.split(delimiter)
     return values
 
+def write_query_to_file(query: str, file_name: str):
+    with open(file_name, "w", encoding="utf-8") as file:
+        file.write(query)
+
+def escape_single_quotes(value:str):
+    return value.replace("'", "''")
+
 def generate_random_number(min_limit: int, max_limit: int) -> float:
     return float(random.randint(min_limit, max_limit))
 
@@ -51,14 +64,17 @@ def generate_data(row: pd.Series) -> Data:
     developer_query = []
     for publisher in row["publishers"]:
         if publisher is not EMPTY_STRING:
+            publisher = escape_single_quotes(publisher)
             publisher_query.append(publisher)
             
     for developer in row["developers"]:
         if developer is not EMPTY_STRING:
+            developer = escape_single_quotes(developer)
             developer_query.append(developer)
             
     for genre in row["genres"]:
         if genre is not EMPTY_STRING:
+            genre = escape_single_quotes(genre)
             genre_query.append(genre)
           
     return Data(developerQuery = developer_query, publisherQuery = publisher_query, genreQuery = genre_query) 
@@ -90,9 +106,9 @@ genres = list(set(genres))
 publishers = list(set(publishers))
 developers = list(set(developers))
 
-publisher_queries = ",\n".join(f"({publisher})" for publisher in publishers)
-developer_queries = ",\n".join(f"({developer})" for developer in developers)
-genre_queries = ",\n".join(f"({genre})" for genre in genres)
+publisher_queries = ",\n".join(f"('{publisher}')" for publisher in publishers)
+developer_queries = ",\n".join(f"('{developer}')" for developer in developers)
+genre_queries = ",\n".join(f"('{genre}')" for genre in genres)
 
 #now insert Ids - explicit, and do the mapping between entities for initial insert
 
@@ -102,10 +118,12 @@ final_publisher_query = insert_publisher_query + publisher_queries + ";"
 
 if developer_queries.endswith(",\n"):
     developer_queries = developer_queries.rstrip(',\n')
-final_developer_query = insert_publisher_query + developer_queries + ";"
+final_developer_query = insert_developer_query + developer_queries + ";"
 
 if genre_queries.endswith(",\n"):
     genre_queries = genre_queries.rstrip(',\n')
 final_genre_query = insert_genre_query + genre_queries + ";"
 
-print(final_genre_query)
+write_query_to_file(final_publisher_query, PUBLISHER_QUERY)
+write_query_to_file(final_developer_query, DEVELOPER_QUERY)
+write_query_to_file(final_genre_query, GENRE_QUERY)

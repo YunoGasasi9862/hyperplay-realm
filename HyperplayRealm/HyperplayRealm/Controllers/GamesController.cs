@@ -40,6 +40,7 @@ namespace HyperplayRealm.Controllers
         {
             // Get collection service logic:
             var list = _gameService.Query().ToList();
+           
             return View(list);
         }
 
@@ -91,7 +92,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = _gameService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _gameService.Query().SingleOrDefault(q => q.Id == id);
             SetViewData();
             return View(item);
         }

@@ -8,6 +8,7 @@ namespace BLL.Models;
 
 public partial class Developer
 {
+    //we do need another ID here - fixed Developer ID
     public Developer() { }
 
     [Required]

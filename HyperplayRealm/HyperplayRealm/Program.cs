@@ -28,6 +28,8 @@ builder.Services.AddDbContext<HyperplayRealmDBContext>(options => options.UseSql
 builder.Services.AddScoped<IResult, Result>(); //this needs to be added as well!
 builder.Services.AddScoped<ILoadResult, LoadResult>();
 builder.Services.AddScoped<IDBOperations<User, UserDTO>, UsersServiceImpl>();
+builder.Services.AddScoped<IDBOperations<Game, GameDTO>, GamesServiceImpl>();
+builder.Services.AddScoped<IDBOperations<Publisher, PublisherDTO>, PublishersServiceImpl>();
 // App Settings
 builder.Services.AddSingleton<IAppSettings, AppSettingsService>();
 builder.Services.AddScoped<IAuthentication, AuthenticationServiceImpl>();

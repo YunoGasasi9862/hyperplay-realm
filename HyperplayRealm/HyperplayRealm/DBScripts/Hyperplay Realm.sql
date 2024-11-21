@@ -28,8 +28,8 @@ go
 create table Roles
 (
 	Id int primary key identity(1, 1),
-	Name nvarchar(50) not null,
-	Description nvarchar(50) not null
+	Name nvarchar(255) not null,
+	Description nvarchar(255) not null
 )
 go
 
@@ -50,7 +50,7 @@ go
 create table Developers
 (
 	DeveloperId int primary key identity(1, 1),
-	Name nvarchar(50) not null,
+	Name nvarchar(255) not null,
 )
 
 go
@@ -60,7 +60,7 @@ go
 create table Publishers
 (
 	PublisherId int primary key identity(1, 1),
-	Name nvarchar(50) not null,
+	Name nvarchar(255) not null,
 )
 
 go
@@ -69,7 +69,7 @@ go
 create table Games
 (
 	Id int primary key identity(1, 1),
-	Title nvarchar(50) not null, 
+	Title nvarchar(255) not null, 
 	Price decimal (4,2) not null,
 	Quantity int not null,
 	PublisherId int not null,
@@ -84,7 +84,7 @@ go
 create table Genres
 (
 	Id int primary key identity(1, 1),
-	GenreName nvarchar(20) not null,
+	GenreName nvarchar(255) not null,
 )
 
 go

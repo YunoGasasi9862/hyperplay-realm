@@ -1,4 +1,4 @@
-﻿@model GameModel
+﻿@model GameDTO
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -82,7 +82,7 @@
     <hr />
     <form asp-action="Delete">
 	    @Html.AntiForgeryToken()
-        <input type="hidden" asp-for="Record.Id" />
+        <input type="hidden" asp-for="Id" />
         <input type="submit" value="Yes" class="btn btn-danger" />&nbsp;&nbsp;
         <a asp-action="Index" class="btn btn-outline-danger">No</a>
     </form>
