@@ -1,10 +1,11 @@
 ﻿using BLL.Interfaces;
 using BLL.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace BLL.DTOs
 {
-    public class PurchaseDTO : IMapper<Purchase, PurchaseDTO>
+    public class PurchaseDTO
     {
         public int UserId { get; set; }
 
@@ -17,20 +18,16 @@ namespace BLL.DTOs
 
         [Required]
         public required User User { get; set; }
-        public PurchaseDTO MapFrom(Purchase entity)
+
+        public static Expression<Func<Purchase, PurchaseDTO>> FromEntity => entity => new PurchaseDTO
         {
-            UserId = entity.UserId;
+            UserId = entity.UserId,
+            GameId = entity.GameId,
+            PurchaseDate = entity.PurchaseDate,
+            Game = entity.Game,
+            User = entity.User
+        };
 
-            GameId = entity.GameId;
-
-            PurchaseDate = entity.PurchaseDate; 
-
-            Game = entity.Game; 
-
-            User = entity.User;
-
-            return this;
-        }
 
         public Purchase MapTo()
         {

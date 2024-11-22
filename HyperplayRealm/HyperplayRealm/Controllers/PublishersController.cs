@@ -4,136 +4,128 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Controllers.Bases;
 using BLL.Services;
 using BLL.Models;
-using BLL.Interfaces;
-using BLL.DTOs;
 
 // Generated from Custom Template.
 
 namespace HyperplayRealm.Controllers
 {
-    public class GamesController : BaseController
+    public class PublishersController : MvcController
     {
         // Service injections:
-        private readonly IDBOperations<Game, GameDTO> _gameService;
-        private readonly IDBOperations<Publisher, PublisherDTO> _publisherService;
+        private readonly IPublisherService _publisherService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
-        public GamesController(
-            IDBOperations<Game, GameDTO> gameService
-            , IDBOperations<Publisher, PublisherDTO> publisherService
+        public PublishersController(
+			IPublisherService publisherService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService
         )
         {
-            _gameService = gameService;
             _publisherService = publisherService;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //_ManyToManyRecordService = ManyToManyRecordService;
         }
 
-        // GET: Games
+        // GET: Publishers
         public IActionResult Index()
         {
             // Get collection service logic:
-            var list = _gameService.Query().ToList();
-           
+            var list = _publisherService.Query().ToList();
             return View(list);
         }
 
-        // GET: Games/Details/5
+        // GET: Publishers/Details/5
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            Console.Write(id);
-            var item = _gameService.Query().SingleOrDefault(q => q.Id == id);
+            var item = _publisherService.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
         }
 
         protected void SetViewData()
         {
             // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
-            ViewData["PublisherId"] = new SelectList(_publisherService.Query().ToList(), "Id", "Name");
             
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
         }
 
-        // GET: Games/Create
+        // GET: Publishers/Create
         public IActionResult Create()
         {
             SetViewData();
             return View();
         }
 
-        // POST: Games/Create
+        // POST: Publishers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(GameDTO game)
+        public IActionResult Create(PublisherModel publisher)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                LoadResult result = await _gameService.Create(game.MapTo());
-                 if (result.Result.IsSuccessfull)
+                var result = _publisherService.Create(publisher.Record);
+                if (result.IsSuccessful)
                 {
-                    TempData["Message"] = result.Result.Message;
-                    return RedirectToAction(nameof(Details), new { id = game.Id });
+                    TempData["Message"] = result.Message;
+                    return RedirectToAction(nameof(Details), new { id = publisher.Record.Id });
                 }
-                ModelState.AddModelError("", result.Result.Message);
+                ModelState.AddModelError("", result.Message);
             }
             SetViewData();
-            return View(game);
+            return View(publisher);
         }
 
-        // GET: Games/Edit/5
+        // GET: Publishers/Edit/5
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = _gameService.Query().SingleOrDefault(q => q.Id == id);
+            var item = _publisherService.Query().SingleOrDefault(q => q.Record.Id == id);
             SetViewData();
             return View(item);
         }
 
-        // POST: Games/Edit
+        // POST: Publishers/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(GameDTO game)
+        public IActionResult Edit(PublisherModel publisher)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                LoadResult result = await _gameService.Update(game.MapTo());
-                if (result.Result.IsSuccessfull)
+                var result = _publisherService.Update(publisher.Record);
+                if (result.IsSuccessful)
                 {
-                    TempData["Message"] = result.Result.Message;
-                    return RedirectToAction(nameof(Details), new { id = game.Id });
+                    TempData["Message"] = result.Message;
+                    return RedirectToAction(nameof(Details), new { id = publisher.Record.Id });
                 }
-                ModelState.AddModelError("", result.Result.Message);
+                ModelState.AddModelError("", result.Message);
             }
             SetViewData();
-            return View(game);
+            return View(publisher);
         }
 
-        // GET: Games/Delete/5
+        // GET: Publishers/Delete/5
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            var item = _gameService.Query().SingleOrDefault(q => q.Id == id);
+            var item = _publisherService.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
         }
 
-        // POST: Games/Delete
+        // POST: Publishers/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            LoadResult result = await _gameService.Delete(id);
-            TempData["Message"] = result.Result.Message;
+            var result = _publisherService.Delete(id);
+            TempData["Message"] = result.Message;
             return RedirectToAction(nameof(Index));
         }
 	}

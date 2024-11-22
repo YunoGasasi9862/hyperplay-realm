@@ -1,11 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 using BLL.Interfaces;
 using BLL.Models;
 
 namespace BLL.DTOs
 {
-    public class DeveloperDTO: IMapper<Developer, DeveloperDTO>
+    public class DeveloperDTO
     {
         [Required]
         public int DeveloperId { get; set; }
@@ -21,6 +22,12 @@ namespace BLL.DTOs
 
             return this;
         }
+
+        public static Expression<Func<Developer, DeveloperDTO>> FromEntity => entity => new DeveloperDTO
+        {
+            DeveloperId = entity.DeveloperId,
+            Name = entity.Name,
+        };
 
         public Developer MapTo()
         {

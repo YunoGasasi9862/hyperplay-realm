@@ -51,12 +51,12 @@
 	        </div>
         </div>
         <div class="row mb-3">
-            <label asp-for="Publisher" class="col-2 col-form-label fw-bold"></label>
+            <label asp-for="PublisherName" class="col-2 col-form-label fw-bold"></label>
             <div class="col-10">
-	            <select asp-for="PublisherId" class="form-select" asp-items="ViewBag.PublisherId">
+                    <select asp-for="PublisherName" class="form-select" asp-items="ViewBag.PublisherName">
 		            <option value="">-- Select --</option>
 	            </select>
-	            <span asp-validation-for="PublisherId" class="text-danger"></span>
+                    <span asp-validation-for="PublisherName" class="text-danger"></span>
             </div>
         </div>
         <div class="row mb-3">

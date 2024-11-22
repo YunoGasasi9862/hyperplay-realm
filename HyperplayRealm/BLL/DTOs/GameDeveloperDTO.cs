@@ -1,11 +1,12 @@
 ﻿using BLL.Interfaces;
 using BLL.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 
 namespace BLL.DTOs
 {
-    public class GameDeveloperDTO : IMapper<GameDeveloper, GameDeveloperDTO>
+    public class GameDeveloperDTO
     {
         public int GameId { get; set; }
 
@@ -17,18 +18,13 @@ namespace BLL.DTOs
         [Required]
         public required Game Game { get; set; }
 
-        public GameDeveloperDTO MapFrom(GameDeveloper entity)
+        public static Expression<Func<GameDeveloper, GameDeveloper>> FromEntity => entity => new GameDeveloper
         {
-            GameId = entity.GameId;
-
-            DeveloperId = entity.DeveloperId;
-
-            Developer = entity.Developer;
-
-            Game = entity.Game;
-
-            return this;
-        }
+            GameId = entity.GameId,
+            DeveloperId = entity.DeveloperId,
+            Developer = entity.Developer,
+            Game = entity.Game,
+        };
 
         public GameDeveloper MapTo()
         {

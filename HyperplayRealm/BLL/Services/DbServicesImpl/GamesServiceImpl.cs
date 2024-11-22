@@ -35,7 +35,7 @@ namespace BLL.Services.Impl
 
         IQueryable<GameDTO> IDBOperations<Game, GameDTO>.Query()
         {
-            return HyperplayRealmDBContext.Games.Select(game => new GameDTO().MapFrom(game));
+           return HyperplayRealmDBContext.Games.Select(GameDTO.FromEntity);
         }
 
     }

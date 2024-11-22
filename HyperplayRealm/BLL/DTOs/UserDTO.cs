@@ -1,9 +1,10 @@
 ﻿using BLL.Interfaces;
 using BLL.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 namespace BLL.DTOs
 {
-    public class UserDTO : IMapper<User, UserDTO>
+    public class UserDTO
     {
         public UserDTO()
         {
@@ -28,26 +29,17 @@ namespace BLL.DTOs
 
         public List<string> Roles { get; set; }
 
-        public UserDTO MapFrom(User entity)
+        public static Expression<Func<User, UserDTO>> FromEntity => entity => new UserDTO
         {
-            Id = entity.Id;
-
-            Name = entity.Name;
-
-            Username = entity.Username;
-
-            Surname = entity.Surname;
-
-            Email = entity.Email;
-
-            Password = entity.Password;
-
-            ProfilePicturePath = entity.ProfilePicturePath;
-
-            Roles = GetRoleNames(entity);
-
-            return this;
-        }
+            Id = entity.Id,
+            Name = entity.Name,
+            Username = entity.Username,
+            Surname = entity.Surname,
+            Email = entity.Email,
+            Password = entity.Password,
+            ProfilePicturePath = entity.ProfilePicturePath,
+            Roles = GetRoleNames(entity)
+        };
 
 
         public User MapTo()
@@ -70,7 +62,7 @@ namespace BLL.DTOs
             };
         }
 
-        private  List<string> GetRoleNames(User entity)
+        private static List<string> GetRoleNames(User entity)
         {
             return entity.UserRoles.Select(role => role.Role.Name).ToList();
         }

@@ -1,10 +1,11 @@
 ﻿using BLL.Interfaces;
 using BLL.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace BLL.DTOs
 {
-    public class RoleDTO : IMapper<Role, RoleDTO>
+    public class RoleDTO
     {
         public int Id { get; set; }
 
@@ -13,16 +14,13 @@ namespace BLL.DTOs
 
         [Required]
         public required string Description { get; set; }
-        public RoleDTO MapFrom(Role entity)
+
+        public static Expression<Func<Role, RoleDTO>> FromEntity => entity => new RoleDTO
         {
-            Id = entity.Id;
-
-            Name = entity.Name;
-
-            Description = entity.Description;
-
-            return this;
-        }
+            Id = entity.Id,
+            Name = entity.Name,
+            Description = entity.Description
+        };
 
         public Role MapTo()
         {

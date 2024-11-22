@@ -1,4 +1,4 @@
-﻿@model GameDTO
+﻿@model PublisherModel
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -7,7 +7,7 @@
     var containerDivClass = "container";
 }
 @{
-    ViewData["Title"] = "Game Delete";
+    ViewData["Title"] = "Publisher Delete";
 }
 
 <div class="@containerDivClass">
@@ -28,42 +28,10 @@
     <hr />
     <div class="row mb-3">
         <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Name)
         </div>
         <div class="col-10">
-            @Html.DisplayFor(model => model.Title)
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.Price)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.Price)
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.Quantity)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.Quantity)
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.ReleaseDate)
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.PublisherName)
-        </div>
-        <div class="col-10">
-                @Html.DisplayFor(model => model.PublisherName)
+            @Html.DisplayFor(model => model.Name)
         </div>
     </div>
 
@@ -82,7 +50,7 @@
     <hr />
     <form asp-action="Delete">
 	    @Html.AntiForgeryToken()
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Record.PublisherId" />
         <input type="submit" value="Yes" class="btn btn-danger" />&nbsp;&nbsp;
         <a asp-action="Index" class="btn btn-outline-danger">No</a>
     </form>

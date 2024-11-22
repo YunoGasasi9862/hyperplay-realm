@@ -24,7 +24,7 @@ namespace BLL.Services.Impl
 
         public IQueryable<PublisherDTO> Query()
         {
-            throw new NotImplementedException();
+            return HyperplayRealmDBContext.Publishers.Select(PublisherDTO.FromEntity);
         }
 
         public Task<LoadResult> Update(Publisher type)

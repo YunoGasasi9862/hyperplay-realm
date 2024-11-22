@@ -1,24 +1,23 @@
 ﻿using BLL.Interfaces;
 using BLL.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace BLL.DTOs
 {
-    public class GenreDTO : IMapper<Genre, GenreDTO>
+    public class GenreDTO
     {
         public int Id { get; set; }
 
         [Required]
         public required string GenreName { get; set; }
 
-        public GenreDTO MapFrom(Genre entity)
+        public static Expression<Func<Genre, GenreDTO>> FromEntity => entity => new GenreDTO
         {
-            Id = entity.Id;
+            Id = entity.Id,
+            GenreName = entity.GenreName
+        };
 
-            GenreName = entity.GenreName;
-
-            return this;
-        }
 
         public Genre MapTo()
         {

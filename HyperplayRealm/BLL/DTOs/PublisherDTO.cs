@@ -1,23 +1,23 @@
 ﻿using BLL.Interfaces;
 using BLL.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace BLL.DTOs
 {
-    public class PublisherDTO : IMapper<Publisher, PublisherDTO>
+    public class PublisherDTO
     {
         public int PublisherId { get; set; }
 
         [Required]
         public required string Name { get; set; }
-        public PublisherDTO MapFrom(Publisher entity)
+
+        public static Expression<Func<Publisher, PublisherDTO>> FromEntity => entity => new PublisherDTO
         {
-            PublisherId = entity.PublisherId;
+            PublisherId = entity.PublisherId,
+            Name = entity.Name
+        };
 
-            Name = entity.Name;
-
-            return this;
-        }
 
         public Publisher MapTo()
         {
