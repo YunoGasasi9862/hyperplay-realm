@@ -1,4 +1,4 @@
-﻿@model PublisherModel
+﻿@model PublisherDTO
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -50,7 +50,7 @@
     <hr />
     <form asp-action="Delete">
 	    @Html.AntiForgeryToken()
-        <input type="hidden" asp-for="Record.PublisherId" />
+        <input type="hidden" asp-for="PublisherId" />
         <input type="submit" value="Yes" class="btn btn-danger" />&nbsp;&nbsp;
         <a asp-action="Index" class="btn btn-outline-danger">No</a>
     </form>

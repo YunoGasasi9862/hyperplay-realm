@@ -6,6 +6,7 @@ using BLL.Services;
 using BLL.Models;
 using BLL.Interfaces;
 using BLL.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 // Generated from Custom Template.
 
@@ -48,7 +49,6 @@ namespace HyperplayRealm.Controllers
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            Console.Write(id);
             var item = _gameService.Query().SingleOrDefault(q => q.Id == id);
             return View(item);
         }
@@ -71,6 +71,7 @@ namespace HyperplayRealm.Controllers
 
         // POST: Games/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(GameDTO game)
         {
@@ -100,6 +101,7 @@ namespace HyperplayRealm.Controllers
 
         // POST: Games/Edit
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(GameDTO game)
         {
@@ -128,6 +130,7 @@ namespace HyperplayRealm.Controllers
 
         // POST: Games/Delete
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

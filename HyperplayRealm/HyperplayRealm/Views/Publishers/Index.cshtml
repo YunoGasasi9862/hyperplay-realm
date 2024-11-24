@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PublisherModel>
+﻿@model IEnumerable<PublisherDTO>
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -48,9 +48,9 @@
 						        @Html.DisplayFor(modelItem => item.Name)
 					        </td>
 					        <td class="text-end w-25">
-						        <a asp-action="Details" asp-route-id="@item.Record.PublisherId">Details</a>&nbsp;|&nbsp;
-						        <a asp-action="Edit" asp-route-id="@item.Record.PublisherId">Edit</a>&nbsp;|&nbsp;
-						        <a asp-action="Delete" asp-route-id="@item.Record.PublisherId">Delete</a>
+						        <a asp-action="Details" asp-route-id="@item.PublisherId">Details</a>&nbsp;|&nbsp;
+						        <a asp-action="Edit" asp-route-id="@item.PublisherId">Edit</a>&nbsp;|&nbsp;
+						        <a asp-action="Delete" asp-route-id="@item.PublisherId">Delete</a>
 					        </td>
 				        </tr>
 		            }

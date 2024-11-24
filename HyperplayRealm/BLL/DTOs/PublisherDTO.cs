@@ -18,7 +18,6 @@ namespace BLL.DTOs
             Name = entity.Name
         };
 
-
         public Publisher MapTo()
         {
             return new Publisher() { PublisherId = this.PublisherId, Name = this.Name };

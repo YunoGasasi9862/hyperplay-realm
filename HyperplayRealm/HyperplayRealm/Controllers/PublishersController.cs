@@ -4,21 +4,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Controllers.Bases;
 using BLL.Services;
 using BLL.Models;
+using BLL.Interfaces;
+using BLL.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 // Generated from Custom Template.
 
 namespace HyperplayRealm.Controllers
 {
-    public class PublishersController : MvcController
+    public class PublishersController : BaseController
     {
         // Service injections:
-        private readonly IPublisherService _publisherService;
+        private readonly IDBOperations<Publisher, PublisherDTO> _publisherService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
         public PublishersController(
-			IPublisherService publisherService
+            IDBOperations<Publisher, PublisherDTO> publisherService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService
@@ -42,7 +45,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = _publisherService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _publisherService.Query().SingleOrDefault(q => q.PublisherId == id);
             return View(item);
         }
 
@@ -63,19 +66,20 @@ namespace HyperplayRealm.Controllers
 
         // POST: Publishers/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(PublisherModel publisher)
+        public async Task<IActionResult> Create(PublisherDTO publisher)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                var result = _publisherService.Create(publisher.Record);
-                if (result.IsSuccessful)
+                LoadResult result = await _publisherService.Create(publisher.MapTo());
+                if (result.Result.IsSuccessfull)
                 {
-                    TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = publisher.Record.Id });
+                    TempData["Message"] = result.Result.Message;
+                    return RedirectToAction(nameof(Details), new { id = publisher.PublisherId });
                 }
-                ModelState.AddModelError("", result.Message);
+                ModelState.AddModelError("", result.Result.Message);
             }
             SetViewData();
             return View(publisher);
@@ -85,26 +89,27 @@ namespace HyperplayRealm.Controllers
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = _publisherService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _publisherService.Query().SingleOrDefault(q => q.PublisherId == id);
             SetViewData();
             return View(item);
         }
 
         // POST: Publishers/Edit
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(PublisherModel publisher)
+        public async Task<IActionResult> Edit(PublisherDTO publisher)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                var result = _publisherService.Update(publisher.Record);
-                if (result.IsSuccessful)
+                LoadResult result = await _publisherService.Update(publisher.MapTo());
+                if (result.Result.IsSuccessfull)
                 {
-                    TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = publisher.Record.Id });
+                    TempData["Message"] = result.Result.Message;
+                    return RedirectToAction(nameof(Details), new { id = publisher.PublisherId });
                 }
-                ModelState.AddModelError("", result.Message);
+                ModelState.AddModelError("", result.Result.Message);
             }
             SetViewData();
             return View(publisher);
@@ -114,18 +119,19 @@ namespace HyperplayRealm.Controllers
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            var item = _publisherService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _publisherService.Query().SingleOrDefault(q => q.PublisherId == id);
             return View(item);
         }
 
         // POST: Publishers/Delete
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            var result = _publisherService.Delete(id);
-            TempData["Message"] = result.Message;
+            LoadResult result = await _publisherService.Delete(id);
+            TempData["Message"] = result.Result.Message;
             return RedirectToAction(nameof(Index));
         }
 	}

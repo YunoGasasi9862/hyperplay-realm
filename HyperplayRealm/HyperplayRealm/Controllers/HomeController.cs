@@ -1,3 +1,4 @@
+using BLL.Configuration.Model;
 using BLL.DTOs;
 using BLL.Interfaces;
 using HyperplayRealm.Models;
@@ -12,6 +13,7 @@ namespace HyperplayRealm.Controllers
         private readonly ILogger<HomeController> _logger;
 
         private readonly IAppSettings _appSettings;
+        private AppSettings? AppSettings { get; set; }
 
         public HomeController(IAppSettings appSettings, ILogger<HomeController> logger)
         {
@@ -19,11 +21,19 @@ namespace HyperplayRealm.Controllers
 
             //get this when you need send it in index
             _appSettings = appSettings;
+            Debug.Write(_appSettings);
         }
 
         public IActionResult Index()
         {
-            return View();
+            AppSettings = _appSettings.GetAppSettings();
+
+            if (AppSettings == null)
+            {
+                throw new ApplicationException("Application Settings Are Needed!");
+            }
+
+            return View(AppSettings);
         }
 
         public IActionResult Privacy()
