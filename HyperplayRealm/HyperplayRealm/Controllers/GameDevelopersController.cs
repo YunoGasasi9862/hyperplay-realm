@@ -4,25 +4,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Controllers.Bases;
 using BLL.Services;
 using BLL.Models;
+using BLL.Interfaces;
+using BLL.DTOs;
 
 // Generated from Custom Template.
 
 namespace HyperplayRealm.Controllers
 {
-    public class GameDevelopersController : MvcController
+    public class GameDevelopersController : BaseController
     {
         // Service injections:
-        private readonly IGameDeveloperService _gameDeveloperService;
-        private readonly IDeveloperService _developerService;
-        private readonly IGameService _gameService;
+        private readonly IDBOperations<GameDeveloper, GameDeveloperDTO> _gameDeveloperService;
+        private readonly IDBOperations<Developer, DeveloperDTO> _developerService;
+        private readonly IDBOperations<Game, GameDTO> _gameService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
         public GameDevelopersController(
-			IGameDeveloperService gameDeveloperService
-            , IDeveloperService developerService
-            , IGameService gameService
+              IDBOperations<GameDeveloper, GameDeveloperDTO> gameDeveloperService
+            , IDBOperations<Developer, DeveloperDTO> developerService
+            , IDBOperations<Game, GameDTO> gameService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService
@@ -48,7 +50,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = _gameDeveloperService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _gameDeveloperService.Query().SingleOrDefault(q => q.DeveloperId == id);
             return View(item);
         }
 
@@ -72,18 +74,18 @@ namespace HyperplayRealm.Controllers
         // POST: GameDevelopers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(GameDeveloperModel gameDeveloper)
+        public async Task<IActionResult> Create(GameDeveloperDTO gameDeveloper)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                var result = _gameDeveloperService.Create(gameDeveloper.Record);
-                if (result.IsSuccessful)
+                LoadResult result = await _gameDeveloperService.Create(gameDeveloper.MapTo());
+                if (result.Result.IsSuccessfull)
                 {
-                    TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = gameDeveloper.Record.Id });
+                    TempData["Message"] = result.Result.Message;
+                    return RedirectToAction(nameof(Details), new { id = gameDeveloper.DeveloperId });
                 }
-                ModelState.AddModelError("", result.Message);
+                ModelState.AddModelError("", result.Result.Message);
             }
             SetViewData();
             return View(gameDeveloper);
@@ -93,7 +95,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = _gameDeveloperService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _gameDeveloperService.Query().SingleOrDefault(q => q.GameId == id);
             SetViewData();
             return View(item);
         }
@@ -101,18 +103,18 @@ namespace HyperplayRealm.Controllers
         // POST: GameDevelopers/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(GameDeveloperModel gameDeveloper)
+        public async Task<IActionResult> Edit(GameDeveloperDTO gameDeveloper)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                var result = _gameDeveloperService.Update(gameDeveloper.Record);
-                if (result.IsSuccessful)
+                LoadResult result = await _gameDeveloperService.Update(gameDeveloper.MapTo());
+                if (result.Result.IsSuccessfull)
                 {
-                    TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = gameDeveloper.Record.Id });
+                    TempData["Message"] = result.Result.Message;
+                    return RedirectToAction(nameof(Details), new { id = gameDeveloper.DeveloperId });
                 }
-                ModelState.AddModelError("", result.Message);
+                ModelState.AddModelError("", result.Result.Message);
             }
             SetViewData();
             return View(gameDeveloper);
@@ -122,18 +124,18 @@ namespace HyperplayRealm.Controllers
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            var item = _gameDeveloperService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _gameDeveloperService.Query().SingleOrDefault(q => q.DeveloperId == id); //fix this we need to be careful when deleting a developer. What about the games?
             return View(item);
         }
 
         // POST: GameDevelopers/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            var result = _gameDeveloperService.Delete(id);
-            TempData["Message"] = result.Message;
+            LoadResult result = await _gameDeveloperService.Delete(id);
+            TempData["Message"] = result.Result.Message;
             return RedirectToAction(nameof(Index));
         }
 	}

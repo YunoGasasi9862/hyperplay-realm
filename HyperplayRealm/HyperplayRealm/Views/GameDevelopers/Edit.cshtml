@@ -1,4 +1,4 @@
-﻿@model GameDeveloperModel
+﻿@model GameDeveloperDTO
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -28,8 +28,8 @@
     <form asp-action="Edit" autocomplete="off">
 	    @Html.AntiForgeryToken()
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="Record.GameId" />
-        <input type="hidden" asp-for="Record.DeveloperId" />
+        <input type="hidden" asp-for="GameId" />
+        <input type="hidden" asp-for="DeveloperId" />
 
 @* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. *@
         @*
@@ -49,7 +49,7 @@
 		        &nbsp;&nbsp;
                 <button type="reset" class="btn btn-outline-primary">Reset</button>
 		        &nbsp;&nbsp;
-                <a asp-action="Delete" asp-route-id="@Model.Record.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@Model.DeveloperId">Delete</a> @*WE need to think about this too*@
                 &nbsp;&nbsp;
 		        <a asp-action="Index">Back to List</a>
 	        </div>

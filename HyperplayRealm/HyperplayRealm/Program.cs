@@ -30,6 +30,8 @@ builder.Services.AddScoped<ILoadResult, LoadResult>();
 builder.Services.AddScoped<IDBOperations<User, UserDTO>, UsersServiceImpl>();
 builder.Services.AddScoped<IDBOperations<Game, GameDTO>, GamesServiceImpl>();
 builder.Services.AddScoped<IDBOperations<Publisher, PublisherDTO>, PublishersServiceImpl>();
+builder.Services.AddScoped<IDBOperations<GameDeveloper, GameDeveloperDTO>, GameDevelopersServiceImpl>();
+
 // App Settings
 builder.Services.AddSingleton<IAppSettings, AppSettingsService>();
 builder.Services.AddScoped<IAuthentication, AuthenticationServiceImpl>();
