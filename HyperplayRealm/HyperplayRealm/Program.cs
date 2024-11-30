@@ -6,6 +6,7 @@ using BLL.Load;
 using BLL.Models;
 using BLL.Services;
 using BLL.Services.Authentication;
+using BLL.Services.HttpService;
 using BLL.Services.Impl;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -31,10 +32,19 @@ builder.Services.AddScoped<IDBOperations<User, UserDTO>, UsersServiceImpl>();
 builder.Services.AddScoped<IDBOperations<Game, GameDTO>, GamesServiceImpl>();
 builder.Services.AddScoped<IDBOperations<Publisher, PublisherDTO>, PublishersServiceImpl>();
 builder.Services.AddScoped<IDBOperations<GameDeveloper, GameDeveloperDTO>, GameDevelopersServiceImpl>();
+builder.Services.AddScoped < IDBOperations<Developer, DeveloperDTO>, DevelopersServiceImpl>();
 
 // App Settings
 builder.Services.AddSingleton<IAppSettings, AppSettingsService>();
 builder.Services.AddScoped<IAuthentication, AuthenticationServiceImpl>();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IHttpService, HttpService>();
+
+builder.Services.AddSession(config =>
+{
+    config.IdleTimeout = TimeSpan.FromMinutes(60);
+});
 
 var app = builder.Build();
 
@@ -48,8 +58,6 @@ if (!app.Environment.IsDevelopment())
 
 //Use online templates for login, etc
 
-//use firebase or any other software for getting the pictures
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -59,6 +67,9 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+//Session
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

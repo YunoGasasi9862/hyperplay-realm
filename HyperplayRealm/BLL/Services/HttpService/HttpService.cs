@@ -1,4 +1,6 @@
 ﻿using BLL.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +11,33 @@ namespace BLL.Services.HttpService
 {
     public class HttpService : IHttpService
     {
-        public Task<T> GetSession<T>() where T : class, new()
+        const string SESSION_KEY = "SESSION_KEY";
+
+        protected readonly IHttpContextAccessor _httpContextAccessor;
+        public HttpService(IHttpContextAccessor httpContextAccessor)
         {
-            throw new NotImplementedException();
+            _httpContextAccessor = httpContextAccessor;
+        }
+        public virtual Task<T> GetSession<T>() where T : class, new()
+        {
+            string? json = _httpContextAccessor?.HttpContext?.Session.GetString(SESSION_KEY);
+
+            if (string.IsNullOrEmpty(json))
+            {
+                return null;
+            }
+
+            return Task.FromResult(JsonConvert.DeserializeObject<T>(json));
+
         }
 
         public Task SetSession<T>(T session) where T : class, new()
         {
-            throw new NotImplementedException();
+            string json = JsonConvert.SerializeObject(session);
+
+            _httpContextAccessor?.HttpContext?.Session.SetString(SESSION_KEY, json);
+
+            return Task.CompletedTask;
         }
     }
 }
