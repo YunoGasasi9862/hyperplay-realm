@@ -25,7 +25,7 @@ namespace BLL.Services.Impl
 
         public IQueryable<RoleDTO> Query()
         {
-            throw new NotImplementedException();
+            return HyperplayRealmDBContext.Roles.Select(RoleDTO.FromEntity);
         }
 
         public Task<LoadResult> Update(Role type)

@@ -26,7 +26,7 @@ namespace BLL.Services.Impl
 
         public IQueryable<UserDTO> Query()
         {
-            throw new NotImplementedException();
+            return HyperplayRealmDBContext.Users.Select(UserDTO.FromEntity);
         }
 
         public Task<LoadResult> Update(User type)

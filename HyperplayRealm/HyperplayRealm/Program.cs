@@ -33,6 +33,9 @@ builder.Services.AddScoped<IDBOperations<Game, GameDTO>, GamesServiceImpl>();
 builder.Services.AddScoped<IDBOperations<Publisher, PublisherDTO>, PublishersServiceImpl>();
 builder.Services.AddScoped<IDBOperations<GameDeveloper, GameDeveloperDTO>, GameDevelopersServiceImpl>();
 builder.Services.AddScoped < IDBOperations<Developer, DeveloperDTO>, DevelopersServiceImpl>();
+builder.Services.AddScoped<IDBOperations<Genre, GenreDTO>, GenresServiceImpl>();
+builder.Services.AddScoped<IDBOperations<GameGenre, GameGenreDTO>, GameGenresServiceImpl>();
+
 
 // App Settings
 builder.Services.AddSingleton<IAppSettings, AppSettingsService>();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services.Impl
 {
-    public class UserRolesServiceImpl : LoadResult, IDBOperations<UserRole, UserDTO>
+    public class UserRolesServiceImpl : LoadResult, IDBOperations<UserRole, UserRoleDTO>
     {
         public UserRolesServiceImpl(HyperplayRealmDBContext hyperplayRealmDBContext, IResult result) : base(hyperplayRealmDBContext, result)
         {
@@ -22,9 +22,9 @@ namespace BLL.Services.Impl
             throw new NotImplementedException();
         }
 
-        public IQueryable<UserDTO> Query()
+        public IQueryable<UserRoleDTO> Query()
         {
-            throw new NotImplementedException();
+            return HyperplayRealmDBContext.UserRoles.Select(UserRoleDTO.FromEntity);
         }
 
         public Task<LoadResult> Update(UserRole type)

@@ -9,8 +9,7 @@ namespace BLL.DTOs
     {
         public int Id { get; set; }
 
-        [Required]
-        public required string GenreName { get; set; }
+        public string? GenreName { get; set; }
 
         public static Expression<Func<Genre, GenreDTO>> FromEntity => entity => new GenreDTO
         {

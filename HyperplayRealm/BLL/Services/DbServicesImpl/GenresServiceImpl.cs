@@ -24,7 +24,7 @@ namespace BLL.Services.Impl
 
         public IQueryable<GenreDTO> Query()
         {
-            throw new NotImplementedException();
+            return HyperplayRealmDBContext.Genres.Select(GenreDTO.FromEntity);
         }
 
         public Task<LoadResult> Update(Genre type)

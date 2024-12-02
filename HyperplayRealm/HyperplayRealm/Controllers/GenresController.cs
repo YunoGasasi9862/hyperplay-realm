@@ -4,21 +4,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Controllers.Bases;
 using BLL.Services;
 using BLL.Models;
+using BLL.Interfaces;
+using BLL.DTOs;
 
 // Generated from Custom Template.
 
 namespace HyperplayRealm.Controllers
 {
-    public class GenresController : MvcController
+    public class GenresController : BaseController
     {
         // Service injections:
-        private readonly IGenreService _genreService;
+        private readonly IDBOperations<Genre, GenreDTO> _genreService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
         public GenresController(
-			IGenreService genreService
+            IDBOperations<Genre, GenreDTO> genreService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService
@@ -42,7 +44,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = _genreService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _genreService.Query().SingleOrDefault(q => q.Id == id);
             return View(item);
         }
 
@@ -64,18 +66,18 @@ namespace HyperplayRealm.Controllers
         // POST: Genres/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(GenreModel genre)
+        public async Task<IActionResult> Create(GenreDTO genre)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                var result = _genreService.Create(genre.Record);
-                if (result.IsSuccessful)
+                LoadResult result = await _genreService.Create(genre.MapTo());
+                if (result.Result.IsSuccessfull)
                 {
-                    TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = genre.Record.Id });
+                    TempData["Message"] = result.Result.Message;
+                    return RedirectToAction(nameof(Details), new { id = genre.Id });
                 }
-                ModelState.AddModelError("", result.Message);
+                ModelState.AddModelError("", result.Result.Message);
             }
             SetViewData();
             return View(genre);
@@ -85,7 +87,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = _genreService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _genreService.Query().SingleOrDefault(q => q.Id == id);
             SetViewData();
             return View(item);
         }
@@ -93,18 +95,18 @@ namespace HyperplayRealm.Controllers
         // POST: Genres/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(GenreModel genre)
+        public async Task<IActionResult> Edit(GenreDTO genre)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                var result = _genreService.Update(genre.Record);
-                if (result.IsSuccessful)
+                LoadResult result = await _genreService.Update(genre.MapTo());
+                if (result.Result.IsSuccessfull)
                 {
-                    TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = genre.Record.Id });
+                    TempData["Message"] = result.Result.Message;
+                    return RedirectToAction(nameof(Details), new { id = genre.Id });
                 }
-                ModelState.AddModelError("", result.Message);
+                ModelState.AddModelError("", result.Result.Message);
             }
             SetViewData();
             return View(genre);
@@ -114,18 +116,18 @@ namespace HyperplayRealm.Controllers
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            var item = _genreService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _genreService.Query().SingleOrDefault(q => q.Id == id);
             return View(item);
         }
 
         // POST: Genres/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            var result = _genreService.Delete(id);
-            TempData["Message"] = result.Message;
+            var result = await _genreService.Delete(id);
+            TempData["Message"] = result.Result.Message;
             return RedirectToAction(nameof(Index));
         }
 	}

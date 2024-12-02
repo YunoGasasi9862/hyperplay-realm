@@ -24,7 +24,7 @@ namespace BLL.Services.Impl
 
         public IQueryable<PurchaseDTO> Query()
         {
-            throw new NotImplementedException();
+            return HyperplayRealmDBContext.Purchases.Select(PurchaseDTO.FromEntity);
         }
 
         public Task<LoadResult> Update(Purchase type)
