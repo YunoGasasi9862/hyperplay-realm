@@ -12,18 +12,16 @@ namespace BLL.DTOs
 
         public int DeveloperId { get; set; }
 
-        [Required]
-        public required Developer Developer { get; set; }
+        public string? DeveloperName { get; set; }
 
-        [Required]
-        public required Game Game { get; set; }
+        public string? GameName { get; set; }
 
-        public static Expression<Func<GameDeveloper, GameDeveloper>> FromEntity => entity => new GameDeveloper
+        public static Expression<Func<GameDeveloper, GameDeveloperDTO>> FromEntity => entity => new GameDeveloperDTO
         {
             GameId = entity.GameId,
             DeveloperId = entity.DeveloperId,
-            Developer = entity.Developer,
-            Game = entity.Game,
+            DeveloperName = entity.Developer.Name,
+            GameName = entity.Game.Title,
         };
 
         public GameDeveloper MapTo()

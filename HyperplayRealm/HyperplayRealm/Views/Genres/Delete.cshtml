@@ -1,4 +1,4 @@
-﻿@model DeveloperDTO
+﻿@model GenreModel
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -7,7 +7,7 @@
     var containerDivClass = "container";
 }
 @{
-    ViewData["Title"] = "Developer Delete";
+    ViewData["Title"] = "Genre Delete";
 }
 
 <div class="@containerDivClass">
@@ -28,10 +28,10 @@
     <hr />
     <div class="row mb-3">
         <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.GenreName)
         </div>
         <div class="col-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.GenreName)
         </div>
     </div>
 
@@ -50,7 +50,7 @@
     <hr />
     <form asp-action="Delete">
 	    @Html.AntiForgeryToken()
-        <input type="hidden" asp-for="DeveloperId" />
+        <input type="hidden" asp-for="Record.Id" />
         <input type="submit" value="Yes" class="btn btn-danger" />&nbsp;&nbsp;
         <a asp-action="Index" class="btn btn-outline-danger">No</a>
     </form>

@@ -29,7 +29,7 @@ namespace BLL.Services.Impl
 
         IQueryable<DeveloperDTO> IDBOperations<Developer, DeveloperDTO>.Query()
         {
-            throw new NotImplementedException();
+            return HyperplayRealmDBContext.Developers.Select(DeveloperDTO.FromEntity);
         }
     }
 }

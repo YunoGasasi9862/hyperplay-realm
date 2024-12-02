@@ -36,10 +36,10 @@
                 <thead class="table-secondary">
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.Developer)
+                            @Html.DisplayNameFor(model => model.DeveloperName)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Game)
+                            @Html.DisplayNameFor(model => model.GameName)
                         </th>
                         <th></th>
                     </tr>
@@ -48,10 +48,10 @@
 		            @foreach (var item in Model) {
 				        <tr>
 					        <td>
-						        @Html.DisplayFor(modelItem => item.Developer)
+						        @Html.DisplayFor(modelItem => item.DeveloperName)
 					        </td>
 					        <td>
-						        @Html.DisplayFor(modelItem => item.Game)
+                                @Html.DisplayFor(modelItem => item.GameName)
 					        </td>
 					        <td class="text-end w-25">
 						        @Html.ActionLink("Details", "Details", new { /* id = item.Record.PrimaryKey */ })&nbsp;|&nbsp;

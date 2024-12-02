@@ -4,47 +4,45 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Controllers.Bases;
 using BLL.Services;
 using BLL.Models;
-using BLL.Interfaces;
-using BLL.DTOs;
 
 // Generated from Custom Template.
 
 namespace HyperplayRealm.Controllers
 {
-    public class DevelopersController : BaseController
+    public class GenresController : MvcController
     {
         // Service injections:
-        private readonly IDBOperations<Developer, DeveloperDTO> _developerService;
+        private readonly IGenreService _genreService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
-        public DevelopersController(
-             IDBOperations<Developer, DeveloperDTO> developerService
+        public GenresController(
+			IGenreService genreService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService
         )
         {
-            _developerService = developerService;
+            _genreService = genreService;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //_ManyToManyRecordService = ManyToManyRecordService;
         }
 
-        // GET: Developers
+        // GET: Genres
         public IActionResult Index()
         {
             // Get collection service logic:
-            var list = _developerService.Query().ToList();
+            var list = _genreService.Query().ToList();
             return View(list);
         }
 
-        // GET: Developers/Details/5
+        // GET: Genres/Details/5
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = _developerService.Query().SingleOrDefault(q => q.DeveloperId == id);
+            var item = _genreService.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
         }
 
@@ -56,78 +54,78 @@ namespace HyperplayRealm.Controllers
             //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
         }
 
-        // GET: Developers/Create
+        // GET: Genres/Create
         public IActionResult Create()
         {
             SetViewData();
             return View();
         }
 
-        // POST: Developers/Create
+        // POST: Genres/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(DeveloperDTO developer)
+        public IActionResult Create(GenreModel genre)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                LoadResult result = await _developerService.Create(developer.MapTo());
-                if (result.Result.IsSuccessfull)
+                var result = _genreService.Create(genre.Record);
+                if (result.IsSuccessful)
                 {
-                    TempData["Message"] = result.Result.Message;
-                    return RedirectToAction(nameof(Details), new { id = developer.DeveloperId });
+                    TempData["Message"] = result.Message;
+                    return RedirectToAction(nameof(Details), new { id = genre.Record.Id });
                 }
-                ModelState.AddModelError("", result.Result.Message);
+                ModelState.AddModelError("", result.Message);
             }
             SetViewData();
-            return View(developer);
+            return View(genre);
         }
 
-        // GET: Developers/Edit/5
+        // GET: Genres/Edit/5
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            DeveloperDTO item = _developerService.Query().SingleOrDefault(q => q.DeveloperId == id);
+            var item = _genreService.Query().SingleOrDefault(q => q.Record.Id == id);
             SetViewData();
             return View(item);
         }
 
-        // POST: Developers/Edit
+        // POST: Genres/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(DeveloperDTO developer)
+        public IActionResult Edit(GenreModel genre)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                LoadResult result = await _developerService.Update(developer.MapTo());
-                if (result.Result.IsSuccessfull)
+                var result = _genreService.Update(genre.Record);
+                if (result.IsSuccessful)
                 {
-                    TempData["Message"] = result.Result.Message;
-                    return RedirectToAction(nameof(Details), new { id = developer.DeveloperId });
+                    TempData["Message"] = result.Message;
+                    return RedirectToAction(nameof(Details), new { id = genre.Record.Id });
                 }
-                ModelState.AddModelError("", result.Result.Message);
+                ModelState.AddModelError("", result.Message);
             }
             SetViewData();
-            return View(developer);
+            return View(genre);
         }
 
-        // GET: Developers/Delete/5
+        // GET: Genres/Delete/5
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            DeveloperDTO item = _developerService.Query().SingleOrDefault(q => q.DeveloperId == id);
+            var item = _genreService.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
         }
 
-        // POST: Developers/Delete
+        // POST: Genres/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            LoadResult result = await _developerService.Delete(id);
-            TempData["Message"] = result.Result.Message;
+            var result = _genreService.Delete(id);
+            TempData["Message"] = result.Message;
             return RedirectToAction(nameof(Index));
         }
 	}

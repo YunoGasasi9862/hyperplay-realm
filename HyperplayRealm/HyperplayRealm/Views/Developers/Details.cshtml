@@ -1,4 +1,4 @@
-﻿@model DeveloperModel
+﻿@model DeveloperDTO
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -46,8 +46,8 @@
     *@
 
     <hr /> 
-    <a asp-action="Edit" asp-route-id="@Model.Record.DeveloperId">Edit</a>&nbsp;|&nbsp;
-    <a asp-action="Delete" asp-route-id="@Model.Record.DeveloperId">Delete</a>&nbsp;|&nbsp;
+    <a asp-action="Edit" asp-route-id="@Model.DeveloperId">Edit</a>&nbsp;|&nbsp;
+    <a asp-action="Delete" asp-route-id="@Model.DeveloperId">Delete</a>&nbsp;|&nbsp;
     <a asp-action="Index">Back to List</a>
 </div>
 }

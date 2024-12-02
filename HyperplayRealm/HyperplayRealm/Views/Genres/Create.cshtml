@@ -1,4 +1,4 @@
-﻿@model GameDeveloperDTO
+﻿@model GenreModel
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -8,7 +8,7 @@
     var dateTimePickerClass = "datetimepicker";
 }
 @{
-    ViewData["Title"] = "GameDeveloper Create";
+    ViewData["Title"] = "Genre Create";
 }
 
 <div class="@containerDivClass">
@@ -27,21 +27,10 @@
 		@Html.AntiForgeryToken()
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row mb-3">
-            <label asp-for="GameName" class="col-2 col-form-label fw-bold"></label>
+            <label asp-for="GenreName" class="col-2 col-form-label fw-bold"></label>
 			<div class="col-10">
-				<select asp-for="GameId" class="form-select" asp-items="ViewBag.GameId">
-					<option value="">-- Select --</option>
-				</select>
-				<span asp-validation-for="GameId" class="text-danger"></span>
-			</div>
-        </div>
-        <div class="row mb-3">
-            <label asp-for="DeveloperName" class="col-2 col-form-label fw-bold"></label>
-			<div class="col-10">
-				<select asp-for="DeveloperId" class="form-select" asp-items="ViewBag.DeveloperId">
-					<option value="">-- Select --</option>
-				</select>
-				<span asp-validation-for="DeveloperId" class="text-danger"></span>
+			    <input asp-for="Record.GenreName" class="form-control" />
+				<span asp-validation-for="Record.GenreName" class="text-danger"></span>
 			</div>
         </div>
 

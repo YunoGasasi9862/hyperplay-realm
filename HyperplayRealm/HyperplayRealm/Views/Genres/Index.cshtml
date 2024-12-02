@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DeveloperDTO>
+﻿@model IEnumerable<GenreModel>
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -7,7 +7,7 @@
     var containerDivClass = "container";
 }
 @{
-    ViewData["Title"] = "Developer List";
+    ViewData["Title"] = "Genre List";
 }
 
 <div class="@containerDivClass">
@@ -36,7 +36,7 @@
                 <thead class="table-secondary">
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.Name)
+                            @Html.DisplayNameFor(model => model.GenreName)
                         </th>
                         <th></th>
                     </tr>
@@ -45,12 +45,12 @@
 		            @foreach (var item in Model) {
 				        <tr>
 					        <td>
-						        @Html.DisplayFor(modelItem => item.Name)
+						        @Html.DisplayFor(modelItem => item.GenreName)
 					        </td>
 					        <td class="text-end w-25">
-						        <a asp-action="Details" asp-route-id="@item.DeveloperId">Details</a>&nbsp;|&nbsp;
-						        <a asp-action="Edit" asp-route-id="@item.DeveloperId">Edit</a>&nbsp;|&nbsp;
-						        <a asp-action="Delete" asp-route-id="@item.DeveloperId">Delete</a>
+						        <a asp-action="Details" asp-route-id="@item.Record.Id">Details</a>&nbsp;|&nbsp;
+						        <a asp-action="Edit" asp-route-id="@item.Record.Id">Edit</a>&nbsp;|&nbsp;
+						        <a asp-action="Delete" asp-route-id="@item.Record.Id">Delete</a>
 					        </td>
 				        </tr>
 		            }

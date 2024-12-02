@@ -22,9 +22,9 @@ namespace BLL.Services.Impl
             throw new NotImplementedException();
         }
 
-        public IQueryable<GameDeveloperDTO> Query()
+        IQueryable<GameDeveloperDTO> IDBOperations<GameDeveloper, GameDeveloperDTO>.Query()
         {
-            throw new NotImplementedException();
+            return HyperplayRealmDBContext.GameDevelopers.Select(GameDeveloperDTO.FromEntity);
         }
 
         public Task<LoadResult> Update(GameDeveloper type)
