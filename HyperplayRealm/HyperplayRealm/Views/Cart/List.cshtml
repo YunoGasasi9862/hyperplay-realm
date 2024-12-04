@@ -1,0 +1,37 @@
+﻿@model IEnumerable<CartDTO>
+
+@{
+    ViewBag.Title = "Cart";
+}
+
+<h3>@ViewBag.Title</h3>
+
+@if (Model is not null)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Publisher)
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.Publisher
+                </td>
+
+                @*List out Developers too!*@
+            </tr>
+        }
+    </table>
+}

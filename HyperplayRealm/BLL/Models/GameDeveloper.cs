@@ -7,7 +7,6 @@ namespace BLL.Models;
 
 public partial class GameDeveloper
 {
-    public GameDeveloper() { }
     public int GameId { get; set; }
 
     public int DeveloperId { get; set; }

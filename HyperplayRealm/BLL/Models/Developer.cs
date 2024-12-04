@@ -2,19 +2,13 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace BLL.Models;
 
 public partial class Developer
 {
-    //we do need another ID here - fixed Developer ID
-    public Developer() { }
-
-    [Required]
     public int DeveloperId { get; set; }
 
-    [Required]
     public string Name { get; set; }
 
     public virtual ICollection<GameDeveloper> GameDevelopers { get; set; } = new List<GameDeveloper>();

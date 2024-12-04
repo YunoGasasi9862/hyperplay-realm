@@ -8,8 +8,12 @@ namespace BLL.Interfaces
 {
     public interface IHttpService
     {
-        public Task<T> GetSession<T>() where T : class, new();
+        public Task<T> GetSession<T>(string sessionKey) where T : class, new();
 
-        public Task SetSession<T>(T session) where T : class, new();
+        public Task SetSession<T>(string sessionKey, T session) where T : class, new();
+
+        public Task ClearSession();
+
+        public Task RemoveSessionByKey(string sessionKey);  
     }
 }

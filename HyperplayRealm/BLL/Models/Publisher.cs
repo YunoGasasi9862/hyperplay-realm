@@ -7,13 +7,6 @@ namespace BLL.Models;
 
 public partial class Publisher
 {
-    //we do need another ID here - fixed Publisher ID - modify later
-
-    public Publisher()
-    {
-
-    }
-
     public int PublisherId { get; set; }
 
     public string Name { get; set; }

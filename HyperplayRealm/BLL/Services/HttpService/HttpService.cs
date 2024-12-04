@@ -11,16 +11,15 @@ namespace BLL.Services.HttpService
 {
     public class HttpService : IHttpService
     {
-        const string SESSION_KEY = "SESSION_KEY";
-
         protected readonly IHttpContextAccessor _httpContextAccessor;
         public HttpService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        public virtual Task<T> GetSession<T>() where T : class, new()
+
+        public virtual Task<T> GetSession<T>(string sessionKey) where T : class, new()
         {
-            string? json = _httpContextAccessor?.HttpContext?.Session.GetString(SESSION_KEY);
+            string? json = _httpContextAccessor?.HttpContext?.Session.GetString(sessionKey);
 
             if (string.IsNullOrEmpty(json))
             {
@@ -31,11 +30,25 @@ namespace BLL.Services.HttpService
 
         }
 
-        public Task SetSession<T>(T session) where T : class, new()
+        public Task RemoveSessionByKey(string sessionKey)
         {
-            string json = JsonConvert.SerializeObject(session);
+            _httpContextAccessor?.HttpContext?.Session.Remove(sessionKey);
 
-            _httpContextAccessor?.HttpContext?.Session.SetString(SESSION_KEY, json);
+            return Task.CompletedTask;
+        }
+
+        public Task ClearSession()
+        {
+            _httpContextAccessor?.HttpContext?.Session.Clear();
+
+            return Task.CompletedTask;
+        }
+
+        public Task SetSession<T>(string sessionKey, T session) where T : class, new()
+        {
+            string json = JsonConvert.SerializeObject(sessionKey);
+
+            _httpContextAccessor?.HttpContext?.Session.SetString(sessionKey, json);
 
             return Task.CompletedTask;
         }

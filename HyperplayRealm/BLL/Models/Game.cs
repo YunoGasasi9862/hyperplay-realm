@@ -7,7 +7,6 @@ namespace BLL.Models;
 
 public partial class Game
 {
-    public Game() { }
     public int Id { get; set; }
 
     public string Title { get; set; }
