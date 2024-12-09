@@ -1,4 +1,4 @@
-﻿@model UserRoleModel
+﻿@model UserRoleDTO
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -29,19 +29,19 @@
         <div class="row mb-3">
             <label asp-for="User" class="col-2 col-form-label fw-bold"></label>
 			<div class="col-10">
-				<select asp-for="Record.UserId" class="form-select" asp-items="ViewBag.UserId">
+				<select asp-for="UserId" class="form-select" asp-items="ViewBag.UserId">
 					<option value="">-- Select --</option>
 				</select>
-				<span asp-validation-for="Record.UserId" class="text-danger"></span>
+				<span asp-validation-for="UserId" class="text-danger"></span>
 			</div>
         </div>
         <div class="row mb-3">
             <label asp-for="Role" class="col-2 col-form-label fw-bold"></label>
 			<div class="col-10">
-				<select asp-for="Record.RoleId" class="form-select" asp-items="ViewBag.RoleId">
+				<select asp-for="RoleId" class="form-select" asp-items="ViewBag.RoleId">
 					<option value="">-- Select --</option>
 				</select>
-				<span asp-validation-for="Record.RoleId" class="text-danger"></span>
+				<span asp-validation-for="RoleId" class="text-danger"></span>
 			</div>
         </div>
 

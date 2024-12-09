@@ -36,6 +36,8 @@ builder.Services.AddScoped < IDBOperations<Developer, DeveloperDTO>, DevelopersS
 builder.Services.AddScoped<IDBOperations<Genre, GenreDTO>, GenresServiceImpl>();
 builder.Services.AddScoped<IDBOperations<GameGenre, GameGenreDTO>, GameGenresServiceImpl>();
 builder.Services.AddScoped<IDBOperations<Role, RoleDTO>, RolesServiceImpl>();
+builder.Services.AddScoped<IDBOperations<UserRole, UserRoleDTO>, UserRolesServiceImpl>();
+
 
 
 // App Settings

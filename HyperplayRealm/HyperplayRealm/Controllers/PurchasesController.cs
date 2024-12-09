@@ -4,138 +4,136 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Controllers.Bases;
 using BLL.Services;
 using BLL.Models;
-using BLL.Interfaces;
-using BLL.DTOs;
 
 // Generated from Custom Template.
 
 namespace HyperplayRealm.Controllers
 {
-    public class UserRolesController : BaseController
+    public class PurchasesController : MvcController
     {
         // Service injections:
-        private readonly IDBOperations<UserRole, UserRoleDTO> _userRoleService;
-        private readonly IDBOperations<Role, RoleDTO> _roleService;
-        private readonly IDBOperations<User, UserDTO> _userService;
+        private readonly IPurchaseService _purchaseService;
+        private readonly IGameService _gameService;
+        private readonly IUserService _userService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
-        public UserRolesController(
-            IDBOperations<UserRole, UserRoleDTO> userRoleService
-            , IDBOperations<Role, RoleDTO> roleService
-            , IDBOperations<User, UserDTO> userService
+        public PurchasesController(
+			IPurchaseService purchaseService
+            , IGameService gameService
+            , IUserService userService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService
         )
         {
-            _userRoleService = userRoleService;
-            _roleService = roleService;
+            _purchaseService = purchaseService;
+            _gameService = gameService;
             _userService = userService;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //_ManyToManyRecordService = ManyToManyRecordService;
         }
 
-        // GET: UserRoles
+        // GET: Purchases
         public IActionResult Index()
         {
             // Get collection service logic:
-            var list = _userRoleService.Query().ToList();
+            var list = _purchaseService.Query().ToList();
             return View(list);
         }
 
-        // GET: UserRoles/Details/5
+        // GET: Purchases/Details/5
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = _userRoleService.Query().SingleOrDefault(q => q.UserId == id);
+            var item = _purchaseService.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
         }
 
         protected void SetViewData()
         {
             // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
-            ViewData["RoleId"] = new SelectList(_roleService.Query().ToList(), "RoleId", "Name");
-            ViewData["UserId"] = new SelectList(_userService.Query().ToList(), "UserId", "Name");
+            ViewData["GameId"] = new SelectList(_gameService.Query().ToList(), "Record.Id", "Name");
+            ViewData["UserId"] = new SelectList(_userService.Query().ToList(), "Record.Id", "Name");
             
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
         }
 
-        // GET: UserRoles/Create
+        // GET: Purchases/Create
         public IActionResult Create()
         {
             SetViewData();
             return View();
         }
 
-        // POST: UserRoles/Create
+        // POST: Purchases/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UserRoleDTO userRole)
+        public IActionResult Create(PurchaseModel purchase)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                LoadResult result = await _userRoleService.Create(userRole.MapTo());
-                if (result.Result.IsSuccessfull)
+                var result = _purchaseService.Create(purchase.Record);
+                if (result.IsSuccessful)
                 {
-                    TempData["Message"] = result.Result.Message;
-                    return RedirectToAction(nameof(Details), new { id = userRole.UserId });
+                    TempData["Message"] = result.Message;
+                    return RedirectToAction(nameof(Details), new { id = purchase.Record.Id });
                 }
-                ModelState.AddModelError("", result.Result.Message);
+                ModelState.AddModelError("", result.Message);
             }
             SetViewData();
-            return View(userRole);
+            return View(purchase);
         }
 
-        // GET: UserRoles/Edit/5
+        // GET: Purchases/Edit/5
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = _userRoleService.Query().SingleOrDefault(q => q.UserId == id);
+            var item = _purchaseService.Query().SingleOrDefault(q => q.Record.Id == id);
             SetViewData();
             return View(item);
         }
 
-        // POST: UserRoles/Edit
+        // POST: Purchases/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(UserRoleDTO userRole)
+        public IActionResult Edit(PurchaseModel purchase)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                LoadResult result = await _userRoleService.Update(userRole.MapTo());
-                if (result.Result.IsSuccessfull)
+                var result = _purchaseService.Update(purchase.Record);
+                if (result.IsSuccessful)
                 {
-                    TempData["Message"] = result.Result.Message;
-                    return RedirectToAction(nameof(Details), new { id = userRole.UserId });
+                    TempData["Message"] = result.Message;
+                    return RedirectToAction(nameof(Details), new { id = purchase.Record.Id });
                 }
-                ModelState.AddModelError("", result.Result.Message);
+                ModelState.AddModelError("", result.Message);
             }
             SetViewData();
-            return View(userRole);
+            return View(purchase);
         }
 
-        // GET: UserRoles/Delete/5
+        // GET: Purchases/Delete/5
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            var item = _userRoleService.Query().SingleOrDefault(q => q.UserId == id);
+            var item = _purchaseService.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
         }
 
-        // POST: UserRoles/Delete
+        // POST: Purchases/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            LoadResult result = await _userRoleService.Delete(id);
-            TempData["Message"] = result.Result.Message;
+            var result = _purchaseService.Delete(id);
+            TempData["Message"] = result.Message;
             return RedirectToAction(nameof(Index));
         }
 	}

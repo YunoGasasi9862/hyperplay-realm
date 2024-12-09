@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UserRoleDTO>
+﻿@model IEnumerable<PurchaseModel>
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -7,7 +7,7 @@
     var containerDivClass = "container";
 }
 @{
-    ViewData["Title"] = "UserRole List";
+    ViewData["Title"] = "Purchase List";
 }
 
 <div class="@containerDivClass">
@@ -36,7 +36,10 @@
                 <thead class="table-secondary">
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.Role)
+                            @Html.DisplayNameFor(model => model.PurchaseDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Game)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.User)
@@ -48,7 +51,10 @@
 		            @foreach (var item in Model) {
 				        <tr>
 					        <td>
-						        @Html.DisplayFor(modelItem => item.Role)
+						        @Html.DisplayFor(modelItem => item.PurchaseDate)
+					        </td>
+					        <td>
+						        @Html.DisplayFor(modelItem => item.Game)
 					        </td>
 					        <td>
 						        @Html.DisplayFor(modelItem => item.User)
