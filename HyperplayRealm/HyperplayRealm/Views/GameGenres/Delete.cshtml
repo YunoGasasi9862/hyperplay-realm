@@ -1,4 +1,4 @@
-﻿@model PurchaseDTO
+﻿@model GameGenreModel
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -7,7 +7,7 @@
     var containerDivClass = "container";
 }
 @{
-    ViewData["Title"] = "Purchase Details";
+    ViewData["Title"] = "GameGenre Delete";
 }
 
 <div class="@containerDivClass">
@@ -24,14 +24,8 @@
         @TempData["Message"]
     </p>
     }
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.PurchaseDate)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.PurchaseDate)
-        </div>
-    </div>
+    <h3 class="text-danger">Are you sure you want to delete?</h3>
+    <hr />
     <div class="row mb-3">
         <div class="col-2 fw-bold">
             @Html.DisplayNameFor(model => model.Game)
@@ -42,10 +36,10 @@
     </div>
     <div class="row mb-3">
         <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.User)
+            @Html.DisplayNameFor(model => model.Genre)
         </div>
         <div class="col-10">
-            @Html.DisplayFor(model => model.User)
+            @Html.DisplayFor(model => model.Genre)
         </div>
     </div>
 
@@ -61,8 +55,13 @@
     </div>
     *@
 
-    <hr /> 
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.Record.PrimaryKey */ })&nbsp;|&nbsp;
-    <a asp-action="Index">Back to List</a>
+    <hr />
+    <form asp-action="Delete">
+	    @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Record.GameId" />
+        <input type="hidden" asp-for="Record.GenreId" />
+        <input type="submit" value="Yes" class="btn btn-danger" />&nbsp;&nbsp;
+        <a asp-action="Index" class="btn btn-outline-danger">No</a>
+    </form>
 </div>
 }

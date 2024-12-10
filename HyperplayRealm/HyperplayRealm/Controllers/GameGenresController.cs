@@ -11,131 +11,131 @@ using BLL.DTOs;
 
 namespace HyperplayRealm.Controllers
 {
-    public class GameDevelopersController : BaseController
+    public class GameGenresController : BaseController
     {
         // Service injections:
-        private readonly IDBOperations<GameDeveloper, GameDeveloperDTO> _gameDeveloperService;
-        private readonly IDBOperations<Developer, DeveloperDTO> _developerService;
+        private readonly IDBOperations<GameGenre, GameGenreDTO> _gameGenreService;
         private readonly IDBOperations<Game, GameDTO> _gameService;
+        private readonly IDBOperations<Genre, GenreDTO> _genreService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
-        public GameDevelopersController(
-              IDBOperations<GameDeveloper, GameDeveloperDTO> gameDeveloperService
-            , IDBOperations<Developer, DeveloperDTO> developerService
+        public GameGenresController(
+            IDBOperations<GameGenre, GameGenreDTO> gameGenreService
             , IDBOperations<Game, GameDTO> gameService
+            , IDBOperations<Genre, GenreDTO> genreService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService
         )
         {
-            _gameDeveloperService = gameDeveloperService;
-            _developerService = developerService;
+            _gameGenreService = gameGenreService;
             _gameService = gameService;
+            _genreService = genreService;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //_ManyToManyRecordService = ManyToManyRecordService;
         }
 
-        // GET: GameDevelopers
+        // GET: GameGenres
         public IActionResult Index()
         {
             // Get collection service logic:
-            var list = _gameDeveloperService.Query().ToList();
+            var list = _gameGenreService.Query().ToList();
             return View(list);
         }
 
-        // GET: GameDevelopers/Details/5
+        // GET: GameGenres/Details/5
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = _gameDeveloperService.Query().SingleOrDefault(q => q.DeveloperId == id);
+            var item = _gameGenreService.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
         }
 
         protected void SetViewData()
         {
             // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
-            ViewData["DeveloperId"] = new SelectList(_developerService.Query().ToList(), "Id", "Name");
-            ViewData["GameId"] = new SelectList(_gameService.Query().ToList(), "Id", "Name");
+            ViewData["GameId"] = new SelectList(_gameService.Query().ToList(), "Record.Id", "Name");
+            ViewData["GenreId"] = new SelectList(_genreService.Query().ToList(), "Record.Id", "Name");
             
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
         }
 
-        // GET: GameDevelopers/Create
+        // GET: GameGenres/Create
         public IActionResult Create()
         {
             SetViewData();
             return View();
         }
 
-        // POST: GameDevelopers/Create
+        // POST: GameGenres/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(GameDeveloperDTO gameDeveloper)
+        public IActionResult Create(GameGenreModel gameGenre)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                LoadResult result = await _gameDeveloperService.Create(gameDeveloper.MapTo());
-                if (result.Result.IsSuccessfull)
+                var result = _gameGenreService.Create(gameGenre.Record);
+                if (result.IsSuccessful)
                 {
-                    TempData["Message"] = result.Result.Message;
-                    return RedirectToAction(nameof(Details), new { id = gameDeveloper.DeveloperId });
+                    TempData["Message"] = result.Message;
+                    return RedirectToAction(nameof(Details), new { id = gameGenre.Record.Id });
                 }
-                ModelState.AddModelError("", result.Result.Message);
+                ModelState.AddModelError("", result.Message);
             }
             SetViewData();
-            return View(gameDeveloper);
+            return View(gameGenre);
         }
 
-        // GET: GameDevelopers/Edit/5
+        // GET: GameGenres/Edit/5
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = _gameDeveloperService.Query().SingleOrDefault(q => q.GameId == id);
+            var item = _gameGenreService.Query().SingleOrDefault(q => q.Record.Id == id);
             SetViewData();
             return View(item);
         }
 
-        // POST: GameDevelopers/Edit
+        // POST: GameGenres/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(GameDeveloperDTO gameDeveloper)
+        public IActionResult Edit(GameGenreModel gameGenre)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                LoadResult result = await _gameDeveloperService.Update(gameDeveloper.MapTo());
-                if (result.Result.IsSuccessfull)
+                var result = _gameGenreService.Update(gameGenre.Record);
+                if (result.IsSuccessful)
                 {
-                    TempData["Message"] = result.Result.Message;
-                    return RedirectToAction(nameof(Details), new { id = gameDeveloper.DeveloperId });
+                    TempData["Message"] = result.Message;
+                    return RedirectToAction(nameof(Details), new { id = gameGenre.Record.Id });
                 }
-                ModelState.AddModelError("", result.Result.Message);
+                ModelState.AddModelError("", result.Message);
             }
             SetViewData();
-            return View(gameDeveloper);
+            return View(gameGenre);
         }
 
-        // GET: GameDevelopers/Delete/5
+        // GET: GameGenres/Delete/5
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            var item = _gameDeveloperService.Query().SingleOrDefault(q => q.DeveloperId == id); //fix this we need to be careful when deleting a developer. What about the games?
+            var item = _gameGenreService.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
         }
 
-        // POST: GameDevelopers/Delete
+        // POST: GameGenres/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            LoadResult result = await _gameDeveloperService.Delete(id);
-            TempData["Message"] = result.Result.Message;
+            var result = _gameGenreService.Delete(id);
+            TempData["Message"] = result.Message;
             return RedirectToAction(nameof(Index));
         }
 	}

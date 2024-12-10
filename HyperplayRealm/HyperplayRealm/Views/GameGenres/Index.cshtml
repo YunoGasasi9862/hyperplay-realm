@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PurchaseDTO>
+﻿@model IEnumerable<GameGenreModel>
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -7,7 +7,7 @@
     var containerDivClass = "container";
 }
 @{
-    ViewData["Title"] = "Purchase List";
+    ViewData["Title"] = "GameGenre List";
 }
 
 <div class="@containerDivClass">
@@ -36,13 +36,10 @@
                 <thead class="table-secondary">
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.PurchaseDate)
-                        </th>
-                        <th>
                             @Html.DisplayNameFor(model => model.Game)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.User)
+                            @Html.DisplayNameFor(model => model.Genre)
                         </th>
                         <th></th>
                     </tr>
@@ -51,13 +48,10 @@
 		            @foreach (var item in Model) {
 				        <tr>
 					        <td>
-						        @Html.DisplayFor(modelItem => item.PurchaseDate)
-					        </td>
-					        <td>
 						        @Html.DisplayFor(modelItem => item.Game)
 					        </td>
 					        <td>
-						        @Html.DisplayFor(modelItem => item.User)
+						        @Html.DisplayFor(modelItem => item.Genre)
 					        </td>
 					        <td class="text-end w-25">
 						        @Html.ActionLink("Details", "Details", new { /* id = item.Record.PrimaryKey */ })&nbsp;|&nbsp;

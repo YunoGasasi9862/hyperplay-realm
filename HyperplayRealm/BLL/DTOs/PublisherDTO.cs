@@ -14,13 +14,13 @@ namespace BLL.DTOs
 
         public static Expression<Func<Publisher, PublisherDTO>> FromEntity => entity => new PublisherDTO
         {
-            PublisherId = entity.PublisherId,
+            PublisherId = entity.Id,
             Name = entity.Name
         };
 
         public Publisher MapTo()
         {
-            return new Publisher() { PublisherId = this.PublisherId, Name = this.Name };
+            return new Publisher() { Id = this.PublisherId, Name = this.Name };
         }
     }
 }

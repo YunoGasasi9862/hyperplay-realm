@@ -4,25 +4,28 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Controllers.Bases;
 using BLL.Services;
 using BLL.Models;
+using BLL.Interfaces;
+using BLL.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 // Generated from Custom Template.
 
 namespace HyperplayRealm.Controllers
 {
-    public class PurchasesController : MvcController
+    public class PurchasesController : BaseController
     {
         // Service injections:
-        private readonly IPurchaseService _purchaseService;
-        private readonly IGameService _gameService;
-        private readonly IUserService _userService;
+        private readonly IDBOperations<Purchase, PurchaseDTO> _purchaseService;
+        private readonly IDBOperations<Game, GameDTO> _gameService;
+        private readonly IDBOperations<User, UserDTO> _userService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
         public PurchasesController(
-			IPurchaseService purchaseService
-            , IGameService gameService
-            , IUserService userService
+            IDBOperations<Purchase, PurchaseDTO> purchaseService
+            , IDBOperations<Game, GameDTO> gameService
+            , IDBOperations<User, UserDTO> userService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService
@@ -48,15 +51,15 @@ namespace HyperplayRealm.Controllers
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = _purchaseService.Query().SingleOrDefault(q => q.Record.Id == id);
+            PurchaseDTO item = _purchaseService.Query().SingleOrDefault(q => q.UserId == id);
             return View(item);
         }
 
         protected void SetViewData()
         {
             // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
-            ViewData["GameId"] = new SelectList(_gameService.Query().ToList(), "Record.Id", "Name");
-            ViewData["UserId"] = new SelectList(_userService.Query().ToList(), "Record.Id", "Name");
+            ViewData["GameId"] = new SelectList(_gameService.Query().ToList(), "Id", "Name");
+            ViewData["UserId"] = new SelectList(_userService.Query().ToList(), "Id", "Name");
             
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
@@ -72,18 +75,18 @@ namespace HyperplayRealm.Controllers
         // POST: Purchases/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(PurchaseModel purchase)
+        public async Task<IActionResult> Create(PurchaseDTO purchase)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                var result = _purchaseService.Create(purchase.Record);
-                if (result.IsSuccessful)
+                LoadResult result = await _purchaseService.Create(purchase.MapTo());
+                if (result.Result.IsSuccessfull)
                 {
-                    TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = purchase.Record.Id });
+                    TempData["Message"] = result.Result.IsSuccessfull;
+                    return RedirectToAction(nameof(Details), new { id = purchase.UserId });
                 }
-                ModelState.AddModelError("", result.Message);
+                ModelState.AddModelError("", result.Result.Message);
             }
             SetViewData();
             return View(purchase);
@@ -93,26 +96,27 @@ namespace HyperplayRealm.Controllers
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = _purchaseService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _purchaseService.Query().SingleOrDefault(q => q.UserId == id);
             SetViewData();
             return View(item);
         }
 
         // POST: Purchases/Edit
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(PurchaseModel purchase)
+        public async Task<IActionResult> Edit(PurchaseDTO purchase)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                var result = _purchaseService.Update(purchase.Record);
-                if (result.IsSuccessful)
+                LoadResult result = await _purchaseService.Update(purchase.MapTo());
+                if (result.Result.IsSuccessfull)
                 {
-                    TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = purchase.Record.Id });
+                    TempData["Message"] = result.Result.Message;
+                    return RedirectToAction(nameof(Details), new { id = purchase.UserId });
                 }
-                ModelState.AddModelError("", result.Message);
+                ModelState.AddModelError("", result.Result.Message);
             }
             SetViewData();
             return View(purchase);
@@ -122,18 +126,19 @@ namespace HyperplayRealm.Controllers
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            var item = _purchaseService.Query().SingleOrDefault(q => q.Record.Id == id);
+            PurchaseDTO item = _purchaseService.Query().SingleOrDefault(q => q.GameId == id);
             return View(item);
         }
 
         // POST: Purchases/Delete
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            var result = _purchaseService.Delete(id);
-            TempData["Message"] = result.Message;
+            LoadResult result = await _purchaseService.Delete(id);
+            TempData["Message"] = result.Result.Message;
             return RedirectToAction(nameof(Index));
         }
 	}

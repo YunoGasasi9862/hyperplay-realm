@@ -49,7 +49,7 @@ go
 
 create table Developers
 (
-	DeveloperId int primary key identity(1, 1),
+	Id int primary key identity(1, 1),
 	Name nvarchar(255) not null,
 )
 
@@ -59,7 +59,7 @@ go
 
 create table Publishers
 (
-	PublisherId int primary key identity(1, 1),
+	Id int primary key identity(1, 1),
 	Name nvarchar(255) not null,
 )
 
@@ -74,7 +74,7 @@ create table Games
 	Quantity int not null,
 	PublisherId int not null,
 	ReleaseDate DateTime not null,
-	FOREIGN KEY (PublisherId) REFERENCES Publishers(PublisherId)
+	FOREIGN KEY (PublisherId) REFERENCES Publishers(Id)
 )
 
 go
@@ -110,7 +110,7 @@ create table GameDevelopers
 	DeveloperId int not null,
 	PRIMARY KEY (GameId, DeveloperId),
 	FOREIGN KEY (GameId) REFERENCES Games(Id),
-	FOREIGN KEY (DeveloperId) REFERENCES Developers(DeveloperId)
+	FOREIGN KEY (DeveloperId) REFERENCES Developers(Id)
 )
  
 go

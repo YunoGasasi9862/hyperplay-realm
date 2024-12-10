@@ -16,7 +16,7 @@ namespace BLL.DTOs
 
         public DeveloperDTO MapFrom(Developer entity)
         {
-            DeveloperId = entity.DeveloperId;
+            DeveloperId = entity.Id;
 
             Name = entity.Name;
 
@@ -25,13 +25,13 @@ namespace BLL.DTOs
 
         public static Expression<Func<Developer, DeveloperDTO>> FromEntity => entity => new DeveloperDTO
         {
-            DeveloperId = entity.DeveloperId,
+            DeveloperId = entity.Id,
             Name = entity.Name,
         };
 
         public Developer MapTo()
         {
-            return new Developer() { DeveloperId = this.DeveloperId, Name = this.Name };
+            return new Developer() { Id = this.DeveloperId, Name = this.Name };
         }
     }
 }

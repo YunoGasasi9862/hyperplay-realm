@@ -1,4 +1,4 @@
-﻿@model PurchaseDTO
+﻿@model GameGenreModel
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -7,7 +7,7 @@
     var containerDivClass = "container";
 }
 @{
-    ViewData["Title"] = "Purchase Details";
+    ViewData["Title"] = "GameGenre Details";
 }
 
 <div class="@containerDivClass">
@@ -26,14 +26,6 @@
     }
     <div class="row mb-3">
         <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.PurchaseDate)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.PurchaseDate)
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
             @Html.DisplayNameFor(model => model.Game)
         </div>
         <div class="col-10">
@@ -42,10 +34,10 @@
     </div>
     <div class="row mb-3">
         <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.User)
+            @Html.DisplayNameFor(model => model.Genre)
         </div>
         <div class="col-10">
-            @Html.DisplayFor(model => model.User)
+            @Html.DisplayFor(model => model.Genre)
         </div>
     </div>
 

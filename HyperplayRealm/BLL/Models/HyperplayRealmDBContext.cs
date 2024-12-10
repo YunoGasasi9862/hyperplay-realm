@@ -37,7 +37,7 @@ public partial class HyperplayRealmDBContext : DbContext
     {
         modelBuilder.Entity<Developer>(entity =>
         {
-            entity.HasKey(e => e.DeveloperId).HasName("PK__Develope__DE084CF199AE2327");
+            entity.HasKey(e => e.Id).HasName("PK__Develope__DE084CF199AE2327");
 
             entity.Property(e => e.Name)
                 .IsRequired()
@@ -101,7 +101,7 @@ public partial class HyperplayRealmDBContext : DbContext
 
         modelBuilder.Entity<Publisher>(entity =>
         {
-            entity.HasKey(e => e.PublisherId).HasName("PK__Publishe__4C657FABDBC23A59");
+            entity.HasKey(e => e.Id).HasName("PK__Publishe__4C657FABDBC23A59");
 
             entity.Property(e => e.Name)
                 .IsRequired()

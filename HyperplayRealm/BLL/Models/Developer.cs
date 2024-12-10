@@ -7,7 +7,7 @@ namespace BLL.Models;
 
 public partial class Developer
 {
-    public int DeveloperId { get; set; }
+    public int Id { get; set; }
 
     public string Name { get; set; }
 
