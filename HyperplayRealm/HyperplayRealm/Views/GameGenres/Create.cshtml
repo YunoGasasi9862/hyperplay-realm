@@ -1,4 +1,4 @@
-﻿@model GameGenreModel
+﻿@model GameGenreDTO
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -29,19 +29,19 @@
         <div class="row mb-3">
             <label asp-for="Game" class="col-2 col-form-label fw-bold"></label>
 			<div class="col-10">
-				<select asp-for="Record.GameId" class="form-select" asp-items="ViewBag.GameId">
+				<select asp-for="GameId" class="form-select" asp-items="ViewBag.GameId">
 					<option value="">-- Select --</option>
 				</select>
-				<span asp-validation-for="Record.GameId" class="text-danger"></span>
+				<span asp-validation-for="GameId" class="text-danger"></span>
 			</div>
         </div>
         <div class="row mb-3">
             <label asp-for="Genre" class="col-2 col-form-label fw-bold"></label>
 			<div class="col-10">
-				<select asp-for="Record.GenreId" class="form-select" asp-items="ViewBag.GenreId">
+				<select asp-for="GenreId" class="form-select" asp-items="ViewBag.GenreId">
 					<option value="">-- Select --</option>
 				</select>
-				<span asp-validation-for="Record.GenreId" class="text-danger"></span>
+				<span asp-validation-for="GenreId" class="text-danger"></span>
 			</div>
         </div>
 

@@ -50,15 +50,15 @@ namespace HyperplayRealm.Controllers
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = _gameGenreService.Query().SingleOrDefault(q => q.Record.Id == id);
+            GameGenreDTO item = _gameGenreService.Query().SingleOrDefault(q => q.GameId == id);
             return View(item);
         }
 
         protected void SetViewData()
         {
             // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
-            ViewData["GameId"] = new SelectList(_gameService.Query().ToList(), "Record.Id", "Name");
-            ViewData["GenreId"] = new SelectList(_genreService.Query().ToList(), "Record.Id", "Name");
+            ViewData["GameId"] = new SelectList(_gameService.Query().ToList(), "Id", "Name");
+            ViewData["GenreId"] = new SelectList(_genreService.Query().ToList(), "Id", "Name");
             
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
@@ -74,18 +74,18 @@ namespace HyperplayRealm.Controllers
         // POST: GameGenres/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(GameGenreModel gameGenre)
+        public async Task<IActionResult> Create(GameGenreDTO gameGenre)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                var result = _gameGenreService.Create(gameGenre.Record);
-                if (result.IsSuccessful)
+                LoadResult result = await _gameGenreService.Create(gameGenre.MapTo());
+                if (result.Result.IsSuccessfull)
                 {
-                    TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = gameGenre.Record.Id });
+                    TempData["Message"] = result.Result.Message;
+                    return RedirectToAction(nameof(Details), new { id = gameGenre.GameId });
                 }
-                ModelState.AddModelError("", result.Message);
+                ModelState.AddModelError("", result.Result.Message);
             }
             SetViewData();
             return View(gameGenre);
@@ -95,7 +95,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = _gameGenreService.Query().SingleOrDefault(q => q.Record.Id == id);
+            GameGenreDTO item = _gameGenreService.Query().SingleOrDefault(q => q.GameId == id);
             SetViewData();
             return View(item);
         }
@@ -103,18 +103,18 @@ namespace HyperplayRealm.Controllers
         // POST: GameGenres/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(GameGenreModel gameGenre)
+        public async Task<IActionResult> Edit(GameGenreDTO gameGenre)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                var result = _gameGenreService.Update(gameGenre.Record);
-                if (result.IsSuccessful)
+                LoadResult result = await _gameGenreService.Update(gameGenre.MapTo());
+                if (result.Result.IsSuccessfull)
                 {
-                    TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = gameGenre.Record.Id });
+                    TempData["Message"] = result.Result.Message;
+                    return RedirectToAction(nameof(Details), new { id = gameGenre.GameId });
                 }
-                ModelState.AddModelError("", result.Message);
+                ModelState.AddModelError("", result.Result.Message);
             }
             SetViewData();
             return View(gameGenre);
@@ -124,18 +124,18 @@ namespace HyperplayRealm.Controllers
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            var item = _gameGenreService.Query().SingleOrDefault(q => q.Record.Id == id);
+            GameGenreDTO item = _gameGenreService.Query().SingleOrDefault(q => q.GameId == id);
             return View(item);
         }
 
         // POST: GameGenres/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            var result = _gameGenreService.Delete(id);
-            TempData["Message"] = result.Message;
+            LoadResult result = await _gameGenreService.Delete(id);
+            TempData["Message"] = result.Result.Message;
             return RedirectToAction(nameof(Index));
         }
 	}
