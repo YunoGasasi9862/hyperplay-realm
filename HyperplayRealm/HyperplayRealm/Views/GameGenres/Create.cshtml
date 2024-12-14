@@ -38,7 +38,7 @@
         <div class="row mb-3">
             <label asp-for="Genre" class="col-2 col-form-label fw-bold"></label>
 			<div class="col-10">
-				<select asp-for="GenreId" class="form-select" asp-items="ViewBag.GenreId">
+				<select asp-for="MapTo().GameId" class="form-select" asp-items="ViewBag.GenreId">
 					<option value="">-- Select --</option>
 				</select>
 				<span asp-validation-for="GenreId" class="text-danger"></span>

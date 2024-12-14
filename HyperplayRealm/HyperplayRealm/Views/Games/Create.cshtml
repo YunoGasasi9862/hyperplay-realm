@@ -50,10 +50,10 @@
         <div class="row mb-3">
             <label asp-for="PublisherName" class="col-2 col-form-label fw-bold"></label>
 			<div class="col-10">
-                <select asp-for="PublisherName" class="form-select" asp-items="ViewBag.PublisherName">
+                <select asp-for="MapTo().PublisherId" class="form-select" asp-items="ViewBag.PublisherId">
 					<option value="">-- Select --</option>
 				</select>
-                <span asp-validation-for="PublisherName" class="text-danger"></span>
+                <span asp-validation-for="MapTo().PublisherId" class="text-danger"></span>
 			</div>
         </div>
         <div class="row mb-3">
@@ -65,15 +65,14 @@
         </div>
 
 @* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. *@
-        @*
         <div class="row mb-3">
-            <label asp-for="ManyToManyRecordIds" class="col-2 col-form-label fw-bold"></label>
-	        <div class="col-10">
-		        <select multiple asp-for="ManyToManyRecordIds" class="form-select" asp-items="ViewBag.ManyToManyRecordIds"></select>
-		        <span asp-validation-for="ManyToManyRecordIds" class="text-danger"></span>
-	        </div>
+            <label asp-for="GenreIds" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10">
+                <select multiple asp-for="GenreIds" class="form-select" asp-items="ViewBag.GenreIds"></select>
+                <span asp-validation-for="GenreIds" class="text-danger"></span>
+            </div>
         </div>
-        *@
+
 
         <hr />  
         <div class="row mb-3">

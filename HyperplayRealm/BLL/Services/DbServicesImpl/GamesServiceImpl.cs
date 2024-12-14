@@ -35,6 +35,7 @@ namespace BLL.Services.Impl
 
         IQueryable<GameDTO> IDBOperations<Game, GameDTO>.Query()
         {
+            //modify this to include GameDevelopers + GameGenres together!!
            return HyperplayRealmDBContext.Games.Select(GameDTO.FromEntity);
         }
 

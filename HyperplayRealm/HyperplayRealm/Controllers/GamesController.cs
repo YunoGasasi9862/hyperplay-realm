@@ -19,18 +19,20 @@ namespace HyperplayRealm.Controllers
         private readonly IDBOperations<Publisher, PublisherDTO> _publisherService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-        //private readonly IManyToManyRecordService _ManyToManyRecordService;
+        private readonly IDBOperations<Genre, GenreDTO> _genreService;
 
         public GamesController(
             IDBOperations<Game, GameDTO> gameService
             , IDBOperations<Publisher, PublisherDTO> publisherService
+            , IDBOperations<Genre, GenreDTO> genreService
 
-            /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //, IManyToManyRecordService ManyToManyRecordService
+        /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
+        //, IManyToManyRecordService ManyToManyRecordService
         )
         {
             _gameService = gameService;
             _publisherService = publisherService;
+            _genreService = genreService;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //_ManyToManyRecordService = ManyToManyRecordService;
@@ -55,11 +57,10 @@ namespace HyperplayRealm.Controllers
 
         protected void SetViewData()
         {
-            // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
-            ViewData["PublisherId"] = new SelectList(_publisherService.Query().ToList(), "Id", "Name");
-            
-            /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
+            ViewData["PublisherId"] = new SelectList(_publisherService.Query().ToList(), "PublisherId", "Name");
+
+            /* Can be uncommented and used for many to many relationships. Store may be replaced with the related entiy name in the controller and views. */
+            ViewBag.GenreIds = new MultiSelectList(_genreService.Query().ToList(), "Id", "GenreName");
         }
 
         // GET: Games/Create

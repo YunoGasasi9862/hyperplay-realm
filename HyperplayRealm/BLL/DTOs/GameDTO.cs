@@ -1,5 +1,6 @@
 ﻿using BLL.Interfaces;
 using BLL.Models;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 
@@ -22,6 +23,8 @@ namespace BLL.DTOs
 
         public string? PublisherName { get; set; }
 
+        public string Genres => string.Join("<br>", MapTo().GameGenres?.Select(ps => ps.Genre?.GenreName));
+
         public static Expression<Func<Game, GameDTO>> FromEntity => entity => new GameDTO
         {
             Id = entity.Id,
@@ -37,5 +40,15 @@ namespace BLL.DTOs
         {
             return new Game { Id = Id, Title = Title, Price = Price, Quantity = Quantity, PublisherId = PublisherId, ReleaseDate = ReleaseDate };
         }
+
+        [DisplayName("Genres")]
+        public List<int> GenreIds {
+            
+            get => MapTo().GameGenres?.Select(gg => gg.GenreId).ToList();
+            
+            set => MapTo().GameGenres = value.Select(v => new GameGenre() { GenreId = v }).ToList();
+        
+        }
+
     }
 }
