@@ -11,11 +11,9 @@ namespace BLL.DTOs
 
         public int GenreId { get; set; }
 
-        [Required]
-        public required Game Game { get; set; }
+        public Game Game { get; set; }
 
-        [Required]
-        public required Genre Genre { get; set; }
+        public Genre Genre { get; set; }
 
         public static Expression<Func<GameGenre, GameGenreDTO>> FromEntity => entity => new GameGenreDTO
         {

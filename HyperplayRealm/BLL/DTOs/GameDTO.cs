@@ -23,7 +23,15 @@ namespace BLL.DTOs
 
         public string? PublisherName { get; set; }
 
-        public string Genres => string.Join("<br>", MapTo().GameGenres?.Select(ps => ps.Genre?.GenreName));
+        public List<string> Genres { get; set;}
+
+        public List<string> Developers { get; set; }
+
+        [DisplayName("Genres")]
+        public string GenreList => string.Join(", ", Genres);
+
+        [DisplayName("Developers")]
+        public string DeveloperList => string.Join(", ", Developers);
 
         public static Expression<Func<Game, GameDTO>> FromEntity => entity => new GameDTO
         {
@@ -34,6 +42,8 @@ namespace BLL.DTOs
             PublisherId = entity.PublisherId,
             ReleaseDate = entity.ReleaseDate,
             PublisherName = entity.Publisher.Name,
+            Genres = entity.GameGenres.Where(gg => gg.GenreId == gg.Genre.Id).Select(gg => gg.Genre.GenreName).ToList(),
+            Developers = entity.GameDevelopers.Where(developer => developer.DeveloperId == developer.Developer.Id).Select(developer => developer.Developer.Name).ToList()
         };
 
         public Game MapTo()
@@ -47,7 +57,6 @@ namespace BLL.DTOs
             get => MapTo().GameGenres?.Select(gg => gg.GenreId).ToList();
             
             set => MapTo().GameGenres = value.Select(v => new GameGenre() { GenreId = v }).ToList();
-        
         }
 
     }

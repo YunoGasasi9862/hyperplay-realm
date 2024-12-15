@@ -5,6 +5,7 @@ using BLL.DTOs;
 using System.Threading.Tasks;
 using BLL.Enums;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services.Impl
 {
@@ -35,8 +36,7 @@ namespace BLL.Services.Impl
 
         IQueryable<GameDTO> IDBOperations<Game, GameDTO>.Query()
         {
-            //modify this to include GameDevelopers + GameGenres together!!
-           return HyperplayRealmDBContext.Games.Select(GameDTO.FromEntity);
+            return HyperplayRealmDBContext.Games.Include(g => g.GameGenres).Include(d => d.GameDevelopers).Select(GameDTO.FromEntity);
         }
 
     }

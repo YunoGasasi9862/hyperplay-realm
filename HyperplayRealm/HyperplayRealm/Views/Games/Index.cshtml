@@ -51,6 +51,12 @@
                         <th>
                             @Html.DisplayNameFor(model => model.PublisherName)
                         </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.GenreList)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DeveloperList)
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -72,6 +78,12 @@
 					        <td>
                                 @Html.DisplayFor(modelItem => item.PublisherName)
 					        </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GenreList)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DeveloperList)
+                            </td>
 					        <td class="text-end w-25">
 						        <a asp-action="Details" asp-route-id="@item.Id">Details</a>&nbsp;|&nbsp;
 						        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>&nbsp;|&nbsp;

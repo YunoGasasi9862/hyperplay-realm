@@ -42,7 +42,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Index()
         {
             // Get collection service logic:
-            var list = _gameService.Query().ToList();
+            List<GameDTO> list = _gameService.Query().ToList();
            
             return View(list);
         }
