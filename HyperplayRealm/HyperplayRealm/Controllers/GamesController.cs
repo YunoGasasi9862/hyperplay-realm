@@ -20,11 +20,13 @@ namespace HyperplayRealm.Controllers
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         private readonly IDBOperations<Genre, GenreDTO> _genreService;
+        private readonly IDBOperations<Developer, DeveloperDTO> _developerService;
 
         public GamesController(
             IDBOperations<Game, GameDTO> gameService
             , IDBOperations<Publisher, PublisherDTO> publisherService
             , IDBOperations<Genre, GenreDTO> genreService
+            , IDBOperations<Developer, DeveloperDTO> developerService
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //, IManyToManyRecordService ManyToManyRecordService
@@ -33,6 +35,7 @@ namespace HyperplayRealm.Controllers
             _gameService = gameService;
             _publisherService = publisherService;
             _genreService = genreService;
+            _developerService = developerService;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //_ManyToManyRecordService = ManyToManyRecordService;
@@ -61,6 +64,9 @@ namespace HyperplayRealm.Controllers
 
             /* Can be uncommented and used for many to many relationships. Store may be replaced with the related entiy name in the controller and views. */
             ViewBag.GenreIds = new MultiSelectList(_genreService.Query().ToList(), "Id", "GenreName");
+
+            ViewBag.DeveloperIds = new MultiSelectList(_developerService.Query().ToList(), "Id", "Name");
+
         }
 
         // GET: Games/Create

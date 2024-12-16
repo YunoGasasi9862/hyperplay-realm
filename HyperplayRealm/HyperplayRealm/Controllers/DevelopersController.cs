@@ -44,7 +44,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = _developerService.Query().SingleOrDefault(q => q.DeveloperId == id);
+            var item = _developerService.Query().SingleOrDefault(q => q.Id == id);
             return View(item);
         }
 
@@ -75,7 +75,7 @@ namespace HyperplayRealm.Controllers
                 if (result.Result.IsSuccessfull)
                 {
                     TempData["Message"] = result.Result.Message;
-                    return RedirectToAction(nameof(Details), new { id = developer.DeveloperId });
+                    return RedirectToAction(nameof(Details), new { id = developer.Id });
                 }
                 ModelState.AddModelError("", result.Result.Message);
             }
@@ -87,7 +87,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            DeveloperDTO item = _developerService.Query().SingleOrDefault(q => q.DeveloperId == id);
+            DeveloperDTO item = _developerService.Query().SingleOrDefault(q => q.Id == id);
             SetViewData();
             return View(item);
         }
@@ -104,7 +104,7 @@ namespace HyperplayRealm.Controllers
                 if (result.Result.IsSuccessfull)
                 {
                     TempData["Message"] = result.Result.Message;
-                    return RedirectToAction(nameof(Details), new { id = developer.DeveloperId });
+                    return RedirectToAction(nameof(Details), new { id = developer.Id });
                 }
                 ModelState.AddModelError("", result.Result.Message);
             }
@@ -116,7 +116,7 @@ namespace HyperplayRealm.Controllers
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            DeveloperDTO item = _developerService.Query().SingleOrDefault(q => q.DeveloperId == id);
+            DeveloperDTO item = _developerService.Query().SingleOrDefault(q => q.Id == id);
             return View(item);
         }
 

@@ -59,5 +59,15 @@ namespace BLL.DTOs
             set => MapTo().GameGenres = value.Select(v => new GameGenre() { GenreId = v }).ToList();
         }
 
+        [DisplayName("Developers")]
+        public List<int> DeveloperIds
+        {
+
+            get => MapTo().GameDevelopers?.Select(gd => gd.DeveloperId).ToList();
+
+            set => MapTo().GameDevelopers = value.Select(v => new GameDeveloper() { DeveloperId = v }).ToList();
+        }
+
+
     }
 }

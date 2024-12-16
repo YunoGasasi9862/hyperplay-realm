@@ -50,7 +50,7 @@
     <hr />
     <form asp-action="Delete">
 	    @Html.AntiForgeryToken()
-        <input type="hidden" asp-for="DeveloperId" />
+        <input type="hidden" asp-for="Id" />
         <input type="submit" value="Yes" class="btn btn-danger" />&nbsp;&nbsp;
         <a asp-action="Index" class="btn btn-outline-danger">No</a>
     </form>

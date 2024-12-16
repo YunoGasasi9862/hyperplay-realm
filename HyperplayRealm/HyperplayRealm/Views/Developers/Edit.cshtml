@@ -28,7 +28,7 @@
     <form asp-action="Edit" autocomplete="off">
 	    @Html.AntiForgeryToken()
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="DeveloperId" />
+        <input type="hidden" asp-for="Id" />
         <div class="row mb-3">
             <label asp-for="Name" class="col-2 col-form-label fw-bold"></label>
 	        <div class="col-10">
@@ -55,7 +55,7 @@
 		        &nbsp;&nbsp;
                 <button type="reset" class="btn btn-outline-primary">Reset</button>
 		        &nbsp;&nbsp;
-                <a asp-action="Delete" asp-route-id="@Model.DeveloperId">Delete</a>
+                <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
                 &nbsp;&nbsp;
 		        <a asp-action="Index">Back to List</a>
 	        </div>
