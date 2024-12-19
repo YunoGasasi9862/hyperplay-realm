@@ -19,4 +19,8 @@
     <ProjectReference Include="..\BLL\BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\images\BG.jpg" />
+  </ItemGroup>
+
 </Project>

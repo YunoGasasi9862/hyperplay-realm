@@ -7,6 +7,7 @@ using BLL.DTOs;
 using BLL.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 // Generated from Custom Template.
 
@@ -17,13 +18,15 @@ namespace HyperplayRealm.Controllers
         // Service injections:
         private readonly IDBOperations<User, UserDTO> m_userOperations;
         private readonly IAuthentication m_authentication;
+        private readonly IEncrypt m_encrypt;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
         public UsersController(
             IDBOperations<User, UserDTO> userOperations,
-            IAuthentication authentication
+            IAuthentication authentication,
+            IEncrypt encrypt
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService
@@ -31,6 +34,7 @@ namespace HyperplayRealm.Controllers
         {
             m_userOperations = userOperations;
             m_authentication = authentication;
+            m_encrypt = encrypt;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //_ManyToManyRecordService = ManyToManyRecordService;
@@ -49,11 +53,32 @@ namespace HyperplayRealm.Controllers
             UserDTO userDto = m_userOperations.Query().SingleOrDefault();
             if (userDto is not null)
             {
+                List<Claim> claims = new List<Claim>()
+                {
+                    new Claim(ClaimTypes.Name, userDto.Username),
+                    new Claim("Id", userDto.Id.ToString())
+                };
+
+                claims.AddRange(userDto.GetRoleClaims());
+
+                ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme); // CookieAuthenticationDefaults.AuthenticationScheme = cookie name
+                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, await m_authentication.Authenticate(user));
                 return RedirectToAction("Index", "Home");
             }
 
             return View();
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
         }
 
     }

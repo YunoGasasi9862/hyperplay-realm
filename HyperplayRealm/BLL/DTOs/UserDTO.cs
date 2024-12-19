@@ -2,6 +2,7 @@
 using BLL.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
+using System.Security.Claims;
 namespace BLL.DTOs
 {
     public class UserDTO
@@ -62,9 +63,21 @@ namespace BLL.DTOs
             };
         }
 
+
         private static List<string> GetRoleNames(User entity)
         {
             return entity.UserRoles.Select(role => role.Role.Name).ToList();
+        }
+
+        public List<Claim> GetRoleClaims()
+        {
+            List<Claim> claims = new List<Claim>();
+            foreach(string role in Roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            return claims;
         }
 
     }

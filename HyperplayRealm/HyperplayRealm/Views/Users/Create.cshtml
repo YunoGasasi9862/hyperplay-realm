@@ -1,90 +1,81 @@
 ﻿@model UserDTO
 
-@* Generated from Custom Template. *@
-@* Model namespace using directive should be added to _ViewImports.cshtml. *@
-
 @{
-    var containerDivClass = "container";
-    var dateTimePickerClass = "datetimepicker";
-}
-@{
-    ViewData["Title"] = "User Create";
+    ViewData["Title"] = "Register";
+    var containerDivClass = "container my-5";
+    var formGroupClass = "form-group mb-3";
+    var labelClass = "form-label fw-bold";
+    var inputClass = "form-control shadow-sm";
+    var validationClass = "text-danger";
+    var btnPrimaryClass = "btn btn-primary btn-lg px-5";
+    var btnOutlineClass = "btn btn-outline-secondary btn-lg px-5";
 }
 
 <div class="@containerDivClass">
-    <h1>@ViewData["Title"]</h1>
-    <hr />
+    <div class="text-center mb-4">
+        <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
+        <p class="text-muted">Create a new account and join us!</p>
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            @if (TempData["Message"] is not null)
+            {
+                <p class="text-danger text-center">
+                    @TempData["Message"]
+                </p>
+            }
+            <form asp-action="Register" autocomplete="off">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="@validationClass mb-3"></div>
+
+                <div class="@formGroupClass">
+                    <label asp-for="Name" class="@labelClass"></label>
+                    <input asp-for="Name" class="@inputClass" placeholder="Enter your first name" />
+                    <span asp-validation-for="Name" class="@validationClass"></span>
+                </div>
+
+                <div class="@formGroupClass">
+                    <label asp-for="Surname" class="@labelClass"></label>
+                    <input asp-for="Surname" class="@inputClass" placeholder="Enter your last name" />
+                    <span asp-validation-for="Surname" class="@validationClass"></span>
+                </div>
+
+                <div class="@formGroupClass">
+                    <label asp-for="Username" class="@labelClass"></label>
+                    <input asp-for="Username" class="@inputClass" placeholder="Choose a username" />
+                    <span asp-validation-for="Username" class="@validationClass"></span>
+                </div>
+
+                <div class="@formGroupClass">
+                    <label asp-for="Email" class="@labelClass"></label>
+                    <input asp-for="Email" type="email" class="@inputClass" placeholder="Enter your email" />
+                    <span asp-validation-for="Email" class="@validationClass"></span>
+                </div>
+
+                <div class="@formGroupClass">
+                    <label asp-for="Password" class="@labelClass"></label>
+                    <input asp-for="Password" type="password" class="@inputClass" placeholder="Choose a strong password" />
+                    <span asp-validation-for="Password" class="@validationClass"></span>
+                </div>
+
+                <div class="@formGroupClass">
+                    <label asp-for="ProfilePicturePath" class="@labelClass"></label>
+                    <input asp-for="ProfilePicturePath" type="file" class="@inputClass" />
+                    <span asp-validation-for="ProfilePicturePath" class="@validationClass"></span>
+                </div>
+
+                <hr class="my-4" />
+                <div class="text-center">
+                    <button type="submit" class="@btnPrimaryClass">Register</button>
+                    &nbsp;&nbsp;
+                    <button type="reset" class="@btnOutlineClass">Reset</button>
+                    &nbsp;&nbsp;
+                    <a asp-action="Index" class="btn btn-link text-muted">Back to Home</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-
-<div class="@containerDivClass">
-    @if (TempData["Message"] is not null)
-    {
-    <p class="text-danger">
-        @TempData["Message"]
-    </p>
-    }
-    <form asp-action="Create" autocomplete="off">
-		@Html.AntiForgeryToken()
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="row mb-3">
-            <label asp-for="Name" class="col-2 col-form-label fw-bold"></label>
-			<div class="col-10">
-			    <input asp-for="Name" class="form-control" />
-				<span asp-validation-for="Name" class="text-danger"></span>
-			</div>
-        </div>
-        <div class="row mb-3">
-            <label asp-for="Surname" class="col-2 col-form-label fw-bold"></label>
-			<div class="col-10">
-			    <input asp-for="Surname" class="form-control" />
-				<span asp-validation-for="Surname" class="text-danger"></span>
-			</div>
-        </div>
-        <div class="row mb-3">
-            <label asp-for="Email" class="col-2 col-form-label fw-bold"></label>
-			<div class="col-10">
-			    <input asp-for="Email" class="form-control" />
-				<span asp-validation-for="Email" class="text-danger"></span>
-			</div>
-        </div>
-        <div class="row mb-3">
-            <label asp-for="Password" class="col-2 col-form-label fw-bold"></label>
-			<div class="col-10">
-			    <input asp-for="Password" class="form-control" />
-				<span asp-validation-for="Password" class="text-danger"></span>
-			</div>
-        </div>
-        <div class="row mb-3">
-            <label asp-for="ProfilePicturePath" class="col-2 col-form-label fw-bold"></label>
-			<div class="col-10">
-			    <input asp-for="ProfilePicturePath" class="form-control" />
-				<span asp-validation-for="ProfilePicturePath" class="text-danger"></span>
-			</div>
-        </div>
-
-@* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. *@
-        @*
-        <div class="row mb-3">
-            <label asp-for="ManyToManyRecordIds" class="col-2 col-form-label fw-bold"></label>
-	        <div class="col-10">
-		        <select multiple asp-for="ManyToManyRecordIds" class="form-select" asp-items="ViewBag.ManyToManyRecordIds"></select>
-		        <span asp-validation-for="ManyToManyRecordIds" class="text-danger"></span>
-	        </div>
-        </div>
-        *@
-
-        <hr />  
-        <div class="row mb-3">
-			<div class="offset-2 col-10">
-                <button type="submit" class="btn btn-primary">Save</button>
-				&nbsp;&nbsp;
-                <button type="reset" class="btn btn-outline-primary">Reset</button>
-				&nbsp;&nbsp;
-				<a asp-action="Index">Back to List</a>
-			</div>
-        </div>
-    </form>
-</div>  
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

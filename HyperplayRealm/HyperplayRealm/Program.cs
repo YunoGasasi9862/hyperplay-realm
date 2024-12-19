@@ -6,6 +6,7 @@ using BLL.Load;
 using BLL.Models;
 using BLL.Services;
 using BLL.Services.Authentication;
+using BLL.Services.Encrytpion;
 using BLL.Services.HttpService;
 using BLL.Services.Impl;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -38,7 +39,7 @@ builder.Services.AddScoped<IDBOperations<GameGenre, GameGenreDTO>, GameGenresSer
 builder.Services.AddScoped<IDBOperations<Role, RoleDTO>, RolesServiceImpl>();
 builder.Services.AddScoped<IDBOperations<UserRole, UserRoleDTO>, UserRolesServiceImpl>();
 builder.Services.AddScoped<IDBOperations<Purchase, PurchaseDTO>, PurchasesServiceImpl>();
-
+builder.Services.AddSingleton<IEncrypt, EncryptionServiceImpl>();
 
 
 // App Settings
