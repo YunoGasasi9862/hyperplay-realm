@@ -8,6 +8,8 @@ using BLL.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
+using BLL.Load;
 
 // Generated from Custom Template.
 
@@ -74,6 +76,25 @@ namespace HyperplayRealm.Controllers
         {
             return View();
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(UserDTO user)
+        {
+            if (ModelState.IsValid)
+            {
+                user.Password = await m_encrypt.Encrypt(user.Password);
+                Console.WriteLine($"New Password {user.Password}");
+                LoadResult loadResult = await m_userOperations.Create(user.MapTo());
+                TempData["Message"] = loadResult.Result.Message;
+                if (loadResult.Result.IsSuccessfull)
+                {
+                    return RedirectToAction(nameof(Details), new { id = user.Id });
+                }
+            }
+
+            return View(user);
+        }
+
 
         public async Task<IActionResult> Logout()
         {

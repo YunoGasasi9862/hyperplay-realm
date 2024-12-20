@@ -28,7 +28,7 @@ namespace BLL.DTOs
 
         public bool RememberMe { get; set; }
 
-        public List<string> Roles { get; set; }
+        public List<string> Roles { get; set; } = new List<string>();
 
         public static Expression<Func<User, UserDTO>> FromEntity => entity => new UserDTO
         {

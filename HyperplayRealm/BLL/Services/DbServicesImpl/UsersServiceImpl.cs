@@ -3,6 +3,7 @@ using BLL.Load;
 using BLL.Models;
 using BLL.DTOs;
 using System.Threading.Tasks;
+using BLL.Enums;
 
 namespace BLL.Services.Impl
 {
@@ -14,9 +15,19 @@ namespace BLL.Services.Impl
 
         }
 
-        public Task<LoadResult> Create(User type)
+        public async Task<LoadResult> Create(User type)
         {
-            throw new NotImplementedException();
+            bool userExists = HyperplayRealmDBContext.Users.Select(u => u.Username == type.Username || u.Email == type.Email).Any();
+            Console.WriteLine(type.ToString());
+
+            if (userExists)
+            {
+                return (LoadResult) await Load(ResultEnum.ERROR, false);
+            }
+
+            HyperplayRealmDBContext.Users.Add(type);
+            await HyperplayRealmDBContext.SaveChangesAsync();
+            return (LoadResult)await Load(ResultEnum.SUCCESS, true);
         }
 
         public Task<LoadResult> Delete(int id)
