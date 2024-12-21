@@ -10,9 +10,10 @@ namespace BLL.Services.Authentication
     {
         public async Task<ClaimsPrincipal> Authenticate(UserDTO user)
         {
+            Console.WriteLine(user);
             List<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Name, user.Username),
             };
 
             claims = await AddRoles(claims, user);

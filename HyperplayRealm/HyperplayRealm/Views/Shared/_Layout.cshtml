@@ -23,47 +23,67 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                @*PLEASE MAKE SURE YOU DONT ADD THESE CONTROLLERS AT THE TOP. ADD THE RELEVANT ONES, AND HIDE THE CRUD OPERATIONS BASED ON ROLES!!*@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Games" asp-action="Index">Games</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Publishers" asp-action="Index">Publishers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Developers" asp-action="Index">Developers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Genres" asp-action="Index">Genres</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="UserRoles" asp-action="Index">UserRoles</a>
-                        </li>
+                          @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Publishers" asp-action="Index">Publishers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Developers" asp-action="Index">Developers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="UserRoles" asp-action="Index">UserRoles</a>
+                                </li>
+                            }
+
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Purchases" asp-action="Index">Purchases</a>
                         </li>
                     </ul>
                 </div>
-                @*PLEASE MAKE SURE YOU DONT ADD THESE CONTROLLERS AT THE TOP. ADD THE RELEVANT ONES, AND HIDE THE CRUD OPERATIONS BASED ON ROLES!!*@
 
-
-                <!-- User: - also add the login to users controller, instead of home for login! -->
+                <!-- User: -->
                 <div class="navbar-text">
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Login</a>
-                        </li>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Login</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item pt-2 pe-2">
+                                <span>@User.Identity.Name</span>
+                            </li>
+                            @**https://localhost:7086/images/DP.jpg.*@ 
+                            <li class="nav-item">
+                                <img src="@Url.Content(User.Claims.FirstOrDefault(c => c.Type == "ProfilePicture")?.Value)" alt="Profile Picture" class="rounded-circle" width="30" height="30" />
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Logout">Logout</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

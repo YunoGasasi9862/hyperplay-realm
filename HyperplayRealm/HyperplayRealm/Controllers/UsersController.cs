@@ -52,19 +52,20 @@ namespace HyperplayRealm.Controllers
         public async Task<IActionResult> Login(UserDTO user)
         {
             //use hashed password and then compare!
-            UserDTO userDto = m_userOperations.Query().SingleOrDefault();
+            string password = await m_encrypt.Encrypt(user.Password);
+            Console.WriteLine(password);
+            UserDTO userDto = m_userOperations.Query().SingleOrDefault(u => u.Username == user.Username && u.Password == password);
+            Console.WriteLine(userDto.ToString());
             if (userDto is not null)
             {
                 List<Claim> claims = new List<Claim>()
                 {
                     new Claim(ClaimTypes.Name, userDto.Username),
-                    new Claim("Id", userDto.Id.ToString())
+                    new Claim("Id", userDto.Id.ToString()),
+                    new Claim("ProfilePicture", userDto.ProfilePicturePath)
                 };
 
                 claims.AddRange(userDto.GetRoleClaims());
-
-                ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme); // CookieAuthenticationDefaults.AuthenticationScheme = cookie name
-                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, await m_authentication.Authenticate(user));
                 return RedirectToAction("Index", "Home");
             }
@@ -83,7 +84,12 @@ namespace HyperplayRealm.Controllers
             if (ModelState.IsValid)
             {
                 user.Password = await m_encrypt.Encrypt(user.Password);
-                Console.WriteLine($"New Password {user.Password}");
+
+                if (!string.IsNullOrEmpty(user.ProfilePicturePath))
+                {
+                    user.ProfilePicturePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", user.ProfilePicturePath);
+                }
+
                 LoadResult loadResult = await m_userOperations.Create(user.MapTo());
                 TempData["Message"] = loadResult.Result.Message;
                 if (loadResult.Result.IsSuccessfull)
