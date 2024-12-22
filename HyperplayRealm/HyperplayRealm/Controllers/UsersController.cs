@@ -58,15 +58,7 @@ namespace HyperplayRealm.Controllers
             Console.WriteLine(userDto.ToString());
             if (userDto is not null)
             {
-                List<Claim> claims = new List<Claim>()
-                {
-                    new Claim(ClaimTypes.Name, userDto.Username),
-                    new Claim("Id", userDto.Id.ToString()),
-                    new Claim("ProfilePicture", userDto.ProfilePicturePath)
-                };
-
-                claims.AddRange(userDto.GetRoleClaims());
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, await m_authentication.Authenticate(user));
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, await m_authentication.Authenticate(userDto));
                 return RedirectToAction("Index", "Home");
             }
 
@@ -87,7 +79,7 @@ namespace HyperplayRealm.Controllers
 
                 if (!string.IsNullOrEmpty(user.ProfilePicturePath))
                 {
-                    user.ProfilePicturePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", user.ProfilePicturePath);
+                    user.ProfilePicturePath = Path.Combine("images", user.ProfilePicturePath).Replace("\\", "/");
                 }
 
                 LoadResult loadResult = await m_userOperations.Create(user.MapTo());

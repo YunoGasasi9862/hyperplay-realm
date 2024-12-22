@@ -72,6 +72,7 @@ namespace BLL.DTOs
         public List<Claim> GetRoleClaims()
         {
             List<Claim> claims = new List<Claim>();
+
             foreach(string role in Roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));

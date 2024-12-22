@@ -8,6 +8,24 @@
     ViewData["Title"] = "Game List";
 }
 
+<style>
+    body {
+        background-image: url('@Url.Content("~/images/Geralt.jpg")');
+        background-size: cover;
+        background-position: center center;
+        animation: backgroundMove 15s ease-in-out infinite, backgroundZoom 20s infinite alternate;
+        background-attachment: fixed; /* Keeps the background fixed while scrolling */
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Optional: Adjust hero section to ensure text stays readable */
+    .hero-section {
+        background-color: rgba(0, 0, 0, 0.6); /* Dark overlay for better text visibility */
+        padding: 5rem 0;
+    }
+</style>
+
 <div class="bg-gradient-primary-to-secondary text-black text-center py-4 shadow-lg">
     <h1 class="display-4">@ViewData["Title"]</h1>
     <p class="lead">Manage your games with ease</p>

@@ -10,27 +10,19 @@ namespace BLL.Services.Authentication
     {
         public async Task<ClaimsPrincipal> Authenticate(UserDTO user)
         {
-            Console.WriteLine(user);
+            Console.WriteLine(user.ProfilePicturePath);
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, user.Username),
+                new Claim("Id", user.Id.ToString()),
+                new Claim("ProfilePicture", user.ProfilePicturePath ?? Constants.Constants.DEFAULT_PROFILE)
             };
 
-            claims = await AddRoles(claims, user);
+            claims.AddRange(user.GetRoleClaims());
 
             ClaimsIdentity userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme); //cookie name
 
             return await Task.FromResult(new ClaimsPrincipal(userIdentity));
-        }
-
-        private async Task<List<Claim>> AddRoles(List<Claim> existingClaims, UserDTO user)
-        {
-            foreach(string role in user.Roles)
-            {
-                existingClaims.Add(new Claim(ClaimTypes.Role, role));
-            }
-
-            return await Task.FromResult(existingClaims);
         }
     }
 }

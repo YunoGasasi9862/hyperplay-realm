@@ -19,6 +19,7 @@ namespace BLL.Services.Impl
         public async Task<LoadResult> Create(User type)
         {
             bool userExists = HyperplayRealmDBContext.Users.Any(u => u.Username == type.Username || u.Email == type.Email);
+
             Console.WriteLine(type.ToString());
 
             if (userExists)
@@ -30,7 +31,6 @@ namespace BLL.Services.Impl
 
             await HyperplayRealmDBContext.SaveChangesAsync();
 
-            //create UserRoleEntry
             if(!(await CreateUserRole(type)).Result.IsSuccessfull)
             {
                 return (LoadResult)await Load(ResultEnum.ERROR, false);
@@ -64,6 +64,7 @@ namespace BLL.Services.Impl
             }
 
             HyperplayRealmDBContext.UserRoles.Add(new UserRole { RoleId = Constants.Constants.DEFAULT_USER_ROLE, UserId = user.Id });
+
             await HyperplayRealmDBContext.SaveChangesAsync();
 
             return (LoadResult)await Load(ResultEnum.SUCCESS, true);
