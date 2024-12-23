@@ -1,8 +1,5 @@
 ﻿@model GameDTO
 
-@* Generated from Custom Template *@
-@* Model namespace using directive should be added to _ViewImports.cshtml. *@
-
 @{
     var dateTimePickerClass = "datetimepicker";
     var containerDivClass = "container py-4";
@@ -13,12 +10,187 @@
     ViewData["Title"] = pageTitle;
 }
 
-<div class="bg-dark text-white py-5 text-center shadow-lg">
-    <h1 class="display-4">@pageTitle</h1>
-    <p class="lead">Create a new game entry for your store</p>
+@* Inline CSS Styling *@
+<style>
+    /* Global Styling */
+    body {
+        background-image: url('@Url.Content("~/images/LIS.png")');
+        background-size: cover;
+        background-position: center center;
+        animation: backgroundMove 15s ease-in-out infinite, backgroundZoom 20s infinite alternate;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Header Styling (Make it Transparent) */
+    .bg-dark {
+        background: rgba(0, 0, 0, 0.6); /* Transparent background */
+        padding: 3rem 1rem;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+        .bg-dark h1 {
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .bg-dark p {
+            font-size: 1.5rem;
+            color: #ecf0f1;
+            margin-top: 10px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+    /* Form Container */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .card {
+        background: rgba(28, 38, 78, 0.8); /* Use rgba for transparency (adjust alpha for more or less opacity) */
+        color: white; /* Ensure the text is white on the gradient */
+        border: none; /* Remove border for cleaner look */
+        border-radius: 15px; /* Keep the rounded corners */
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Slight shadow to make the card stand out */
+    }
+
+    .card-body {
+        background: rgba(0, 0, 0, 0.4); /* Add slight overlay to make text more readable */
+        border-radius: 15px;
+        padding: 2rem;
+    }
+
+    /* Form Styling */
+    form {
+        background-color: transparent;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
+        margin-top: 20px;
+    }
+
+        form .row {
+            margin-bottom: 20px;
+        }
+
+        form label {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        form input,
+        form select {
+            background-color: #34495e;
+            color: #fff;
+            border: 1px solid #2c3e50;
+            border-radius: 10px;
+            padding: 12px;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+            form input:focus,
+            form select:focus {
+                border-color: #3498db;
+                outline: none;
+            }
+
+    /* Button Styling */
+    button,
+    a.btn {
+        font-size: 1.1rem;
+        padding: 12px 20px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+
+        button[type="submit"],
+        button[type="reset"] {
+            background: linear-gradient(45deg, #1e3c72, #2a5298); /* Gradient for the submit button */
+            border: none; /* Remove border */
+            color: white; /* White text color */
+            font-weight: bold; /* Make the text bold */
+        }
+
+            button[type="submit"]:hover,
+            button[type="reset"]:hover {
+                background: linear-gradient(45deg, #2a5298, #1e3c72); /* Reverse the gradient on hover */
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+    a.btn {
+        background-color: transparent;
+        color: #fff;
+        text-decoration: none;
+        display: inline-block;
+        padding: 12px 20px;
+    }
+
+        button:active,
+        a.btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Validation Errors */
+    .text-danger {
+        font-size: 0.9rem;
+        color: #ff5252; /* Change error text to red for better visibility */
+    }
+
+    /* Message alert */
+    .alert {
+        font-size: 1rem;
+        border-radius: 10px;
+    }
+
+    .alert-danger {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Center the form */
+    .registration-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* Align to the top instead of center */
+        min-height: 100vh; /* Ensure the container takes full height */
+        margin-top: -20px; /* Push the form up a little */
+    }
+
+    .card {
+        width: 100%;
+        max-width: 700px; /* Control the maximum width of the card */
+    }
+
+    .custom-transparent-header {
+        background: rgba(0, 0, 0, 0.6); /* 60% opacity black background */
+        padding: 40px 0; /* Adjust padding as needed */
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
+    }
+</style>
+
+<div class="custom-transparent-header text-white shadow-lg">
+    <div class="container text-center">
+        <h1 class="display-4">@pageTitle</h1>
+        <p class="lead">Create a new game entry for your store</p>
+    </div>
 </div>
 
-<div class="@containerDivClass">
+
+<div class="@containerDivClass registration-container">
     @if (TempData["Message"] is not null)
     {
         <div class="alert alert-danger text-center">
@@ -26,14 +198,14 @@
         </div>
     }
 
-    <form asp-action="Create" autocomplete="off" class="bg-dark text-white p-5 rounded shadow">
+    <form asp-action="Create" autocomplete="off" class="card">
         @Html.AntiForgeryToken()
         <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
 
         <div class="@formRowClass">
             <label asp-for="Title" class="@formLabelClass"></label>
             <div class="@formInputDivClass">
-                <input asp-for="Title" class="form-control bg-secondary text-white border-0 shadow-sm" />
+                <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
         </div>
@@ -41,7 +213,7 @@
         <div class="@formRowClass">
             <label asp-for="Price" class="@formLabelClass"></label>
             <div class="@formInputDivClass">
-                <input asp-for="Price" class="form-control bg-secondary text-white border-0 shadow-sm" />
+                <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
         </div>
@@ -49,7 +221,7 @@
         <div class="@formRowClass">
             <label asp-for="Quantity" class="@formLabelClass"></label>
             <div class="@formInputDivClass">
-                <input asp-for="Quantity" class="form-control bg-secondary text-white border-0 shadow-sm" />
+                <input asp-for="Quantity" class="form-control" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
         </div>
@@ -57,7 +229,7 @@
         <div class="@formRowClass">
             <label asp-for="PublisherName" class="@formLabelClass">Publisher</label>
             <div class="@formInputDivClass">
-                <select asp-for="MapTo().PublisherId" class="form-select bg-secondary text-white border-0 shadow-sm" asp-items="ViewBag.PublisherId">
+                <select asp-for="MapTo().PublisherId" class="form-select" asp-items="ViewBag.PublisherId">
                     <option value="">-- Select --</option>
                 </select>
                 <span asp-validation-for="MapTo().PublisherId" class="text-danger"></span>
@@ -67,7 +239,7 @@
         <div class="@formRowClass">
             <label asp-for="ReleaseDate" class="@formLabelClass">Release Date</label>
             <div class="@formInputDivClass">
-                <input asp-for="ReleaseDate" class="form-control bg-secondary text-white border-0 shadow-sm @dateTimePickerClass" type="text" />
+                <input asp-for="ReleaseDate" class="form-control @dateTimePickerClass" type="text" />
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
             </div>
         </div>
@@ -75,7 +247,7 @@
         <div class="@formRowClass">
             <label asp-for="GenreIds" class="@formLabelClass">Genres</label>
             <div class="@formInputDivClass">
-                <select multiple asp-for="GenreIds" class="form-select bg-secondary text-white border-0 shadow-sm" asp-items="ViewBag.GenreIds"></select>
+                <select multiple asp-for="GenreIds" class="form-select" asp-items="ViewBag.GenreIds"></select>
                 <span asp-validation-for="GenreIds" class="text-danger"></span>
             </div>
         </div>
@@ -83,20 +255,14 @@
         <div class="@formRowClass">
             <label asp-for="DeveloperIds" class="@formLabelClass">Developers</label>
             <div class="@formInputDivClass">
-                <select multiple asp-for="DeveloperIds" class="form-select bg-secondary text-white border-0 shadow-sm" asp-items="ViewBag.DeveloperIds"></select>
+                <select multiple asp-for="DeveloperIds" class="form-select" asp-items="ViewBag.DeveloperIds"></select>
                 <span asp-validation-for="DeveloperIds" class="text-danger"></span>
             </div>
         </div>
 
-        <div class="text-center mt-5">
-            <button type="submit" class="btn btn-success btn-lg shadow">Save</button>
-            <button type="reset" class="btn btn-outline-light btn-lg ms-3">Reset</button>
-            <a asp-action="Index" class="btn btn-secondary btn-lg ms-3">Back to List</a>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary mx-2">Create</button>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-light btn-lg ms-3">Back</a>
         </div>
     </form>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <partial name="_DateTimePicker" />
-}

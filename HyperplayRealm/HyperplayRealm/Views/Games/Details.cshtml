@@ -1,85 +1,264 @@
 ﻿@model GameDTO
 
-@* Generated from Custom Template. *@
-@* Model namespace using directive should be added to _ViewImports.cshtml. *@
-
 @{
-    var containerDivClass = "container";
-}
-@{
+    var containerDivClass = "container my-5";  // Bootstrap container with margin
     ViewData["Title"] = "Game Details";
 }
 
+<!-- Custom Page Styling -->
+<style>
+    body {
+        background-color: #1a1a1a;
+        background-image: url('@Url.Content("~/images/De")');
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+        color: #f0f0f0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .add-game-button {
+        background: linear-gradient(90deg, #6a11cb, #2575fc); /* Same as table header gradient */
+        color: #fff;
+        border: none;
+        font-weight: bold;
+        border-radius: 50px;
+        padding: 10px 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .add-game-button:hover {
+            transform: scale(1.1); /* Slight zoom effect */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* More prominent shadow */
+            background: linear-gradient(90deg, #2575fc, #6a11cb); /* Reverse the gradient on hover */
+        }
+
+        .add-game-button:active {
+            transform: scale(1); /* Restore size when clicked */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Common Button Gradient (Matches Table Header) */
+    .btn-header-gradient {
+        background: linear-gradient(90deg, #6a11cb, #2575fc); /* Same gradient as table header */
+        color: white; /* Text color */
+        border: none; /* Clean look */
+        padding: 0.4rem 0.8rem; /* Adjust padding for smaller buttons */
+        font-weight: bold; /* Bold text for emphasis */
+        border-radius: 0.3rem; /* Subtle rounding */
+        text-transform: uppercase; /* Optional: Make text uppercase */
+        transition: all 0.3s ease-in-out; /* Smooth hover effect */
+        font-size: 0.875rem; /* Slightly smaller text for compact look */
+    }
+
+        /* Hover Effect for All Buttons */
+        .btn-header-gradient:hover {
+            background: linear-gradient(90deg, #2575fc, #6a11cb); /* Reverse gradient */
+            transform: scale(1.05); /* Slightly enlarge */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Add shadow effect */
+        }
+
+        /* Optional: Add slight differentiation for Delete */
+        .btn-header-gradient.btn-danger {
+            background: linear-gradient(90deg, #cb2d3e, #ef473a); /* Red gradient for danger */
+        }
+
+            .btn-header-gradient.btn-danger:hover {
+                background: linear-gradient(90deg, #ef473a, #cb2d3e); /* Reverse red gradient */
+            }
+
+    .card {
+        background: rgba(0, 0, 0, 0.75);
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+        background-color: #444444;
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: bold;
+        padding: 1rem;
+        border-radius: 15px 15px 0 0;
+        text-align: center;
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        text-align: center;
+        color: #ffb86c;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 30px;
+        font-weight: bold;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .details-row {
+        margin-bottom: 20px;
+        padding: 10px 0;
+    }
+
+    .details-label {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #ffb86c;
+    }
+
+    .details-value {
+        font-size: 1.2rem;
+        color: #e4e4e4;
+    }
+
+    .add-game-button {
+        background: linear-gradient(90deg, #6a11cb, #2575fc); /* Gradient */
+        color: #fff;
+        border: none;
+        font-weight: bold;
+        border-radius: 50px;
+        padding: 10px 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        text-decoration: none; /* Remove underline */
+    }
+
+        /* Push effect on hover */
+        .add-game-button:hover {
+            transform: scale(1.1); /* Slight zoom effect */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* More prominent shadow */
+            background: linear-gradient(90deg, #2575fc, #6a11cb); /* Reverse gradient on hover */
+        }
+
+        /* Restore normal size on active click */
+        .add-game-button:active {
+            transform: scale(1); /* Restore size when clicked */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    .alert-danger {
+        background-color: rgba(255, 0, 0, 0.7);
+        border-radius: 10px;
+        padding: 1rem;
+        color: white;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .btn {
+        font-size: 1rem;
+        text-transform: uppercase;
+        font-weight: 500;
+        padding: 10px 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+    .btn-link {
+        color: #f0f0f0;
+        font-size: 1.1rem;
+        text-decoration: none;
+    }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+    .text-center {
+        text-align: center;
+    }
+</style>
+
 <div class="@containerDivClass">
     <h1>@ViewData["Title"]</h1>
-    <hr />
-</div>
 
-@if (Model is not null)
-{
-<div class="@containerDivClass">
-    @if (TempData["Message"] is not null)
+    <hr class="border-top border-light opacity-50" />
+
+    @if (Model is not null)
     {
-    <p class="text-danger">
-        @TempData["Message"]
-    </p>
+        @if (TempData["Message"] is not null)
+        {
+            <div class="alert alert-danger text-center p-3">
+                @TempData["Message"]
+            </div>
+        }
+
+        <!-- Card for Game Details -->
+        <div class="card shadow-lg">
+            <div class="card-header">
+                Game Information
+            </div>
+            <div class="card-body">
+                <!-- Display Game Details -->
+                <div class="row details-row">
+                    <div class="col-md-3 details-label">
+                        @Html.DisplayNameFor(model => model.Title)
+                    </div>
+                    <div class="col-md-9 details-value">
+                        @Html.DisplayFor(model => model.Title)
+                    </div>
+                </div>
+
+                <div class="row details-row">
+                    <div class="col-md-3 details-label">
+                        @Html.DisplayNameFor(model => model.Price)
+                    </div>
+                    <div class="col-md-9 details-value">
+                        @Html.DisplayFor(model => model.Price)
+                    </div>
+                </div>
+
+                <div class="row details-row">
+                    <div class="col-md-3 details-label">
+                        @Html.DisplayNameFor(model => model.Quantity)
+                    </div>
+                    <div class="col-md-9 details-value">
+                        @Html.DisplayFor(model => model.Quantity)
+                    </div>
+                </div>
+
+                <div class="row details-row">
+                    <div class="col-md-3 details-label">
+                        @Html.DisplayNameFor(model => model.ReleaseDate)
+                    </div>
+                    <div class="col-md-9 details-value">
+                        @Html.DisplayFor(model => model.ReleaseDate)
+                    </div>
+                </div>
+
+                <div class="row details-row">
+                    <div class="col-md-3 details-label">
+                        @Html.DisplayNameFor(model => model.PublisherName)
+                    </div>
+                    <div class="col-md-9 details-value">
+                        @Html.DisplayFor(model => model.PublisherName)
+                    </div>
+                </div>
+
+                <hr class="border-top border-light opacity-50" />
+
+                <!-- Action Buttons -->
+                <div class="text-center">
+                    <a class="btn btn-header-gradient btn-sm shadow-sm" asp-action="Edit" asp-route-id="@Model.Id">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </a>
+                    <a class="btn btn-header-gradient btn-sm shadow-sm" asp-action="Delete" asp-route-id="@Model.Id">
+                        <i class="bi bi-trash"></i> Delete
+                    </a>
+                    <a class="btn btn-header-gradient btn-sm shadow-sm" asp-action="Index">
+                        <i class="bi bi-arrow-left-circle"></i> Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
     }
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.Title)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.Title)
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.Price)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.Price)
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.Quantity)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.Quantity)
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.ReleaseDate)
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.PublisherName)
-        </div>
-        <div class="col-10">
-                @Html.DisplayFor(model => model.PublisherName)
-        </div>
-    </div>
-
-@* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. *@
-    @*
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            <b>@Html.DisplayNameFor(model => model.ManyToManyRecords)</b>
-        </div>
-        <div class="col-10">
-            @Html.Raw(Model.ManyToManyRecords)
-        </div>
-    </div>
-    *@
-
-    <hr /> 
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>&nbsp;|&nbsp;
-    <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>&nbsp;|&nbsp;
-    <a asp-action="Index">Back to List</a>
 </div>
-}

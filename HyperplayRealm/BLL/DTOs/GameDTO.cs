@@ -23,6 +23,8 @@ namespace BLL.DTOs
 
         public string? PublisherName { get; set; }
 
+        public string GameLogo { get; set; }
+
         public List<string> Genres { get; set;}
 
         public List<string> Developers { get; set; }

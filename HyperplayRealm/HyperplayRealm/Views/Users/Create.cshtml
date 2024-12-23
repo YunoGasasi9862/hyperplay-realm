@@ -11,13 +11,95 @@
     var btnOutlineClass = "btn btn-outline-secondary btn-lg px-5";
 }
 
-<div class="@containerDivClass">
-    <div class="text-center mb-4">
-        <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
-        <p class="text-muted">Create a new account and join us!</p>
-    </div>
+<style>
+    body {
+        background-image: url('@Url.Content("~/images/Witcher.jpg")'), linear-gradient(45deg, #6a0dad, #9b4fd7, #d6aefc, #f3c6f8);
+        background-size: cover, 400% 400%; /* Make sure the image and gradient scale properly */
+        background-position: center center; /* Ensure the image is centered */
+        animation: backgroundMove 15s ease-in-out infinite, backgroundZoom 20s infinite alternate;
+        background-attachment: fixed; /* Keeps the background fixed while scrolling */
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
+
+
+    .card {
+        background: rgba(28, 38, 78, 0.8); /* Use rgba for transparency (adjust alpha for more or less opacity) */
+        color: white; /* Ensure the text is white on the gradient */
+        border: none; /* Remove border for cleaner look */
+        border-radius: 15px; /* Keep the rounded corners */
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Slight shadow to make the card stand out */
+    }
+
+    .card-body {
+        background: rgba(0, 0, 0, 0.4); /* Add slight overlay to make text more readable */
+        border-radius: 15px;
+        padding: 2rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(45deg, #1e3c72, #2a5298); /* Gradient for the submit button */
+        border: none; /* Remove border */
+    }
+
+    .btn-outline-primary {
+        border: 2px solid #2a5298; /* Outline button with a color similar to the gradient */
+        color: #2a5298;
+    }
+
+    .text-danger {
+        color: #ff5252; /* Change error text to red for better visibility */
+    }
+
+    .text-center a {
+        color: #fff; /* Ensure links are white */
+        text-decoration: none;
+    }
+
+        .text-center a:hover {
+            color: #2a5298; /* Slight hover effect for links */
+        }
+    /* Gradient button styling for both Login and Reset buttons */
+    .btn-gradient {
+        background: linear-gradient(45deg, #1e3c72, #2a5298); /* Same gradient for both */
+        border: none; /* Remove borders */
+        color: white; /* White text color */
+        font-weight: bold; /* Make the text bold */
+        transition: background 0.3s ease; /* Add transition effect */
+    }
+
+        .btn-gradient:hover {
+            background: linear-gradient(45deg, #2a5298, #1e3c72); /* Reverse the gradient on hover */
+        }
+        /* Ensuring that button text is white */
+        .btn-gradient, .btn-gradient:hover {
+            color: white; /* Force text color to be white for all states */
+        }
+
+    /* Center the form */
+    .registration-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Ensure the container takes full height */
+    }
+
+    .card {
+        width: 100%;
+        max-width: 500px; /* Control the maximum width of the card */
+    }
+</style>
+
+<!-- Full Height Flexbox Container to center content -->
+<div class="registration-container">
     <div class="card shadow-sm">
         <div class="card-body">
+            <div class="text-center mb-4">
+                <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
+                <p class="text-muted">Create a new account and join us!</p>
+            </div>
             @if (TempData["Message"] is not null)
             {
                 <p class="text-danger text-center">
@@ -66,7 +148,7 @@
 
                 <hr class="my-4" />
                 <div class="text-center">
-                    <button type="submit" class="@btnPrimaryClass">Register</button>
+                    <button type="submit" class="@btnPrimaryClass text-white">Register</button>
                     &nbsp;&nbsp;
                     <button type="reset" class="@btnOutlineClass">Reset</button>
                     &nbsp;&nbsp;
