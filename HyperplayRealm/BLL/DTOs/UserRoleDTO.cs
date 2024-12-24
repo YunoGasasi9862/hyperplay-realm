@@ -11,18 +11,14 @@ namespace BLL.DTOs
 
         public int RoleId { get; set; }
 
-        [Required]
-        public required Role Role { get; set; }
+        public Role Role { get; set; }
 
-        [Required]
-        public required User User { get; set; }
+        public User User { get; set; }
 
         public static Expression<Func<UserRole, UserRoleDTO>> FromEntity => entity => new UserRoleDTO
         {
             UserId = entity.UserId,
-            RoleId = entity.RoleId,
-            Role = entity.Role,
-            User = entity.User
+            RoleId = entity.RoleId
         };
 
 

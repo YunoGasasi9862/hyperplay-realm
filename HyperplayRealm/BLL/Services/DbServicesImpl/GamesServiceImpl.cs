@@ -24,9 +24,21 @@ namespace BLL.Services.Impl
             return (LoadResult) await Load(ResultEnum.SUCCESS, true);
         }
 
-        public Task<LoadResult> Delete(int id)
+        public async Task<LoadResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            Game? entity = HyperplayRealmDBContext.Games.Include(gg => gg.GameGenres).Include(gd => gd.GameDevelopers).Where(game => game.Id == id).SingleOrDefault();
+
+            if (entity == null)
+            {
+                return (LoadResult)await Load(ResultEnum.ERROR, false);
+            }
+
+            HyperplayRealmDBContext.RemoveRange(entity.GameGenres);
+            HyperplayRealmDBContext.RemoveRange(entity.GameDevelopers);
+            HyperplayRealmDBContext.Remove(entity);
+            await HyperplayRealmDBContext.SaveChangesAsync();
+
+            return (LoadResult)await Load(ResultEnum.SUCCESS, true);
         }
 
         public Task<LoadResult> Update(Game type)

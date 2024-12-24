@@ -154,9 +154,12 @@
                     @Model.Count() record(s) found.
                 </div>
             </div>
-            <div class="col-md-4 text-end">
-                <a asp-action="Create" class="btn btn-header-gradient btn-sm shadow-sm">+ Add New Game</a>
-            </div>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="col-md-4 text-end">
+                    <a asp-action="Create" class="btn btn-header-gradient btn-sm shadow-sm">+ Add New Game</a>
+                </div>
+            }
         </div>
 
         <table class="table custom-table shadow-lg">
@@ -190,8 +193,12 @@
                         <td class="text-end">
                             <div class="d-flex justify-content-end gap-2">
                                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-header-gradient btn-sm shadow-sm">Details</a>
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-header-gradient btn-sm shadow-sm">Edit</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-header-gradient btn-sm shadow-sm">Delete</a>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-header-gradient btn-sm shadow-sm">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-header-gradient btn-sm shadow-sm">Delete</a>
+                                }
+
                             </div>
                         </td>
 

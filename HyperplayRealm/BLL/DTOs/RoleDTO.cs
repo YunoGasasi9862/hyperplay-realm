@@ -9,11 +9,9 @@ namespace BLL.DTOs
     {
         public int Id { get; set; }
 
-        [Required]
-        public required string Name { get; set; }
+        public string Name { get; set; }
 
-        [Required]
-        public required string Description { get; set; }
+        public string Description { get; set; }
 
         public static Expression<Func<Role, RoleDTO>> FromEntity => entity => new RoleDTO
         {

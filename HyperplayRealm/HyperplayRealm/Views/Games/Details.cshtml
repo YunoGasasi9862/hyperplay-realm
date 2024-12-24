@@ -8,14 +8,15 @@
 <!-- Custom Page Styling -->
 <style>
     body {
-        background-color: #1a1a1a;
-        background-image: url('@Url.Content("~/images/De")');
+        background-image: url('@Url.Content("~/images/LIS.png")');
         background-size: cover;
         background-position: center center;
+        animation: backgroundMove 15s ease-in-out infinite, backgroundZoom 20s infinite alternate;
         background-attachment: fixed;
-        color: #f0f0f0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
     }
+
     .add-game-button {
         background: linear-gradient(90deg, #6a11cb, #2575fc); /* Same as table header gradient */
         color: #fff;
@@ -248,12 +249,15 @@
 
                 <!-- Action Buttons -->
                 <div class="text-center">
-                    <a class="btn btn-header-gradient btn-sm shadow-sm" asp-action="Edit" asp-route-id="@Model.Id">
-                        <i class="bi bi-pencil-square"></i> Edit
-                    </a>
-                    <a class="btn btn-header-gradient btn-sm shadow-sm" asp-action="Delete" asp-route-id="@Model.Id">
-                        <i class="bi bi-trash"></i> Delete
-                    </a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-header-gradient btn-sm shadow-sm" asp-action="Edit" asp-route-id="@Model.Id">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                        <a class="btn btn-header-gradient btn-sm shadow-sm" asp-action="Delete" asp-route-id="@Model.Id">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    }
                     <a class="btn btn-header-gradient btn-sm shadow-sm" asp-action="Index">
                         <i class="bi bi-arrow-left-circle"></i> Back to List
                     </a>

@@ -5,6 +5,7 @@ using BLL.DTOs;
 using System.Threading.Tasks;
 using BLL.Enums;
 using BLL.Constants;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services.Impl
 {
@@ -46,7 +47,7 @@ namespace BLL.Services.Impl
 
         public IQueryable<UserDTO> Query()
         {
-            return HyperplayRealmDBContext.Users.Select(UserDTO.FromEntity);
+            return HyperplayRealmDBContext.Users.Include(ur => ur.UserRoles).ThenInclude(role => role.Role).Select(UserDTO.FromEntity);
         }
 
         public Task<LoadResult> Update(User type)

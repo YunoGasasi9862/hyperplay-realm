@@ -10,7 +10,6 @@ namespace BLL.Services.Authentication
     {
         public async Task<ClaimsPrincipal> Authenticate(UserDTO user)
         {
-            Console.WriteLine(user.ProfilePicturePath);
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, user.Username),
@@ -18,7 +17,9 @@ namespace BLL.Services.Authentication
                 new Claim("ProfilePicture", user.ProfilePicturePath ?? Constants.Constants.DEFAULT_PROFILE)
             };
 
-            claims.AddRange(user.GetRoleClaims());
+            claims.AddRange(user.GetRoleClaims(user.MapTo()));
+
+            Console.WriteLine(claims.Count);
 
             ClaimsIdentity userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme); //cookie name
 

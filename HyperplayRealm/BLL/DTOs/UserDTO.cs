@@ -1,6 +1,7 @@
 ﻿using BLL.Interfaces;
 using BLL.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq.Expressions;
 using System.Security.Claims;
 namespace BLL.DTOs
@@ -60,6 +61,7 @@ namespace BLL.DTOs
                 Password = this.Password,
 
                 ProfilePicturePath = this.ProfilePicturePath
+
             };
         }
 
@@ -69,7 +71,7 @@ namespace BLL.DTOs
             return entity.UserRoles.Select(role => role.Role.Name).ToList();
         }
 
-        public List<Claim> GetRoleClaims()
+        public List<Claim> GetRoleClaims(User entity)
         {
             List<Claim> claims = new List<Claim>();
 
