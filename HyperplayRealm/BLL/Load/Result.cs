@@ -19,6 +19,8 @@ namespace BLL.Load
             {ResultEnum.ERROR, "Failed to perform the Operation"},
 
             {ResultEnum.SUCCESS, "Successfully performed the Operation"},
+
+            {ResultEnum.ENTITY_ALREADY_EXISTS, "Entity Already Exists!"}
         };
 
         public void SetResultMessage(ResultEnum result, bool isSuccessful)

@@ -17,6 +17,13 @@ namespace BLL.Services.Impl
 
         public async Task<LoadResult> Create(Game type)
         {
+            Game? game = HyperplayRealmDBContext.Games.Where(g => g.Title == type.Title).SingleOrDefault();
+
+            if (game != null)
+            {
+                return (LoadResult)await Load(ResultEnum.ENTITY_ALREADY_EXISTS, false);
+            }
+
             HyperplayRealmDBContext.Games.Add(type);
 
             await HyperplayRealmDBContext.SaveChangesAsync();

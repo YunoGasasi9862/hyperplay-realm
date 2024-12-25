@@ -32,6 +32,12 @@ namespace BLL.Services.Impl
 
             await HyperplayRealmDBContext.SaveChangesAsync();
 
+            //here the best approach is to deal it within userRole service class, and call its service in the controller!!
+            //the method should also return the type saved - the load Result should contain the entity, which can be used 
+            //by the controller to initiate another insertion. 
+            //should adhere to single responsibility!!
+            //since the semester is already finished, and my focus is on senior year project,
+            //i wont be able to implement this - returning the saved entity via load result to be used by another service
             if(!(await CreateUserRole(type)).Result.IsSuccessfull)
             {
                 return (LoadResult)await Load(ResultEnum.ERROR, false);

@@ -42,7 +42,8 @@ namespace HyperplayRealm.Controllers
         public IActionResult Index()
         {
             // Get collection service logic:
-            var list = _userRoleService.Query().ToList();
+            List<UserRoleDTO> list = _userRoleService.Query().ToList();
+
             return View(list);
         }
 
@@ -58,7 +59,7 @@ namespace HyperplayRealm.Controllers
         {
             // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
             ViewData["RoleId"] = new SelectList(_roleService.Query().ToList(), "Id", "Name");
-            ViewData["UserId"] = new SelectList(_userService.Query().ToList(), "Id", "Name");
+            ViewData["UserId"] = new SelectList(_userService.Query().ToList(), "Id", "Username");
             
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");

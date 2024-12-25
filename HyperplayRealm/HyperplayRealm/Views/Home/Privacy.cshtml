@@ -1,6 +1,87 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+@{
+    var containerDivClass = "container";
+}
+<div class="@containerDivClass">
+    <h1 class="text-white">@ViewData["Title"]</h1>
+    <hr />
+</div>
+<!-- Background Image -->
+<style>
+    body {
+        background-image: url('@Url.Content("~/images/BG.jpg")');
+        background-size: cover;
+        background-position: center center;
+        animation: backgroundMove 15s ease-in-out infinite, backgroundZoom 20s infinite alternate;
+        background-attachment: fixed; /* Keeps the background fixed while scrolling */
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Optional: Adjust hero section to ensure text stays readable */
+    .hero-section {
+ display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh; /* Optional: Makes the section fill the viewport height */
+    }
+
+    /* Gradient Button Styling */
+    .btn-gradient {
+        background: linear-gradient(90deg, #6a11cb, #2575fc); /* Gradient color */
+        color: #fff;
+        border: none;
+        font-weight: bold;
+        border-radius: 50px; /* Rounded button */
+        padding: 10px 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-gradient:hover {
+        transform: scale(1.1); /* Slight zoom effect */
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* More prominent shadow */
+        background: linear-gradient(90deg, #2575fc, #6a11cb); /* Reverse gradient on hover */
+    }
+
+    .btn-gradient:active {
+        transform: scale(1); /* Restore size when clicked */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Featured Games Card Styling */
+    .card {
+        border-radius: 15px; /* Rounded corners */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        background-color: #fff; /* Card background color */
+    }
+
+    .card-img-top {
+        border-radius: 15px 15px 0 0; /* Rounded top corners for the image */
+        object-fit: cover; /* Ensure the image fills the container */
+        height: 200px; /* Fixed height for image */
+    }
+
+    .card-body {
+        padding: 1.5rem; /* Spacing inside the card */
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #6c757d; /* Muted text color */
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="container py-5 hero-section">
+    <p class="text-white">Use this page to detail your site's privacy policy.</p>
+</div>

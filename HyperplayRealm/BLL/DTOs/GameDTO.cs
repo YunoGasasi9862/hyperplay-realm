@@ -3,7 +3,7 @@ using BLL.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
-
+using System.Text.Json.Serialization;
 
 namespace BLL.DTOs
 {
@@ -23,18 +23,13 @@ namespace BLL.DTOs
 
         public string? PublisherName { get; set; }
 
-        public string GameLogo { get; set; }
+        public string? GameLogo { get; set; }
 
-        public List<string> Genres { get; set;}
+        public List<string>? Genres { get; set;}
 
-        public List<string> Developers { get; set; }
-
-        [DisplayName("Genres")]
-        public string GenreList => string.Join(", ", Genres);
-
-        [DisplayName("Developers")]
-        public string DeveloperList => string.Join(", ", Developers);
-
+        public List<string>? Developers { get; set; }
+        public string? GenreList => Genres != null && Genres.Any() ? string.Join(", ", Genres) : string.Empty;
+        public string? DeveloperList => Developers != null && Developers.Any() ? string.Join(", ", Developers) : string.Empty;
         public static Expression<Func<Game, GameDTO>> FromEntity => entity => new GameDTO
         {
             Id = entity.Id,

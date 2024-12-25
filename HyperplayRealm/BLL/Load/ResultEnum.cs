@@ -10,6 +10,8 @@ namespace BLL.Enums
     {
         ERROR = 0,
 
-        SUCCESS = 1
+        SUCCESS = 1,
+
+        ENTITY_ALREADY_EXISTS = 2
     }
 }

@@ -82,6 +82,7 @@ namespace HyperplayRealm.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(GameDTO game)
         {
+            Console.WriteLine(game.ToString());
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
@@ -93,6 +94,17 @@ namespace HyperplayRealm.Controllers
                 }
                 ModelState.AddModelError("", result.Result.Message);
             }
+
+            if (!ModelState.IsValid)
+            {
+                // Check the model state to ensure the values are being received
+                var errors = ModelState.Values.SelectMany(v => v.Errors).ToList();
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
+            }
+
             SetViewData();
             return View(game);
         }
