@@ -49,7 +49,7 @@ namespace HyperplayRealm.Controllers
             {
                 GameId = game.Id,
                 Title = game.Title,
-                Price = game.Price
+                Price = Convert.ToDecimal(game.Price)
             };
 
             cart.Add(cartItem);

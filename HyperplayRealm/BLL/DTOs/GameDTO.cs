@@ -13,13 +13,13 @@ namespace BLL.DTOs
 
         public string Title { get; set; }
 
-        public decimal Price { get; set; }
+        public string? Price { get; set; }
 
         public int Quantity { get; set; }
 
         public int PublisherId { get; set; }
 
-        public DateTime ReleaseDate { get; set; }
+        public string? ReleaseDate { get; set; }
 
         public string? PublisherName { get; set; }
 
@@ -34,10 +34,10 @@ namespace BLL.DTOs
         {
             Id = entity.Id,
             Title = entity.Title,
-            Price = entity.Price,
+            Price = entity.Price.ToString("C2"),
             Quantity = entity.Quantity,
             PublisherId = entity.PublisherId,
-            ReleaseDate = entity.ReleaseDate,
+            ReleaseDate = entity.ReleaseDate.ToShortDateString(),
             PublisherName = entity.Publisher.Name,
             Genres = entity.GameGenres.Where(gg => gg.GenreId == gg.Genre.Id).Select(gg => gg.Genre.GenreName).ToList(),
             Developers = entity.GameDevelopers.Where(developer => developer.DeveloperId == developer.Developer.Id).Select(developer => developer.Developer.Name).ToList()
@@ -45,7 +45,7 @@ namespace BLL.DTOs
 
         public Game MapTo()
         {
-            return new Game { Id = Id, Title = Title, Price = Price, Quantity = Quantity, PublisherId = PublisherId, ReleaseDate = ReleaseDate };
+            return new Game { Id = Id, Title = Title, Price = Convert.ToDecimal(Price), Quantity = Quantity, PublisherId = PublisherId, ReleaseDate = Convert.ToDateTime(ReleaseDate) };
         }
 
         [DisplayName("Genres")]
